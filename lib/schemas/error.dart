@@ -1,11 +1,11 @@
-class WordpressError {
+class WordPressError {
   String code;
   String message;
   Data data;
 
-  WordpressError({this.code, this.message, this.data});
+  WordPressError({this.code, this.message, this.data});
 
-  WordpressError.fromJson(Map<String, dynamic> json) {
+  WordPressError.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     message = json['message'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;

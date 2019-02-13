@@ -57,10 +57,15 @@ const URL_JWT_TOKEN_VALIDATE = '$URL_JWT_BASE/token/validate';
 const URL_POSTS = '$URL_WP_BASE/posts';
 const URL_USERS = '$URL_WP_BASE/users';
 
-enum WordpressContext { view, embed, edit }
+enum WordPressAuthenticator {
+  JWT,
+  ApplicationPasswords,
+}
+enum WordPressContext { view, embed, edit }
 
 class WordPress {
   final String _baseUrl;
+  final WordPressAuthenticator _authenticator;
   final String _wpContext;
 
   Map<String, String> _header = {
@@ -70,12 +75,15 @@ class WordPress {
 
   /// Take in base url and remove trailing '/' from the url if it exists.
   /// Take in the wordpress context and get the enum name.
-  WordPress(String baseUrl, WordpressContext wpContext)
+  WordPress(String baseUrl, WordPressAuthenticator authenticator,
+      WordPressContext wpContext, [String adminName, String adminKey])
       : assert(baseUrl != null),
         this._baseUrl = baseUrl.endsWith('/')
             ? baseUrl.substring(0, baseUrl.length - 1)
             : baseUrl,
+        this._authenticator = authenticator,
         this._wpContext = wpContext.toString().split('.')[1] {
+
     _wpContextParam = '/?context=${this._wpContext}';
   }
 
@@ -98,11 +106,11 @@ class WordPress {
       return authResponse;
     } else {
       try {
-        WordpressError err =
-            WordpressError.fromJson(json.decode(response.body));
+        WordPressError err =
+            WordPressError.fromJson(json.decode(response.body));
         throw err;
       } catch (e) {
-        throw new WordpressError(message: e.message);
+        throw new WordPressError(message: e.message);
       }
     }
   }
@@ -122,11 +130,11 @@ class WordPress {
       return posts;
     } else {
       try {
-        WordpressError err =
-            WordpressError.fromJson(json.decode(response.body));
+        WordPressError err =
+            WordPressError.fromJson(json.decode(response.body));
         throw err;
       } catch (e) {
-        throw new WordpressError(message: e.message);
+        throw new WordPressError(message: e.message);
       }
     }
   }
@@ -145,14 +153,12 @@ class WordPress {
       return users;
     } else {
       try {
-        WordpressError err =
-            WordpressError.fromJson(json.decode(response.body));
+        WordPressError err =
+            WordPressError.fromJson(json.decode(response.body));
         throw err;
       } catch (e) {
-        throw new WordpressError(message: e.message);
+        throw new WordPressError(message: e.message);
       }
     }
   }
-
-
 }
