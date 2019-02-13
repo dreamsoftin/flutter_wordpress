@@ -1,8 +1,10 @@
 name: flutter_wordpress
 description: Flutter Wordpress API
 version: 0.0.1
-author:
-homepage:
+authors:
+- Sachin Ganesh <sachinganesh13@gmail.com>
+- Suraj Shettigar <suri.shettigar@gmail.com>
+homepage: https://github.com/SachinGanesh/flutter_wordpress
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
