@@ -1,3 +1,3 @@
-## [0.0.1] - TODO: Add release date.
+## [0.0.1] - TODO: Init.
 
-* TODO: Describe initial release.
+* Under Development. Nothing works now.
