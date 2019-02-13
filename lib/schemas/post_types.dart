@@ -1,4 +1,6 @@
 import 'links.dart';
+import 'labels.dart';
+import 'capabilities.dart';
 
 class PostTypes {
   Post post;
@@ -38,28 +40,45 @@ class PostTypes {
 }
 
 class Post {
+  Capabilities capabilities;
   String description;
   bool hierarchical;
+  bool viewable;
+  Labels labels;
   String name;
   String slug;
+  Supports supports;
   List<String> taxonomies;
   String restBase;
   Links lLinks;
 
   Post(
-      {this.description,
-        this.hierarchical,
-        this.name,
-        this.slug,
-        this.taxonomies,
-        this.restBase,
-        this.lLinks});
+      {this.capabilities,
+      this.description,
+      this.hierarchical,
+      this.viewable,
+      this.labels,
+      this.name,
+      this.slug,
+      this.supports,
+      this.taxonomies,
+      this.restBase,
+      this.lLinks});
 
   Post.fromJson(Map<String, dynamic> json) {
+    capabilities = json['capabilities'] != null
+        ? new Capabilities.fromJson(json['capabilities'])
+        : null;
     description = json['description'];
     hierarchical = json['hierarchical'];
+    viewable = json['viewable'];
+    labels =
+        json['labels'] != null ? new Labels.fromJson(json['labels']) : null;
     name = json['name'];
     slug = json['slug'];
+    supports = json['supports'] != null
+        ? new Supports.fromJson(json['supports'])
+        : null;
     taxonomies = json['taxonomies'].cast<String>();
     restBase = json['rest_base'];
     lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
@@ -67,10 +86,20 @@ class Post {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.capabilities != null) {
+      data['capabilities'] = this.capabilities.toJson();
+    }
     data['description'] = this.description;
     data['hierarchical'] = this.hierarchical;
+    data['viewable'] = this.viewable;
+    if (this.labels != null) {
+      data['labels'] = this.labels.toJson();
+    }
     data['name'] = this.name;
     data['slug'] = this.slug;
+    if (this.supports != null) {
+      data['supports'] = this.supports.toJson();
+    }
     data['taxonomies'] = this.taxonomies;
     data['rest_base'] = this.restBase;
     if (this.lLinks != null) {
@@ -80,48 +109,121 @@ class Post {
   }
 }
 
+class Supports {
+  bool title;
+  bool editor;
+  bool author;
+  bool thumbnail;
+  bool excerpt;
+  bool trackbacks;
+  bool customFields;
+  bool comments;
+  bool revisions;
+  bool postFormats;
+
+  Supports(
+      {this.title,
+      this.editor,
+      this.author,
+      this.thumbnail,
+      this.excerpt,
+      this.trackbacks,
+      this.customFields,
+      this.comments,
+      this.revisions,
+      this.postFormats});
+
+  Supports.fromJson(Map<String, dynamic> json) {
+    title = json['title'];
+    editor = json['editor'];
+    author = json['author'];
+    thumbnail = json['thumbnail'];
+    excerpt = json['excerpt'];
+    trackbacks = json['trackbacks'];
+    customFields = json['custom-fields'];
+    comments = json['comments'];
+    revisions = json['revisions'];
+    postFormats = json['post-formats'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['title'] = this.title;
+    data['editor'] = this.editor;
+    data['author'] = this.author;
+    data['thumbnail'] = this.thumbnail;
+    data['excerpt'] = this.excerpt;
+    data['trackbacks'] = this.trackbacks;
+    data['custom-fields'] = this.customFields;
+    data['comments'] = this.comments;
+    data['revisions'] = this.revisions;
+    data['post-formats'] = this.postFormats;
+    return data;
+  }
+}
+
 class Page {
+  Capabilities capabilities;
   String description;
   bool hierarchical;
+  bool viewable;
+  Labels labels;
   String name;
   String slug;
-  List<Null> taxonomies;
+  Supports supports;
+  List<int> taxonomies;
   String restBase;
   Links lLinks;
 
   Page(
-      {this.description,
-        this.hierarchical,
-        this.name,
-        this.slug,
-        this.taxonomies,
-        this.restBase,
-        this.lLinks});
+      {this.capabilities,
+      this.description,
+      this.hierarchical,
+      this.viewable,
+      this.labels,
+      this.name,
+      this.slug,
+      this.supports,
+      this.taxonomies,
+      this.restBase,
+      this.lLinks});
 
   Page.fromJson(Map<String, dynamic> json) {
+    capabilities = json['capabilities'] != null
+        ? new Capabilities.fromJson(json['capabilities'])
+        : null;
     description = json['description'];
     hierarchical = json['hierarchical'];
+    viewable = json['viewable'];
+    labels =
+        json['labels'] != null ? new Labels.fromJson(json['labels']) : null;
     name = json['name'];
     slug = json['slug'];
-    /*if (json['taxonomies'] != null) {
-      taxonomies = new List<>();
-      json['taxonomies'].forEach((v) {
-        taxonomies.add(new Null.fromJson(v));
-      });
-    }*/
+    supports = json['supports'] != null
+        ? new Supports.fromJson(json['supports'])
+        : null;
+    taxonomies = json['taxonomies'].cast<int>();
     restBase = json['rest_base'];
     lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.capabilities != null) {
+      data['capabilities'] = this.capabilities.toJson();
+    }
     data['description'] = this.description;
     data['hierarchical'] = this.hierarchical;
+    data['viewable'] = this.viewable;
+    if (this.labels != null) {
+      data['labels'] = this.labels.toJson();
+    }
     data['name'] = this.name;
     data['slug'] = this.slug;
-    /*if (this.taxonomies != null) {
-      data['taxonomies'] = this.taxonomies.map((v) => v.toJson()).toList();
-    }*/
+    if (this.supports != null) {
+      data['supports'] = this.supports.toJson();
+    }
+    data['taxonomies'] = this.taxonomies;
     data['rest_base'] = this.restBase;
     if (this.lLinks != null) {
       data['_links'] = this.lLinks.toJson();
@@ -131,47 +233,67 @@ class Page {
 }
 
 class Attachment {
+  Capabilities capabilities;
   String description;
   bool hierarchical;
+  bool viewable;
+  Labels labels;
   String name;
   String slug;
-  List<Null> taxonomies;
+  Supports supports;
+  List<int> taxonomies;
   String restBase;
   Links lLinks;
 
   Attachment(
-      {this.description,
-        this.hierarchical,
-        this.name,
-        this.slug,
-        this.taxonomies,
-        this.restBase,
-        this.lLinks});
+      {this.capabilities,
+      this.description,
+      this.hierarchical,
+      this.viewable,
+      this.labels,
+      this.name,
+      this.slug,
+      this.supports,
+      this.taxonomies,
+      this.restBase,
+      this.lLinks});
 
   Attachment.fromJson(Map<String, dynamic> json) {
+    capabilities = json['capabilities'] != null
+        ? new Capabilities.fromJson(json['capabilities'])
+        : null;
     description = json['description'];
     hierarchical = json['hierarchical'];
+    viewable = json['viewable'];
+    labels =
+        json['labels'] != null ? new Labels.fromJson(json['labels']) : null;
     name = json['name'];
     slug = json['slug'];
-    /*if (json['taxonomies'] != null) {
-      taxonomies = new List<Null>();
-      json['taxonomies'].forEach((v) {
-        taxonomies.add(new Null.fromJson(v));
-      });
-    }*/
+    supports = json['supports'] != null
+        ? new Supports.fromJson(json['supports'])
+        : null;
+    taxonomies = json['taxonomies'].cast<int>();
     restBase = json['rest_base'];
     lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.capabilities != null) {
+      data['capabilities'] = this.capabilities.toJson();
+    }
     data['description'] = this.description;
     data['hierarchical'] = this.hierarchical;
+    data['viewable'] = this.viewable;
+    if (this.labels != null) {
+      data['labels'] = this.labels.toJson();
+    }
     data['name'] = this.name;
     data['slug'] = this.slug;
-    /*if (this.taxonomies != null) {
-      data['taxonomies'] = this.taxonomies.map((v) => v.toJson()).toList();
-    }*/
+    if (this.supports != null) {
+      data['supports'] = this.supports.toJson();
+    }
+    data['taxonomies'] = this.taxonomies;
     data['rest_base'] = this.restBase;
     if (this.lLinks != null) {
       data['_links'] = this.lLinks.toJson();
@@ -181,47 +303,67 @@ class Attachment {
 }
 
 class WpBlock {
+  Capabilities capabilities;
   String description;
   bool hierarchical;
+  bool viewable;
+  Labels labels;
   String name;
   String slug;
-  List<Null> taxonomies;
+  Supports supports;
+  List<int> taxonomies;
   String restBase;
   Links lLinks;
 
   WpBlock(
-      {this.description,
-        this.hierarchical,
-        this.name,
-        this.slug,
-        this.taxonomies,
-        this.restBase,
-        this.lLinks});
+      {this.capabilities,
+      this.description,
+      this.hierarchical,
+      this.viewable,
+      this.labels,
+      this.name,
+      this.slug,
+      this.supports,
+      this.taxonomies,
+      this.restBase,
+      this.lLinks});
 
   WpBlock.fromJson(Map<String, dynamic> json) {
+    capabilities = json['capabilities'] != null
+        ? new Capabilities.fromJson(json['capabilities'])
+        : null;
     description = json['description'];
     hierarchical = json['hierarchical'];
+    viewable = json['viewable'];
+    labels =
+        json['labels'] != null ? new Labels.fromJson(json['labels']) : null;
     name = json['name'];
     slug = json['slug'];
-    /*if (json['taxonomies'] != null) {
-      taxonomies = new List<Null>();
-      json['taxonomies'].forEach((v) {
-        taxonomies.add(new Null.fromJson(v));
-      });
-    }*/
+    supports = json['supports'] != null
+        ? new Supports.fromJson(json['supports'])
+        : null;
+    taxonomies = json['taxonomies'].cast<int>();
     restBase = json['rest_base'];
     lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.capabilities != null) {
+      data['capabilities'] = this.capabilities.toJson();
+    }
     data['description'] = this.description;
     data['hierarchical'] = this.hierarchical;
+    data['viewable'] = this.viewable;
+    if (this.labels != null) {
+      data['labels'] = this.labels.toJson();
+    }
     data['name'] = this.name;
     data['slug'] = this.slug;
-    /*if (this.taxonomies != null) {
-      data['taxonomies'] = this.taxonomies.map((v) => v.toJson()).toList();
-    }*/
+    if (this.supports != null) {
+      data['supports'] = this.supports.toJson();
+    }
+    data['taxonomies'] = this.taxonomies;
     data['rest_base'] = this.restBase;
     if (this.lLinks != null) {
       data['_links'] = this.lLinks.toJson();

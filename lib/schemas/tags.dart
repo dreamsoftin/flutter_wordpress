@@ -8,7 +8,7 @@ class Tags {
   String name;
   String slug;
   String taxonomy;
-  List<Null> meta;
+//  List<Null> meta;
   Links lLinks;
 
   Tags(
@@ -19,7 +19,7 @@ class Tags {
         this.name,
         this.slug,
         this.taxonomy,
-        this.meta,
+//        this.meta,
         this.lLinks});
 
   Tags.fromJson(Map<String, dynamic> json) {
@@ -57,3 +57,4 @@ class Tags {
     return data;
   }
 }
+

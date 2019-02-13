@@ -50,13 +50,40 @@ class PostsBuilder extends StatefulWidget {
 }
 
 class PostsBuilderState extends State<PostsBuilder> {
+  wp.WordPress wordPress;
   Future<List<wp.Posts>> posts;
+  Future<List<wp.Users>> users;
 
   @override
   void initState() {
     super.initState();
 
-    posts = wp.WordPressAPI().fetchPosts();
+    wordPress = wp.WordPress(
+        'https://wordpress.dsoft.website', wp.WordpressContext.view);
+
+    Future<wp.AuthResponse> auth = wordPress.authenticateUser(
+        username: 'admin ', password: 'mypassword@123');
+
+    auth.then((response) {
+      fetchPosts();
+    }).catchError((err) {
+      print(err.message);
+    });
+
+  }
+
+  void fetchPosts()
+  {
+    setState(() {
+      posts = wordPress.fetchPosts();
+    });
+  }
+
+  void fetchUsers()
+  {
+    setState(() {
+      users = wordPress.fetchUsers();
+    });
   }
 
   @override
@@ -75,7 +102,8 @@ class PostsBuilderState extends State<PostsBuilder> {
             itemCount: snapshot.data.length,
           );
         } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
+          wp.WordpressError err = snapshot.error as wp.WordpressError;
+          return Text(err.message);
         }
         return CircularProgressIndicator();
       },

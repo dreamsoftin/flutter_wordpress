@@ -9,7 +9,7 @@ class Categories {
   String slug;
   String taxonomy;
   int parent;
-  List<Null> meta;
+//  List<Null> meta;
   Links lLinks;
 
   Categories(
@@ -21,7 +21,7 @@ class Categories {
         this.slug,
         this.taxonomy,
         this.parent,
-        this.meta,
+//        this.meta,
         this.lLinks});
 
   Categories.fromJson(Map<String, dynamic> json) {
@@ -61,3 +61,4 @@ class Categories {
     return data;
   }
 }
+

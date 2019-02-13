@@ -8,7 +8,10 @@ class Comments {
   int parent;
   int author;
   String authorName;
+  String authorEmail;
   String authorUrl;
+  String authorIp;
+  String authorUserAgent;
   String date;
   String dateGmt;
   Content content;
@@ -16,7 +19,7 @@ class Comments {
   String status;
   String type;
   AvatarUrls authorAvatarUrls;
-  List<Null> meta;
+//  List<Null> meta;
   Links lLinks;
 
   Comments(
@@ -25,7 +28,10 @@ class Comments {
         this.parent,
         this.author,
         this.authorName,
+        this.authorEmail,
         this.authorUrl,
+        this.authorIp,
+        this.authorUserAgent,
         this.date,
         this.dateGmt,
         this.content,
@@ -33,7 +39,7 @@ class Comments {
         this.status,
         this.type,
         this.authorAvatarUrls,
-        this.meta,
+//        this.meta,
         this.lLinks});
 
   Comments.fromJson(Map<String, dynamic> json) {
@@ -42,7 +48,10 @@ class Comments {
     parent = json['parent'];
     author = json['author'];
     authorName = json['author_name'];
+    authorEmail = json['author_email'];
     authorUrl = json['author_url'];
+    authorIp = json['author_ip'];
+    authorUserAgent = json['author_user_agent'];
     date = json['date'];
     dateGmt = json['date_gmt'];
     content =
@@ -69,7 +78,10 @@ class Comments {
     data['parent'] = this.parent;
     data['author'] = this.author;
     data['author_name'] = this.authorName;
+    data['author_email'] = this.authorEmail;
     data['author_url'] = this.authorUrl;
+    data['author_ip'] = this.authorIp;
+    data['author_user_agent'] = this.authorUserAgent;
     data['date'] = this.date;
     data['date_gmt'] = this.dateGmt;
     if (this.content != null) {

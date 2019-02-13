@@ -11,6 +11,7 @@ class Pages {
   Guid guid;
   String modified;
   String modifiedGmt;
+  String password;
   String slug;
   String status;
   String type;
@@ -25,7 +26,9 @@ class Pages {
   String commentStatus;
   String pingStatus;
   String template;
-  List<Null> meta;
+//  List<Null> meta;
+  String permalinkTemplate;
+  String generatedSlug;
   Links lLinks;
 
   Pages(
@@ -35,6 +38,7 @@ class Pages {
         this.guid,
         this.modified,
         this.modifiedGmt,
+        this.password,
         this.slug,
         this.status,
         this.type,
@@ -49,7 +53,9 @@ class Pages {
         this.commentStatus,
         this.pingStatus,
         this.template,
-        this.meta,
+//        this.meta,
+        this.permalinkTemplate,
+        this.generatedSlug,
         this.lLinks});
 
   Pages.fromJson(Map<String, dynamic> json) {
@@ -59,6 +65,7 @@ class Pages {
     guid = json['guid'] != null ? new Guid.fromJson(json['guid']) : null;
     modified = json['modified'];
     modifiedGmt = json['modified_gmt'];
+    password = json['password'];
     slug = json['slug'];
     status = json['status'];
     type = json['type'];
@@ -81,6 +88,8 @@ class Pages {
         meta.add(new Null.fromJson(v));
       });
     }*/
+    permalinkTemplate = json['permalink_template'];
+    generatedSlug = json['generated_slug'];
     lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
   }
 
@@ -94,6 +103,7 @@ class Pages {
     }
     data['modified'] = this.modified;
     data['modified_gmt'] = this.modifiedGmt;
+    data['password'] = this.password;
     data['slug'] = this.slug;
     data['status'] = this.status;
     data['type'] = this.type;
@@ -117,10 +127,13 @@ class Pages {
     /*if (this.meta != null) {
       data['meta'] = this.meta.map((v) => v.toJson()).toList();
     }*/
+    data['permalink_template'] = this.permalinkTemplate;
+    data['generated_slug'] = this.generatedSlug;
     if (this.lLinks != null) {
       data['_links'] = this.lLinks.toJson();
     }
     return data;
   }
 }
+
 

@@ -4,33 +4,46 @@ class Links {
   List<About> about;
   List<Author> author;
   List<Replies> replies;
+  List<Archives> archives;
   List<VersionHistory> versionHistory;
-  List<WpItems> wpItems;
   List<WpPostType> wpPostType;
-  List<WpFeaturedmedia> wpFeaturedmedia;
   List<WpAttachment> wpAttachment;
   List<WpTerm> wpTerm;
-  List<Curies> curies;
+  List<WpActionPublish> wpActionPublish;
+  List<WpActionUnfilteredHtml> wpActionUnfilteredHtml;
+  List<WpActionSticky> wpActionSticky;
+  List<WpActionAssignAuthor> wpActionAssignAuthor;
+  List<WpActionCreateCategories> wpActionCreateCategories;
+  List<WpActionAssignCategories> wpActionAssignCategories;
+  List<WpActionCreateTags> wpActionCreateTags;
+  List<WpActionAssignTags> wpActionAssignTags;
+  List<WpItems> wpItems;
   List<Up> up;
-  List<Children> children;
-  List<Archives> archives;
+  List<Curies> curies;
 
-  Links(
-      {this.self,
-      this.collection,
-      this.about,
-      this.author,
-      this.replies,
-      this.versionHistory,
-      this.wpItems,
-      this.wpPostType,
-      this.wpFeaturedmedia,
-      this.wpAttachment,
-      this.wpTerm,
-      this.curies,
-      this.up,
-      this.children,
-      this.archives});
+  Links({
+    this.self,
+    this.collection,
+    this.about,
+    this.author,
+    this.replies,
+    this.archives,
+    this.versionHistory,
+    this.wpPostType,
+    this.wpAttachment,
+    this.wpTerm,
+    this.wpActionPublish,
+    this.wpActionUnfilteredHtml,
+    this.wpActionSticky,
+    this.wpActionAssignAuthor,
+    this.wpActionCreateCategories,
+    this.wpActionAssignCategories,
+    this.wpActionCreateTags,
+    this.wpActionAssignTags,
+    this.wpItems,
+    this.up,
+    this.curies,
+  });
 
   Links.fromJson(Map<String, dynamic> json) {
     if (json['self'] != null) {
@@ -63,28 +76,22 @@ class Links {
         replies.add(new Replies.fromJson(v));
       });
     }
+    if (json['archives'] != null) {
+      archives = new List<Archives>();
+      json['archives'].forEach((v) {
+        archives.add(new Archives.fromJson(v));
+      });
+    }
     if (json['version-history'] != null) {
       versionHistory = new List<VersionHistory>();
       json['version-history'].forEach((v) {
         versionHistory.add(new VersionHistory.fromJson(v));
       });
     }
-    if (json['wp:items'] != null) {
-      wpItems = new List<WpItems>();
-      json['wp:items'].forEach((v) {
-        wpItems.add(new WpItems.fromJson(v));
-      });
-    }
     if (json['wp:post_type'] != null) {
       wpPostType = new List<WpPostType>();
       json['wp:post_type'].forEach((v) {
         wpPostType.add(new WpPostType.fromJson(v));
-      });
-    }
-    if (json['wp:featuredmedia'] != null) {
-      wpFeaturedmedia = new List<WpFeaturedmedia>();
-      json['wp:featuredmedia'].forEach((v) {
-        wpFeaturedmedia.add(new WpFeaturedmedia.fromJson(v));
       });
     }
     if (json['wp:attachment'] != null) {
@@ -99,10 +106,58 @@ class Links {
         wpTerm.add(new WpTerm.fromJson(v));
       });
     }
-    if (json['curies'] != null) {
-      curies = new List<Curies>();
-      json['curies'].forEach((v) {
-        curies.add(new Curies.fromJson(v));
+    if (json['wp:action-publish'] != null) {
+      wpActionPublish = new List<WpActionPublish>();
+      json['wp:action-publish'].forEach((v) {
+        wpActionPublish.add(new WpActionPublish.fromJson(v));
+      });
+    }
+    if (json['wp:action-unfiltered-html'] != null) {
+      wpActionUnfilteredHtml = new List<WpActionUnfilteredHtml>();
+      json['wp:action-unfiltered-html'].forEach((v) {
+        wpActionUnfilteredHtml.add(new WpActionUnfilteredHtml.fromJson(v));
+      });
+    }
+    if (json['wp:action-sticky'] != null) {
+      wpActionSticky = new List<WpActionSticky>();
+      json['wp:action-sticky'].forEach((v) {
+        wpActionSticky.add(new WpActionSticky.fromJson(v));
+      });
+    }
+    if (json['wp:action-assign-author'] != null) {
+      wpActionAssignAuthor = new List<WpActionAssignAuthor>();
+      json['wp:action-assign-author'].forEach((v) {
+        wpActionAssignAuthor.add(new WpActionAssignAuthor.fromJson(v));
+      });
+    }
+    if (json['wp:action-create-categories'] != null) {
+      wpActionCreateCategories = new List<WpActionCreateCategories>();
+      json['wp:action-create-categories'].forEach((v) {
+        wpActionCreateCategories.add(new WpActionCreateCategories.fromJson(v));
+      });
+    }
+    if (json['wp:action-assign-categories'] != null) {
+      wpActionAssignCategories = new List<WpActionAssignCategories>();
+      json['wp:action-assign-categories'].forEach((v) {
+        wpActionAssignCategories.add(new WpActionAssignCategories.fromJson(v));
+      });
+    }
+    if (json['wp:action-create-tags'] != null) {
+      wpActionCreateTags = new List<WpActionCreateTags>();
+      json['wp:action-create-tags'].forEach((v) {
+        wpActionCreateTags.add(new WpActionCreateTags.fromJson(v));
+      });
+    }
+    if (json['wp:action-assign-tags'] != null) {
+      wpActionAssignTags = new List<WpActionAssignTags>();
+      json['wp:action-assign-tags'].forEach((v) {
+        wpActionAssignTags.add(new WpActionAssignTags.fromJson(v));
+      });
+    }
+    if (json['wp:items'] != null) {
+      wpItems = new List<WpItems>();
+      json['wp:items'].forEach((v) {
+        wpItems.add(new WpItems.fromJson(v));
       });
     }
     if (json['up'] != null) {
@@ -111,16 +166,10 @@ class Links {
         up.add(new Up.fromJson(v));
       });
     }
-    if (json['children'] != null) {
-      children = new List<Children>();
-      json['children'].forEach((v) {
-        children.add(new Children.fromJson(v));
-      });
-    }
-    if (json['archives'] != null) {
-      archives = new List<Archives>();
-      json['archives'].forEach((v) {
-        archives.add(new Archives.fromJson(v));
+    if (json['curies'] != null) {
+      curies = new List<Curies>();
+      json['curies'].forEach((v) {
+        curies.add(new Curies.fromJson(v));
       });
     }
   }
@@ -142,19 +191,15 @@ class Links {
     if (this.replies != null) {
       data['replies'] = this.replies.map((v) => v.toJson()).toList();
     }
+    if (this.archives != null) {
+      data['archives'] = this.archives.map((v) => v.toJson()).toList();
+    }
     if (this.versionHistory != null) {
       data['version-history'] =
           this.versionHistory.map((v) => v.toJson()).toList();
     }
-    if (this.wpItems != null) {
-      data['wp:items'] = this.wpItems.map((v) => v.toJson()).toList();
-    }
     if (this.wpPostType != null) {
       data['wp:post_type'] = this.wpPostType.map((v) => v.toJson()).toList();
-    }
-    if (this.wpFeaturedmedia != null) {
-      data['wp:featuredmedia'] =
-          this.wpFeaturedmedia.map((v) => v.toJson()).toList();
     }
     if (this.wpAttachment != null) {
       data['wp:attachment'] = this.wpAttachment.map((v) => v.toJson()).toList();
@@ -162,17 +207,46 @@ class Links {
     if (this.wpTerm != null) {
       data['wp:term'] = this.wpTerm.map((v) => v.toJson()).toList();
     }
-    if (this.curies != null) {
-      data['curies'] = this.curies.map((v) => v.toJson()).toList();
+    if (this.wpActionPublish != null) {
+      data['wp:action-publish'] =
+          this.wpActionPublish.map((v) => v.toJson()).toList();
+    }
+    if (this.wpActionUnfilteredHtml != null) {
+      data['wp:action-unfiltered-html'] =
+          this.wpActionUnfilteredHtml.map((v) => v.toJson()).toList();
+    }
+    if (this.wpActionSticky != null) {
+      data['wp:action-sticky'] =
+          this.wpActionSticky.map((v) => v.toJson()).toList();
+    }
+    if (this.wpActionAssignAuthor != null) {
+      data['wp:action-assign-author'] =
+          this.wpActionAssignAuthor.map((v) => v.toJson()).toList();
+    }
+    if (this.wpActionCreateCategories != null) {
+      data['wp:action-create-categories'] =
+          this.wpActionCreateCategories.map((v) => v.toJson()).toList();
+    }
+    if (this.wpActionAssignCategories != null) {
+      data['wp:action-assign-categories'] =
+          this.wpActionAssignCategories.map((v) => v.toJson()).toList();
+    }
+    if (this.wpActionCreateTags != null) {
+      data['wp:action-create-tags'] =
+          this.wpActionCreateTags.map((v) => v.toJson()).toList();
+    }
+    if (this.wpActionAssignTags != null) {
+      data['wp:action-assign-tags'] =
+          this.wpActionAssignTags.map((v) => v.toJson()).toList();
+    }
+    if (this.wpItems != null) {
+      data['wp:items'] = this.wpItems.map((v) => v.toJson()).toList();
     }
     if (this.up != null) {
       data['up'] = this.up.map((v) => v.toJson()).toList();
     }
-    if (this.children != null) {
-      data['children'] = this.children.map((v) => v.toJson()).toList();
-    }
-    if (this.archives != null) {
-      data['archives'] = this.archives.map((v) => v.toJson()).toList();
+    if (this.curies != null) {
+      data['curies'] = this.curies.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -264,6 +338,22 @@ class Replies {
   }
 }
 
+class Archives {
+  String href;
+
+  Archives({this.href});
+
+  Archives.fromJson(Map<String, dynamic> json) {
+    href = json['href'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['href'] = this.href;
+    return data;
+  }
+}
+
 class VersionHistory {
   int count;
   String href;
@@ -283,22 +373,6 @@ class VersionHistory {
   }
 }
 
-class WpItems {
-  String href;
-
-  WpItems({this.href});
-
-  WpItems.fromJson(Map<String, dynamic> json) {
-    href = json['href'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
-    return data;
-  }
-}
-
 class WpPostType {
   String href;
 
@@ -310,25 +384,6 @@ class WpPostType {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
-    return data;
-  }
-}
-
-class WpFeaturedmedia {
-  bool embeddable;
-  String href;
-
-  WpFeaturedmedia({this.embeddable, this.href});
-
-  WpFeaturedmedia.fromJson(Map<String, dynamic> json) {
-    embeddable = json['embeddable'];
-    href = json['href'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['embeddable'] = this.embeddable;
     data['href'] = this.href;
     return data;
   }
@@ -372,24 +427,146 @@ class WpTerm {
   }
 }
 
-class Curies {
-  String name;
+class WpActionPublish {
   String href;
-  bool templated;
 
-  Curies({this.name, this.href, this.templated});
+  WpActionPublish({this.href});
 
-  Curies.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
+  WpActionPublish.fromJson(Map<String, dynamic> json) {
     href = json['href'];
-    templated = json['templated'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
     data['href'] = this.href;
-    data['templated'] = this.templated;
+    return data;
+  }
+}
+
+class WpActionUnfilteredHtml {
+  String href;
+
+  WpActionUnfilteredHtml({this.href});
+
+  WpActionUnfilteredHtml.fromJson(Map<String, dynamic> json) {
+    href = json['href'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['href'] = this.href;
+    return data;
+  }
+}
+
+class WpActionSticky {
+  String href;
+
+  WpActionSticky({this.href});
+
+  WpActionSticky.fromJson(Map<String, dynamic> json) {
+    href = json['href'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['href'] = this.href;
+    return data;
+  }
+}
+
+class WpActionAssignAuthor {
+  String href;
+
+  WpActionAssignAuthor({this.href});
+
+  WpActionAssignAuthor.fromJson(Map<String, dynamic> json) {
+    href = json['href'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['href'] = this.href;
+    return data;
+  }
+}
+
+class WpActionCreateCategories {
+  String href;
+
+  WpActionCreateCategories({this.href});
+
+  WpActionCreateCategories.fromJson(Map<String, dynamic> json) {
+    href = json['href'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['href'] = this.href;
+    return data;
+  }
+}
+
+class WpActionAssignCategories {
+  String href;
+
+  WpActionAssignCategories({this.href});
+
+  WpActionAssignCategories.fromJson(Map<String, dynamic> json) {
+    href = json['href'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['href'] = this.href;
+    return data;
+  }
+}
+
+class WpActionCreateTags {
+  String href;
+
+  WpActionCreateTags({this.href});
+
+  WpActionCreateTags.fromJson(Map<String, dynamic> json) {
+    href = json['href'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['href'] = this.href;
+    return data;
+  }
+}
+
+class WpActionAssignTags {
+  String href;
+
+  WpActionAssignTags({this.href});
+
+  WpActionAssignTags.fromJson(Map<String, dynamic> json) {
+    href = json['href'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['href'] = this.href;
+    return data;
+  }
+}
+
+class WpItems {
+  String href;
+
+  WpItems({this.href});
+
+  WpItems.fromJson(Map<String, dynamic> json) {
+    href = json['href'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['href'] = this.href;
     return data;
   }
 }
@@ -416,34 +593,24 @@ class Up {
   }
 }
 
-class Children {
+class Curies {
+  String name;
   String href;
+  bool templated;
 
-  Children({this.href});
+  Curies({this.name, this.href, this.templated});
 
-  Children.fromJson(Map<String, dynamic> json) {
+  Curies.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
     href = json['href'];
+    templated = json['templated'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
     data['href'] = this.href;
-    return data;
-  }
-}
-
-class Archives {
-  String href;
-
-  Archives({this.href});
-
-  Archives.fromJson(Map<String, dynamic> json) {
-    href = json['href'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    data['templated'] = this.templated;
     return data;
   }
 }

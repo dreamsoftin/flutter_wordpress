@@ -13,6 +13,7 @@ class Posts {
   Guid guid;
   String modified;
   String modifiedGmt;
+  String password;
   String slug;
   String status;
   String type;
@@ -27,9 +28,11 @@ class Posts {
   bool sticky;
   String template;
   String format;
-  List<Null> meta;
+//  List<Null> meta;
   List<int> categories;
   List<int> tags;
+  String permalinkTemplate;
+  String generatedSlug;
   Links lLinks;
 
   Posts(
@@ -39,6 +42,7 @@ class Posts {
         this.guid,
         this.modified,
         this.modifiedGmt,
+        this.password,
         this.slug,
         this.status,
         this.type,
@@ -53,9 +57,11 @@ class Posts {
         this.sticky,
         this.template,
         this.format,
-        this.meta,
+//        this.meta,
         this.categories,
         this.tags,
+        this.permalinkTemplate,
+        this.generatedSlug,
         this.lLinks});
 
   Posts.fromJson(Map<String, dynamic> json) {
@@ -65,6 +71,7 @@ class Posts {
     guid = json['guid'] != null ? new Guid.fromJson(json['guid']) : null;
     modified = json['modified'];
     modifiedGmt = json['modified_gmt'];
+    password = json['password'];
     slug = json['slug'];
     status = json['status'];
     type = json['type'];
@@ -89,6 +96,8 @@ class Posts {
     }*/
     categories = json['categories'].cast<int>();
     tags = json['tags'].cast<int>();
+    permalinkTemplate = json['permalink_template'];
+    generatedSlug = json['generated_slug'];
     lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
   }
 
@@ -102,6 +111,7 @@ class Posts {
     }
     data['modified'] = this.modified;
     data['modified_gmt'] = this.modifiedGmt;
+    data['password'] = this.password;
     data['slug'] = this.slug;
     data['status'] = this.status;
     data['type'] = this.type;
@@ -127,11 +137,14 @@ class Posts {
     }*/
     data['categories'] = this.categories;
     data['tags'] = this.tags;
+    data['permalink_template'] = this.permalinkTemplate;
+    data['generated_slug'] = this.generatedSlug;
     if (this.lLinks != null) {
       data['_links'] = this.lLinks.toJson();
     }
     return data;
   }
 }
+
 
 
