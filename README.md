@@ -2,13 +2,9 @@
 
 Flutter Wordpress API
 
-## Getting Started
+## Requirements
+- A Wordpress site using V2 REST API https://developer.wordpress.org/rest-api/
+- JWT Authentication for WP REST API V2 https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/
+- Flutter 1.0 https://flutter.io/docs/get-started/install
 
-This project is a starting point for a Dart
-[package](https://flutter.io/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
