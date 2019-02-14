@@ -1,6 +1,6 @@
 import 'links.dart';
 
-class Tags {
+class Category {
   int id;
   int count;
   String description;
@@ -8,10 +8,11 @@ class Tags {
   String name;
   String slug;
   String taxonomy;
+  int parent;
 //  List<Null> meta;
   Links lLinks;
 
-  Tags(
+  Category(
       {this.id,
         this.count,
         this.description,
@@ -19,10 +20,11 @@ class Tags {
         this.name,
         this.slug,
         this.taxonomy,
+        this.parent,
 //        this.meta,
         this.lLinks});
 
-  Tags.fromJson(Map<String, dynamic> json) {
+  Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     count = json['count'];
     description = json['description'];
@@ -30,6 +32,7 @@ class Tags {
     name = json['name'];
     slug = json['slug'];
     taxonomy = json['taxonomy'];
+    parent = json['parent'];
     /*if (json['meta'] != null) {
       meta = new List<Null>();
       json['meta'].forEach((v) {
@@ -48,6 +51,7 @@ class Tags {
     data['name'] = this.name;
     data['slug'] = this.slug;
     data['taxonomy'] = this.taxonomy;
+    data['parent'] = this.parent;
     /*if (this.meta != null) {
       data['meta'] = this.meta.map((v) => v.toJson()).toList();
     }*/

@@ -2,7 +2,7 @@ import 'links.dart';
 import 'avatar_urls.dart';
 import 'content.dart';
 
-class Comments {
+class Comment {
   int id;
   int post;
   int parent;
@@ -22,7 +22,7 @@ class Comments {
 //  List<Null> meta;
   Links lLinks;
 
-  Comments(
+  Comment(
       {this.id,
         this.post,
         this.parent,
@@ -42,7 +42,7 @@ class Comments {
 //        this.meta,
         this.lLinks});
 
-  Comments.fromJson(Map<String, dynamic> json) {
+  Comment.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     post = json['post'];
     parent = json['parent'];

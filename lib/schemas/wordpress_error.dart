@@ -1,3 +1,4 @@
+
 class WordPressError {
   String code;
   String message;
@@ -19,6 +20,11 @@ class WordPressError {
       data['data'] = this.data.toJson();
     }
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'WordPress Error! code: $code, message: $message, status: ${data == null ? null : data.status}';
   }
 }
 

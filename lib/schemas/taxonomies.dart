@@ -3,17 +3,17 @@ import 'labels.dart';
 import 'capabilities.dart';
 
 class Taxonomies {
-  Category category;
-  PostTag postTag;
+  TaxonomyCategory category;
+  TaxonomyPostTag postTag;
 
   Taxonomies({this.category, this.postTag});
 
   Taxonomies.fromJson(Map<String, dynamic> json) {
     category = json['category'] != null
-        ? new Category.fromJson(json['category'])
+        ? new TaxonomyCategory.fromJson(json['category'])
         : null;
     postTag = json['post_tag'] != null
-        ? new PostTag.fromJson(json['post_tag'])
+        ? new TaxonomyPostTag.fromJson(json['post_tag'])
         : null;
   }
 
@@ -29,7 +29,7 @@ class Taxonomies {
   }
 }
 
-class Category {
+class TaxonomyCategory {
   String name;
   String slug;
   Capabilities capabilities;
@@ -42,7 +42,7 @@ class Category {
   Visibility visibility;
   Links lLinks;
 
-  Category(
+  TaxonomyCategory(
       {this.name,
         this.slug,
         this.capabilities,
@@ -55,7 +55,7 @@ class Category {
         this.visibility,
         this.lLinks});
 
-  Category.fromJson(Map<String, dynamic> json) {
+  TaxonomyCategory.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     slug = json['slug'];
     capabilities = json['capabilities'] != null
@@ -137,7 +137,7 @@ class Visibility {
   }
 }
 
-class PostTag {
+class TaxonomyPostTag {
   String name;
   String slug;
   Capabilities capabilities;
@@ -150,7 +150,7 @@ class PostTag {
   Visibility visibility;
   Links lLinks;
 
-  PostTag(
+  TaxonomyPostTag(
       {this.name,
         this.slug,
         this.capabilities,
@@ -163,7 +163,7 @@ class PostTag {
         this.visibility,
         this.lLinks});
 
-  PostTag.fromJson(Map<String, dynamic> json) {
+  TaxonomyPostTag.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     slug = json['slug'];
     capabilities = json['capabilities'] != null

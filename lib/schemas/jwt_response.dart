@@ -1,13 +1,13 @@
-class AuthResponse {
+class JWTResponse {
   String token;
   String userEmail;
   String userNicename;
   String userDisplayName;
 
-  AuthResponse(
+  JWTResponse(
       {this.token, this.userEmail, this.userNicename, this.userDisplayName});
 
-  AuthResponse.fromJson(Map<String, dynamic> json) {
+  JWTResponse.fromJson(Map<String, dynamic> json) {
     token = json['token'];
     userEmail = json['user_email'];
     userNicename = json['user_nicename'];

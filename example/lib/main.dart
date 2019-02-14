@@ -51,31 +51,50 @@ class PostsBuilder extends StatefulWidget {
 
 class PostsBuilderState extends State<PostsBuilder> {
   wp.WordPress wordPress;
-  Future<List<wp.Posts>> posts;
-  Future<List<wp.Users>> users;
+  Future<List<wp.Post>> posts;
+  Future<List<wp.User>> users;
 
   @override
   void initState() {
     super.initState();
 
-    wordPress = wp.WordPress(
-        'https://wordpress.dsoft.website',
-        wp.WordPressAuthenticator.ApplicationPasswords,
-        wp.WordPressContext.edit);
+    try {
+      wordPress = wp.WordPress(
+        baseUrl: 'http://192.168.6.165',
+        authenticator: wp.WordPressAuthenticator.ApplicationPasswords,
+        adminName: 'admin',
+        adminKey: 'EOjD JsYA hKfM RHNI vufW hyUX',
+      );
+    } catch (err) {
+      print(err);
+    }
 
-    Future<wp.AuthResponse> auth = wordPress.authenticateUser(
+    /*if (wordPress != null)
+      wordPress
+          .authenticateUser(username: 'admin', password: 'hello')
+          .then((user) {
+        print("User: $user");
+      }).catchError((err) {
+        print(err.toString());
+      });*/
+
+    fetchPosts();
+
+    /* Future<wp.JWTResponse> auth = wordPress.authenticateUser(
         username: 'admin', password: 'mypassword@123');
 
     auth.then((response) {
       fetchPosts();
     }).catchError((err) {
       print(err.message);
-    });
+    });*/
   }
 
   void fetchPosts() {
     setState(() {
-      posts = wordPress.fetchPosts();
+      posts = wordPress.fetchPosts(
+          params:
+              wp.ParamsPostList(order: wp.Order.asc, includeAuthorIDs: [1, 2]));
     });
   }
 
@@ -87,13 +106,24 @@ class PostsBuilderState extends State<PostsBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<wp.Posts>>(
+    return FutureBuilder<List<wp.Post>>(
       future: posts,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ListView.separated(
             itemBuilder: (context, i) {
-              return Text(snapshot.data[i].title.rendered);
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    snapshot.data[i].title.rendered,
+                    style: Theme.of(context).textTheme.title,
+                  ),
+                  Text(
+                    snapshot.data[i].content.rendered,
+                  )
+                ],
+              );
             },
             separatorBuilder: (context, i) {
               return Divider();
@@ -101,8 +131,10 @@ class PostsBuilderState extends State<PostsBuilder> {
             itemCount: snapshot.data.length,
           );
         } else if (snapshot.hasError) {
-          wp.WordPressError err = snapshot.error as wp.WordPressError;
-          return Text(err.message);
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(color: Colors.red),
+          );
         }
         return CircularProgressIndicator();
       },

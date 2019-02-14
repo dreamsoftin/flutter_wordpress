@@ -1,10 +1,12 @@
+library flutter_wordpress;
+
 import 'links.dart';
 import 'content.dart';
 import 'guid.dart';
 import 'title.dart';
 import 'excerpt.dart';
 
-class Pages {
+class Post {
   int id;
   String date;
   String dateGmt;
@@ -21,17 +23,19 @@ class Pages {
   Excerpt excerpt;
   int author;
   int featuredMedia;
-  int parent;
-  int menuOrder;
   String commentStatus;
   String pingStatus;
+  bool sticky;
   String template;
+  String format;
 //  List<Null> meta;
+  List<int> categories;
+  List<int> tags;
   String permalinkTemplate;
   String generatedSlug;
   Links lLinks;
 
-  Pages(
+  Post(
       {this.id,
         this.date,
         this.dateGmt,
@@ -48,17 +52,19 @@ class Pages {
         this.excerpt,
         this.author,
         this.featuredMedia,
-        this.parent,
-        this.menuOrder,
         this.commentStatus,
         this.pingStatus,
+        this.sticky,
         this.template,
+        this.format,
 //        this.meta,
+        this.categories,
+        this.tags,
         this.permalinkTemplate,
         this.generatedSlug,
         this.lLinks});
 
-  Pages.fromJson(Map<String, dynamic> json) {
+  Post.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     date = json['date'];
     dateGmt = json['date_gmt'];
@@ -77,17 +83,19 @@ class Pages {
     json['excerpt'] != null ? new Excerpt.fromJson(json['excerpt']) : null;
     author = json['author'];
     featuredMedia = json['featured_media'];
-    parent = json['parent'];
-    menuOrder = json['menu_order'];
     commentStatus = json['comment_status'];
     pingStatus = json['ping_status'];
+    sticky = json['sticky'];
     template = json['template'];
+    format = json['format'];
     /*if (json['meta'] != null) {
       meta = new List<Null>();
       json['meta'].forEach((v) {
         meta.add(new Null.fromJson(v));
       });
     }*/
+    categories = json['categories'].cast<int>();
+    tags = json['tags'].cast<int>();
     permalinkTemplate = json['permalink_template'];
     generatedSlug = json['generated_slug'];
     lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
@@ -119,14 +127,16 @@ class Pages {
     }
     data['author'] = this.author;
     data['featured_media'] = this.featuredMedia;
-    data['parent'] = this.parent;
-    data['menu_order'] = this.menuOrder;
     data['comment_status'] = this.commentStatus;
     data['ping_status'] = this.pingStatus;
+    data['sticky'] = this.sticky;
     data['template'] = this.template;
+    data['format'] = this.format;
     /*if (this.meta != null) {
       data['meta'] = this.meta.map((v) => v.toJson()).toList();
     }*/
+    data['categories'] = this.categories;
+    data['tags'] = this.tags;
     data['permalink_template'] = this.permalinkTemplate;
     data['generated_slug'] = this.generatedSlug;
     if (this.lLinks != null) {
@@ -134,6 +144,8 @@ class Pages {
     }
     return data;
   }
+
 }
+
 
 

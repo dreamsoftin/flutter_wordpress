@@ -1,7 +1,7 @@
 import 'links.dart';
 import 'avatar_urls.dart';
 
-class Users {
+class User {
   int id;
   String username;
   String name;
@@ -22,28 +22,28 @@ class Users {
 //  List<Null> meta;
   Links lLinks;
 
-  Users(
+  User(
       {this.id,
-        this.username,
-        this.name,
-        this.firstName,
-        this.lastName,
-        this.email,
-        this.url,
-        this.description,
-        this.link,
-        this.locale,
-        this.nickname,
-        this.slug,
-        this.roles,
-        this.registeredDate,
-        this.capabilities,
-        this.extraCapabilities,
-        this.avatarUrls,
+      this.username,
+      this.name,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.url,
+      this.description,
+      this.link,
+      this.locale,
+      this.nickname,
+      this.slug,
+      this.roles,
+      this.registeredDate,
+      this.capabilities,
+      this.extraCapabilities,
+      this.avatarUrls,
 //        this.meta,
-        this.lLinks});
+      this.lLinks});
 
-  Users.fromJson(Map<String, dynamic> json) {
+  User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     username = json['username'];
     name = json['name'];
@@ -56,7 +56,7 @@ class Users {
     locale = json['locale'];
     nickname = json['nickname'];
     slug = json['slug'];
-    roles = json['roles'].cast<String>();
+    if (json['roles'] != null) roles = json['roles'].cast<String>();
     registeredDate = json['registered_date'];
     capabilities = json['capabilities'] != null
         ? new UserCapabilities.fromJson(json['capabilities'])
@@ -108,6 +108,11 @@ class Users {
       data['_links'] = this.lLinks.toJson();
     }
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'id: $id, name: $name';
   }
 }
 
@@ -177,67 +182,67 @@ class UserCapabilities {
 
   UserCapabilities(
       {this.switchThemes,
-        this.editThemes,
-        this.activatePlugins,
-        this.editPlugins,
-        this.editUsers,
-        this.editFiles,
-        this.manageOptions,
-        this.moderateComments,
-        this.manageCategories,
-        this.manageLinks,
-        this.uploadFiles,
-        this.import,
-        this.unfilteredHtml,
-        this.editPosts,
-        this.editOthersPosts,
-        this.editPublishedPosts,
-        this.publishPosts,
-        this.editPages,
-        this.read,
-        this.level10,
-        this.level9,
-        this.level8,
-        this.level7,
-        this.level6,
-        this.level5,
-        this.level4,
-        this.level3,
-        this.level2,
-        this.level1,
-        this.level0,
-        this.editOthersPages,
-        this.editPublishedPages,
-        this.publishPages,
-        this.deletePages,
-        this.deleteOthersPages,
-        this.deletePublishedPages,
-        this.deletePosts,
-        this.deleteOthersPosts,
-        this.deletePublishedPosts,
-        this.deletePrivatePosts,
-        this.editPrivatePosts,
-        this.readPrivatePosts,
-        this.deletePrivatePages,
-        this.editPrivatePages,
-        this.readPrivatePages,
-        this.deleteUsers,
-        this.createUsers,
-        this.unfilteredUpload,
-        this.editDashboard,
-        this.updatePlugins,
-        this.deletePlugins,
-        this.installPlugins,
-        this.updateThemes,
-        this.installThemes,
-        this.updateCore,
-        this.listUsers,
-        this.removeUsers,
-        this.promoteUsers,
-        this.editThemeOptions,
-        this.deleteThemes,
-        this.export,
-        this.administrator});
+      this.editThemes,
+      this.activatePlugins,
+      this.editPlugins,
+      this.editUsers,
+      this.editFiles,
+      this.manageOptions,
+      this.moderateComments,
+      this.manageCategories,
+      this.manageLinks,
+      this.uploadFiles,
+      this.import,
+      this.unfilteredHtml,
+      this.editPosts,
+      this.editOthersPosts,
+      this.editPublishedPosts,
+      this.publishPosts,
+      this.editPages,
+      this.read,
+      this.level10,
+      this.level9,
+      this.level8,
+      this.level7,
+      this.level6,
+      this.level5,
+      this.level4,
+      this.level3,
+      this.level2,
+      this.level1,
+      this.level0,
+      this.editOthersPages,
+      this.editPublishedPages,
+      this.publishPages,
+      this.deletePages,
+      this.deleteOthersPages,
+      this.deletePublishedPages,
+      this.deletePosts,
+      this.deleteOthersPosts,
+      this.deletePublishedPosts,
+      this.deletePrivatePosts,
+      this.editPrivatePosts,
+      this.readPrivatePosts,
+      this.deletePrivatePages,
+      this.editPrivatePages,
+      this.readPrivatePages,
+      this.deleteUsers,
+      this.createUsers,
+      this.unfilteredUpload,
+      this.editDashboard,
+      this.updatePlugins,
+      this.deletePlugins,
+      this.installPlugins,
+      this.updateThemes,
+      this.installThemes,
+      this.updateCore,
+      this.listUsers,
+      this.removeUsers,
+      this.promoteUsers,
+      this.editThemeOptions,
+      this.deleteThemes,
+      this.export,
+      this.administrator});
 
   UserCapabilities.fromJson(Map<String, dynamic> json) {
     switchThemes = json['switch_themes'];
@@ -387,5 +392,3 @@ class UserExtraCapabilities {
     return data;
   }
 }
-
-
