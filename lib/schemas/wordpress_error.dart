@@ -1,4 +1,4 @@
-
+/// All API related errors are thrown as an object of this class.
 class WordPressError {
   String code;
   String message;

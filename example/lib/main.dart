@@ -66,41 +66,60 @@ class PostsBuilderState extends State<PostsBuilder> {
         adminKey: 'EOjD JsYA hKfM RHNI vufW hyUX',
       );
     } catch (err) {
-      print(err);
+      print(err.toString());
     }
 
-    /*if (wordPress != null)
-      wordPress
-          .authenticateUser(username: 'admin', password: 'hello')
-          .then((user) {
-        print("User: $user");
-      }).catchError((err) {
-        print(err.toString());
-      });*/
+   /* Future<wp.User> response = wordPress.authenticateUser(
+      username: 'username',
+      password: 'password',
+    );
 
-    fetchPosts();
-
-    /* Future<wp.JWTResponse> auth = wordPress.authenticateUser(
-        username: 'admin', password: 'mypassword@123');
-
-    auth.then((response) {
-      fetchPosts();
+    response.then((user) {
+      print(user.toString());
     }).catchError((err) {
-      print(err.message);
+      print(err.toString());
     });*/
+
+    Future<List<wp.User>> users = wordPress.fetchUsers(
+      params: wp.ParamsUserList(
+        context: wp.WordPressContext.view,
+        pageNum: 1,
+        perPage: 30,
+        order: wp.Order.asc,
+        orderBy: wp.UsersOrderBy.name,
+      ),
+    );
+
+    users.then((response) {
+      print(response);
+    }).catchError((err) {
+      print(err.toString());
+    });
+
+    Future<List<wp.Comment>> comments = wordPress.fetchComments(
+      params: wp.ParamsCommentList(
+        context: wp.WordPressContext.view,
+        pageNum: 1,
+        perPage: 30,
+      ),
+    );
+
+    comments.then((response) {
+      print(response);
+    }).catchError((err) {
+      print(err.toString());
+    });
   }
 
   void fetchPosts() {
     setState(() {
-      posts = wordPress.fetchPosts(
-          params:
-              wp.ParamsPostList(order: wp.Order.asc, includeAuthorIDs: [1, 2]));
+      posts = wordPress.fetchPosts(params: wp.ParamsPostList());
     });
   }
 
   void fetchUsers() {
     setState(() {
-      users = wordPress.fetchUsers();
+      users = wordPress.fetchUsers(params: wp.ParamsUserList());
     });
   }
 
@@ -121,7 +140,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                   ),
                   Text(
                     snapshot.data[i].content.rendered,
-                  )
+                  ),
                 ],
               );
             },

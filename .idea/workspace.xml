@@ -2,24 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="73f4dbd7-3b98-4a12-b0ae-5e3c44fac77c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/constants.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/parameters.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/requests/params_post_list.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/requests/params_comment_list.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/requests/params_user_list.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/constants.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/flutter_wordpress.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/flutter_wordpress.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schemas/auth_response.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schemas/jwt_response.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schemas/categories.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schemas/category.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schemas/comments.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schemas/comment.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schemas/error.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schemas/wordpress_error.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schemas/links.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schemas/links.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schemas/pages.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schemas/page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schemas/post_types.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schemas/post_types.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schemas/posts.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schemas/post.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schemas/tags.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schemas/tag.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schemas/taxonomies.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schemas/taxonomies.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schemas/users.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schemas/user.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/parameters.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/requests/params_post_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/requests/params_post_list.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schemas/wordpress_error.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schemas/wordpress_error.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -40,67 +33,72 @@
           <entry key="project.open.time.29" value="1" />
           <entry key="project.open.time.46" value="1" />
           <entry key="project.open.time.51" value="1" />
-          <entry key="project.open.time.59" value="1" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.open.time.59" value="2" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="dart" value="196" />
+          <entry key="dart" value="215" />
           <entry key="gitignore" value="1" />
           <entry key="gradle" value="1" />
           <entry key="iml" value="1" />
-          <entry key="md" value="3" />
+          <entry key="md" value="4" />
+          <entry key="metadata" value="1" />
           <entry key="packages" value="1" />
           <entry key="xml" value="2" />
-          <entry key="yaml" value="5" />
+          <entry key="yaml" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Dart" value="196" />
+          <entry key="Dart" value="215" />
           <entry key="Groovy" value="1" />
           <entry key="IDEA_MODULE" value="1" />
-          <entry key="Markdown" value="1" />
-          <entry key="PLAIN_TEXT" value="4" />
+          <entry key="Markdown" value="2" />
+          <entry key="PLAIN_TEXT" value="5" />
           <entry key="XML" value="2" />
-          <entry key="YAML" value="5" />
+          <entry key="YAML" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="dart" value="14098" />
-          <entry key="md" value="151" />
+          <entry key="dart" value="18343" />
+          <entry key="md" value="205" />
           <entry key="xml" value="22" />
-          <entry key="yaml" value="66" />
+          <entry key="yaml" value="95" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Dart" value="14098" />
-          <entry key="Markdown" value="151" />
+          <entry key="Dart" value="18343" />
+          <entry key="Markdown" value="205" />
           <entry key="XML" value="22" />
-          <entry key="YAML" value="66" />
+          <entry key="YAML" value="95" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/flutter_wordpress.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="233" column="30" lean-forward="true" selection-start-line="233" selection-start-column="30" selection-end-line="233" selection-end-column="30" />
+            <state>
+              <caret selection-end-line="9" selection-end-column="110" />
+              <folding>
+                <element signature="e#0#7926#0" expanded="true" />
+                <element signature="e#589#618#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1485">
-              <caret line="116" column="35" lean-forward="true" selection-start-line="116" selection-start-column="35" selection-end-line="116" selection-end-column="35" />
+            <state relative-caret-position="244">
+              <caret line="66" column="8" lean-forward="true" selection-start-line="66" selection-start-column="8" selection-end-line="66" selection-end-column="8" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -136,6 +134,7 @@
       <find>: '',</find>
       <find>,</find>
       <find>:</find>
+      <find>///</find>
     </findStrings>
     <replaceStrings>
       <replace>import</replace>
@@ -160,7 +159,6 @@
         <option value="$PROJECT_DIR$/lib/schemas/AvatarUrls.dart" />
         <option value="$PROJECT_DIR$/lib/schemas/avatar_urls.dart" />
         <option value="$PROJECT_DIR$/test/flutter_wordpress_test.dart" />
-        <option value="$PROJECT_DIR$/example/pubspec.yaml" />
         <option value="$PROJECT_DIR$/example/test/widget_test.dart" />
         <option value="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/lib/schemas/jwt_error.dart" />
@@ -179,7 +177,6 @@
         <option value="$PROJECT_DIR$/lib/schemas/settings.dart" />
         <option value="$PROJECT_DIR$/lib/schemas/auth_error.dart" />
         <option value="$PROJECT_DIR$/lib/schemas/request_error.dart" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/lib/schemas/error.dart" />
         <option value="$PROJECT_DIR$/lib/schemas/jwt_response.dart" />
         <option value="$PROJECT_DIR$/lib/schemas/users.dart" />
@@ -190,17 +187,22 @@
         <option value="$PROJECT_DIR$/lib/schemas/tag.dart" />
         <option value="$PROJECT_DIR$/lib/schemas/taxonomies.dart" />
         <option value="$PROJECT_DIR$/lib/schemas/user.dart" />
-        <option value="$PROJECT_DIR$/lib/schemas/wordpress_error.dart" />
         <option value="$PROJECT_DIR$/lib/schemas/links.dart" />
         <option value="$PROJECT_DIR$/lib/requests/post_request.dart" />
-        <option value="$PROJECT_DIR$/lib/constants.dart" />
         <option value="$PROJECT_DIR$/lib/requests/request.dart" />
         <option value="$PROJECT_DIR$/lib/requests/request_post.dart" />
         <option value="$PROJECT_DIR$/lib/requests/params_post.dart" />
         <option value="$PROJECT_DIR$/lib/schemas/post.dart" />
-        <option value="$PROJECT_DIR$/example/lib/main.dart" />
+        <option value="$PROJECT_DIR$/lib/schemas/wordpress_error.dart" />
+        <option value="$PROJECT_DIR$/lib/requests/params_post_list.dart" />
+        <option value="$PROJECT_DIR$/lib/requests/params_user_list.dart" />
         <option value="$PROJECT_DIR$/lib/parameters.dart" />
+        <option value="$PROJECT_DIR$/lib/constants.dart" />
         <option value="$PROJECT_DIR$/lib/flutter_wordpress.dart" />
+        <option value="$PROJECT_DIR$/example/pubspec.yaml" />
+        <option value="$PROJECT_DIR$/lib/requests/params_comment_list.dart" />
+        <option value="$PROJECT_DIR$/example/lib/main.dart" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -215,8 +217,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -227,20 +227,22 @@
             <path>
               <item name="flutter_wordpress" type="b2602c69:ProjectViewProjectNode" />
               <item name="flutter_wordpress" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="example" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="flutter_wordpress" type="b2602c69:ProjectViewProjectNode" />
               <item name="flutter_wordpress" type="462c0819:PsiDirectoryNode" />
+              <item name="example" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="requests" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
         <option name="show-excluded-files" value="false" />
       </pane>
+      <pane id="PackagesPane" />
       <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -283,16 +285,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Image Layers" order="0" />
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info id="Designer" order="2" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="Structure" order="4" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.25637585" />
+      <window_info content_ui="combo" id="Project" order="5" weight="0.25637585" />
       <window_info id="Build Variants" order="6" side_tool="true" />
       <window_info id="Captures" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="0" weight="0.32907802" />
+      <window_info anchor="bottom" id="Run" order="0" visible="true" weight="0.32907802" />
       <window_info anchor="bottom" id="TODO" order="1" />
       <window_info anchor="bottom" id="Debug" order="2" />
       <window_info anchor="bottom" id="Terminal" order="3" />
@@ -398,27 +401,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="13" lean-forward="true" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pubspec.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/pubspec.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/schemas/capabilities.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1167">
@@ -502,23 +484,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/schemas/user.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="10" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/schemas/wordpress_error.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/schemas/category.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -547,13 +512,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/requests/request.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/requests/request.dart" />
     <entry file="file://$PROJECT_DIR$/lib/schemas/post.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2119">
@@ -564,41 +523,100 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/parameters.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="9" lean-forward="true" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1485">
-          <caret line="116" column="35" lean-forward="true" selection-start-line="116" selection-start-column="35" selection-end-line="116" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/.metadata">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/requests/params_post_list.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="16" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="20" />
+        <state relative-caret-position="85">
+          <caret line="5" column="16" selection-end-line="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/requests/params_user_list.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/schemas/wordpress_error.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="65" selection-start-column="65" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/parameters.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/constants.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="95" column="19" selection-start-line="95" selection-start-column="9" selection-end-line="95" selection-end-column="19" />
+        <state relative-caret-position="1462">
+          <caret line="95" column="31" selection-start-line="95" selection-start-column="31" selection-end-line="95" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pubspec.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/flutter_wordpress.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="233" column="30" lean-forward="true" selection-start-line="233" selection-start-column="30" selection-end-line="233" selection-end-column="30" />
+        <state>
+          <caret selection-end-line="9" selection-end-column="110" />
+          <folding>
+            <element signature="e#0#7926#0" expanded="true" />
+            <element signature="e#589#618#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/schemas/user.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="114" column="34" lean-forward="true" selection-start-line="114" selection-start-column="34" selection-end-line="114" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="29" column="3" lean-forward="true" selection-start-line="29" selection-start-column="3" selection-end-line="29" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/pubspec.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/requests/params_comment_list.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="23" column="32" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="66" column="8" lean-forward="true" selection-start-line="66" selection-start-column="8" selection-end-line="66" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

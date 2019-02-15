@@ -91,17 +91,25 @@ enum CommentStatus {
   spam,
   trash,
 }
+enum CommentType {
+  comment,
+  //TODO: Add all comment types
+}
 
+/// Converts an enum string to enum value name.
 String enumStringToName(String enumString) {
   return enumString.split('.')[1];
 }
 
+/// Formats a list of [items] to a comma(,) separated string to pass it as a
+/// URL parameter.
 String listToUrlString<T>(List<T> items) {
   if (items == null || items.length == 0) return '';
 
   return items.join(',');
 }
 
+/// Formats a [Map] of parameters to a string of URL friendly parameters.
 String constructUrlParams(Map<String, String> params) {
   StringBuffer p = new StringBuffer('/?');
   params.forEach((key, value) {

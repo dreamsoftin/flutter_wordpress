@@ -1,3 +1,15 @@
+/// This library uses WordPress REST API V2 to provide a way for your application
+/// to interact with your WordPress website.
+///
+/// We use terminologies similar to the [WordPress REST API](https://developer.wordpress.org/rest-api/)
+///
+/// For authentication and usage of administrator level APIs, we have implemented
+/// two popular authentication plugins:
+///
+/// 1. [Application Passwords](https://wordpress.org/plugins/application-passwords/)
+/// 2. [JWT Authentication for WP REST API](https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/)
+library flutter_wordpress;
+
 import 'dart:async' as async;
 import 'dart:convert';
 
@@ -29,6 +41,8 @@ import 'schemas/wordpress_error.dart';
 import 'constants.dart';
 
 import 'requests/params_post_list.dart';
+import 'requests/params_user_list.dart';
+import 'requests/params_comment_list.dart';
 
 export 'schemas/jwt_response.dart';
 export 'schemas/avatar_urls.dart';
@@ -55,7 +69,12 @@ export 'schemas/wordpress_error.dart';
 export 'constants.dart';
 
 export 'requests/params_post_list.dart';
+export 'requests/params_user_list.dart';
+export 'requests/params_comment_list.dart';
 
+/// If [WordPressAuthenticator.ApplicationPasswords] is used as an authenticator,
+/// [adminName] and [adminKey] is necessary for authentication.
+/// https://wordpress.org/plugins/application-passwords/
 class WordPress {
   String _baseUrl;
   WordPressAuthenticator _authenticator;
@@ -64,8 +83,6 @@ class WordPress {
     'Authorization': '',
   };
 
-  /// Take in base url and remove trailing '/' from the url if it exists.
-  /// Take in the wordpress context and get the enum name.
   WordPress(
       {@required String baseUrl,
       WordPressAuthenticator authenticator,
@@ -134,6 +151,10 @@ class WordPress {
     }
   }
 
+  /// This returns [User] object if the user with [id], [email] or [username]
+  /// exists. Otherwise throws [WordPressError].
+  ///
+  /// Only one parameter is enough to search for the user.
   async.Future<User> fetchUser({int id, String email, String username}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_USERS);
     final Map<String, String> params = {
@@ -166,11 +187,11 @@ class WordPress {
     }
   }
 
+  /// This methods returns a list of [Post] based on the filter parameters
+  /// specified through [ParamsPostList] object. By default it returns only
+  /// [ParamsPostList.perPage] number of posts in page [ParamsPostList.pageNum].
   async.Future<List<Post>> fetchPosts({@required ParamsPostList params}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS);
-
-    print(params.toString());
-    print(params.toMap());
 
     url.write(params.toString());
 
@@ -195,15 +216,18 @@ class WordPress {
     }
   }
 
-  async.Future<List<User>> fetchUsers(
-      {int pageNum = 1, int perPage = 10}) async {
-    //TODO: Implement parameters
-    final url = _baseUrl + URL_USERS + constructUrlParams(new Map());
+  /// This methods returns a list of [User] based on the filter parameters
+  /// specified through [ParamsUserList] object. By default it returns only
+  /// [ParamsUserList.perPage] number of users in page [ParamsUserList.pageNum].
+  async.Future<List<User>> fetchUsers({@required ParamsUserList params}) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_USERS);
 
-    final response = await http.get(url, headers: _urlHeader);
+    url.write(params.toString());
+
+    final response = await http.get(url.toString(), headers: _urlHeader);
 
     if (response.statusCode == 200) {
-      List<User> users = new List();
+      List<User> users = new List<User>();
       dynamic list = json.decode(response.body);
       list.forEach((user) {
         users.add(User.fromJson(user));
@@ -220,16 +244,19 @@ class WordPress {
     }
   }
 
-  async.Future<List<Comment>> fetchComments({Post post, int id}) async {
-    //TODO: Implement parameters
+  /// This methods returns a list of [Comment] based on the filter parameters
+  /// specified through [ParamsCommentList] object. By default it returns only
+  /// [ParamsCommentList.perPage] number of comments in page [ParamsCommentList.pageNum].
+  async.Future<List<Comment>> fetchComments(
+      {@required ParamsCommentList params}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_COMMENTS);
-    Map<String, String> params;
-    if (post != null) ;
 
-    final response = await http.get(url, headers: _urlHeader);
+    url.write(params.toString());
+
+    final response = await http.get(url.toString(), headers: _urlHeader);
 
     if (response.statusCode == 200) {
-      List<Comment> comments = new List();
+      List<Comment> comments = new List<Comment>();
       dynamic list = json.decode(response.body);
       list.forEach((comment) {
         comments.add(Comment.fromJson(comment));

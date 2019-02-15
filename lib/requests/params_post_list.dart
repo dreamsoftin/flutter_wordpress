@@ -1,5 +1,9 @@
 import 'package:flutter_wordpress/constants.dart';
 
+/// This class holds all arguments which can be used to filter posts when using
+/// [WordPress.fetchPosts] method.
+///
+/// [List Posts' Arguments](https://developer.wordpress.org/rest-api/reference/posts/#list-posts)
 class ParamsPostList {
   final WordPressContext context;
   final int pageNum;
@@ -52,7 +56,7 @@ class ParamsPostList {
       'per_page': '${this.perPage}',
       'search': '${this.searchQuery}',
       'after': '${this.afterDate}',
-      'before': '${this.searchQuery == null ? '' : this.searchQuery}',
+      'before': '${this.beforeDate}',
       'author': '${listToUrlString(this.includeAuthorIDs)}',
       'author_exclude': '${listToUrlString(this.excludeAuthorIDs)}',
       'include': '${listToUrlString(includePostIDs)}',
@@ -74,5 +78,4 @@ class ParamsPostList {
   String toString() {
     return constructUrlParams(toMap());
   }
-
 }
