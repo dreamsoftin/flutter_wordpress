@@ -615,7 +615,6 @@ class Up {
   }
 }
 
-
 class InReplyTo {
   bool embeddable;
   String href;

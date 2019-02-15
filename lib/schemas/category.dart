@@ -14,15 +14,15 @@ class Category {
 
   Category(
       {this.id,
-        this.count,
-        this.description,
-        this.link,
-        this.name,
-        this.slug,
-        this.taxonomy,
-        this.parent,
+      this.count,
+      this.description,
+      this.link,
+      this.name,
+      this.slug,
+      this.taxonomy,
+      this.parent,
 //        this.meta,
-        this.lLinks});
+      this.lLinks});
 
   Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -61,4 +61,3 @@ class Category {
     return data;
   }
 }
-

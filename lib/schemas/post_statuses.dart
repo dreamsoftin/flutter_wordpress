@@ -10,22 +10,22 @@ class PostStatuses {
 
   PostStatuses(
       {this.publish,
-        this.future,
-        this.draft,
-        this.pending,
-        this.private,
-        this.trash});
+      this.future,
+      this.draft,
+      this.pending,
+      this.private,
+      this.trash});
 
   PostStatuses.fromJson(Map<String, dynamic> json) {
     publish =
-    json['publish'] != null ? new Publish.fromJson(json['publish']) : null;
+        json['publish'] != null ? new Publish.fromJson(json['publish']) : null;
     future =
-    json['future'] != null ? new Future.fromJson(json['future']) : null;
+        json['future'] != null ? new Future.fromJson(json['future']) : null;
     draft = json['draft'] != null ? new Draft.fromJson(json['draft']) : null;
     pending =
-    json['pending'] != null ? new Pending.fromJson(json['pending']) : null;
+        json['pending'] != null ? new Pending.fromJson(json['pending']) : null;
     private =
-    json['private'] != null ? new Private.fromJson(json['private']) : null;
+        json['private'] != null ? new Private.fromJson(json['private']) : null;
     trash = json['trash'] != null ? new Trash.fromJson(json['trash']) : null;
   }
 
@@ -65,13 +65,13 @@ class Publish {
 
   Publish(
       {this.name,
-        this.private,
-        this.protected,
-        this.public,
-        this.queryable,
-        this.showInList,
-        this.slug,
-        this.lLinks});
+      this.private,
+      this.protected,
+      this.public,
+      this.queryable,
+      this.showInList,
+      this.slug,
+      this.lLinks});
 
   Publish.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -112,13 +112,13 @@ class Future {
 
   Future(
       {this.name,
-        this.private,
-        this.protected,
-        this.public,
-        this.queryable,
-        this.showInList,
-        this.slug,
-        this.lLinks});
+      this.private,
+      this.protected,
+      this.public,
+      this.queryable,
+      this.showInList,
+      this.slug,
+      this.lLinks});
 
   Future.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -159,13 +159,13 @@ class Draft {
 
   Draft(
       {this.name,
-        this.private,
-        this.protected,
-        this.public,
-        this.queryable,
-        this.showInList,
-        this.slug,
-        this.lLinks});
+      this.private,
+      this.protected,
+      this.public,
+      this.queryable,
+      this.showInList,
+      this.slug,
+      this.lLinks});
 
   Draft.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -206,13 +206,13 @@ class Pending {
 
   Pending(
       {this.name,
-        this.private,
-        this.protected,
-        this.public,
-        this.queryable,
-        this.showInList,
-        this.slug,
-        this.lLinks});
+      this.private,
+      this.protected,
+      this.public,
+      this.queryable,
+      this.showInList,
+      this.slug,
+      this.lLinks});
 
   Pending.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -253,13 +253,13 @@ class Private {
 
   Private(
       {this.name,
-        this.private,
-        this.protected,
-        this.public,
-        this.queryable,
-        this.showInList,
-        this.slug,
-        this.lLinks});
+      this.private,
+      this.protected,
+      this.public,
+      this.queryable,
+      this.showInList,
+      this.slug,
+      this.lLinks});
 
   Private.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -300,13 +300,13 @@ class Trash {
 
   Trash(
       {this.name,
-        this.private,
-        this.protected,
-        this.public,
-        this.queryable,
-        this.showInList,
-        this.slug,
-        this.lLinks});
+      this.private,
+      this.protected,
+      this.public,
+      this.queryable,
+      this.showInList,
+      this.slug,
+      this.lLinks});
 
   Trash.fromJson(Map<String, dynamic> json) {
     name = json['name'];

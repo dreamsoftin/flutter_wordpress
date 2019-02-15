@@ -69,16 +69,7 @@ class PostsBuilderState extends State<PostsBuilder> {
       print(err.toString());
     }
 
-   /* Future<wp.User> response = wordPress.authenticateUser(
-      username: 'username',
-      password: 'password',
-    );
-
-    response.then((user) {
-      print(user.toString());
-    }).catchError((err) {
-      print(err.toString());
-    });*/
+    fetchPosts();
 
     Future<List<wp.User>> users = wordPress.fetchUsers(
       params: wp.ParamsUserList(
@@ -86,7 +77,7 @@ class PostsBuilderState extends State<PostsBuilder> {
         pageNum: 1,
         perPage: 30,
         order: wp.Order.asc,
-        orderBy: wp.UsersOrderBy.name,
+        orderBy: wp.UserOrderBy.name,
       ),
     );
 
@@ -105,6 +96,33 @@ class PostsBuilderState extends State<PostsBuilder> {
     );
 
     comments.then((response) {
+      print(response);
+    }).catchError((err) {
+      print(err.toString());
+    });
+
+    Future<List<wp.Page>> pages = wordPress.fetchPages(
+      params: wp.ParamsPageList(),
+    );
+    pages.then((response) {
+      print(response);
+    }).catchError((err) {
+      print(err.toString());
+    });
+
+    Future<List<wp.Category>> categories = wordPress.fetchCategories(
+      params: wp.ParamsCategoryList(),
+    );
+    categories.then((response) {
+      print(response);
+    }).catchError((err) {
+      print(err.toString());
+    });
+
+    Future<List<wp.Tag>> tags = wordPress.fetchTags(
+      params: wp.ParamsTagList(),
+    );
+    tags.then((response) {
       print(response);
     }).catchError((err) {
       print(err.toString());
@@ -131,6 +149,8 @@ class PostsBuilderState extends State<PostsBuilder> {
         if (snapshot.hasData) {
           return ListView.separated(
             itemBuilder: (context, i) {
+              print(
+                  "Post Status: ${snapshot.data[i].status} ${snapshot.data[i].format} ${snapshot.data[i].commentStatus} ${snapshot.data[i].pingStatus}");
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[

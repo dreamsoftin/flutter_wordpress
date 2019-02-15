@@ -44,16 +44,16 @@ class TaxonomyCategory {
 
   TaxonomyCategory(
       {this.name,
-        this.slug,
-        this.capabilities,
-        this.description,
-        this.labels,
-        this.types,
-        this.showCloud,
-        this.hierarchical,
-        this.restBase,
-        this.visibility,
-        this.lLinks});
+      this.slug,
+      this.capabilities,
+      this.description,
+      this.labels,
+      this.types,
+      this.showCloud,
+      this.hierarchical,
+      this.restBase,
+      this.visibility,
+      this.lLinks});
 
   TaxonomyCategory.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -63,7 +63,7 @@ class TaxonomyCategory {
         : null;
     description = json['description'];
     labels =
-    json['labels'] != null ? new Labels.fromJson(json['labels']) : null;
+        json['labels'] != null ? new Labels.fromJson(json['labels']) : null;
     types = json['types'].cast<String>();
     showCloud = json['show_cloud'];
     hierarchical = json['hierarchical'];
@@ -99,7 +99,6 @@ class TaxonomyCategory {
   }
 }
 
-
 class Visibility {
   bool public;
   bool publiclyQueryable;
@@ -110,11 +109,11 @@ class Visibility {
 
   Visibility(
       {this.public,
-        this.publiclyQueryable,
-        this.showAdminColumn,
-        this.showInNavMenus,
-        this.showInQuickEdit,
-        this.showUi});
+      this.publiclyQueryable,
+      this.showAdminColumn,
+      this.showInNavMenus,
+      this.showInQuickEdit,
+      this.showUi});
 
   Visibility.fromJson(Map<String, dynamic> json) {
     public = json['public'];
@@ -152,16 +151,16 @@ class TaxonomyPostTag {
 
   TaxonomyPostTag(
       {this.name,
-        this.slug,
-        this.capabilities,
-        this.description,
-        this.labels,
-        this.types,
-        this.showCloud,
-        this.hierarchical,
-        this.restBase,
-        this.visibility,
-        this.lLinks});
+      this.slug,
+      this.capabilities,
+      this.description,
+      this.labels,
+      this.types,
+      this.showCloud,
+      this.hierarchical,
+      this.restBase,
+      this.visibility,
+      this.lLinks});
 
   TaxonomyPostTag.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -171,7 +170,7 @@ class TaxonomyPostTag {
         : null;
     description = json['description'];
     labels =
-    json['labels'] != null ? new Labels.fromJson(json['labels']) : null;
+        json['labels'] != null ? new Labels.fromJson(json['labels']) : null;
     types = json['types'].cast<String>();
     showCloud = json['show_cloud'];
     hierarchical = json['hierarchical'];
@@ -206,4 +205,3 @@ class TaxonomyPostTag {
     return data;
   }
 }
-

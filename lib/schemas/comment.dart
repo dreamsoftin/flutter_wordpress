@@ -24,23 +24,23 @@ class Comment {
 
   Comment(
       {this.id,
-        this.post,
-        this.parent,
-        this.author,
-        this.authorName,
-        this.authorEmail,
-        this.authorUrl,
-        this.authorIp,
-        this.authorUserAgent,
-        this.date,
-        this.dateGmt,
-        this.content,
-        this.link,
-        this.status,
-        this.type,
-        this.authorAvatarUrls,
+      this.post,
+      this.parent,
+      this.author,
+      this.authorName,
+      this.authorEmail,
+      this.authorUrl,
+      this.authorIp,
+      this.authorUserAgent,
+      this.date,
+      this.dateGmt,
+      this.content,
+      this.link,
+      this.status,
+      this.type,
+      this.authorAvatarUrls,
 //        this.meta,
-        this.lLinks});
+      this.lLinks});
 
   Comment.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -55,7 +55,7 @@ class Comment {
     date = json['date'];
     dateGmt = json['date_gmt'];
     content =
-    json['content'] != null ? new Content.fromJson(json['content']) : null;
+        json['content'] != null ? new Content.fromJson(json['content']) : null;
     link = json['link'];
     status = json['status'];
     type = json['type'];
