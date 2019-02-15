@@ -1,38 +1,38 @@
 import 'links.dart';
-import 'avatar_urls.dart';
 
-class Users {
+class Category {
   int id;
-  String name;
-  String url;
+  int count;
   String description;
   String link;
+  String name;
   String slug;
-  AvatarUrls avatarUrls;
-  List<Null> meta;
+  String taxonomy;
+  int parent;
+//  List<Null> meta;
   Links lLinks;
 
-  Users(
+  Category(
       {this.id,
-        this.name,
-        this.url,
+        this.count,
         this.description,
         this.link,
+        this.name,
         this.slug,
-        this.avatarUrls,
-        this.meta,
+        this.taxonomy,
+        this.parent,
+//        this.meta,
         this.lLinks});
 
-  Users.fromJson(Map<String, dynamic> json) {
+  Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
-    url = json['url'];
+    count = json['count'];
     description = json['description'];
     link = json['link'];
+    name = json['name'];
     slug = json['slug'];
-    avatarUrls = json['avatar_urls'] != null
-        ? new AvatarUrls.fromJson(json['avatar_urls'])
-        : null;
+    taxonomy = json['taxonomy'];
+    parent = json['parent'];
     /*if (json['meta'] != null) {
       meta = new List<Null>();
       json['meta'].forEach((v) {
@@ -45,14 +45,13 @@ class Users {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['name'] = this.name;
-    data['url'] = this.url;
+    data['count'] = this.count;
     data['description'] = this.description;
     data['link'] = this.link;
+    data['name'] = this.name;
     data['slug'] = this.slug;
-    if (this.avatarUrls != null) {
-      data['avatar_urls'] = this.avatarUrls.toJson();
-    }
+    data['taxonomy'] = this.taxonomy;
+    data['parent'] = this.parent;
     /*if (this.meta != null) {
       data['meta'] = this.meta.map((v) => v.toJson()).toList();
     }*/

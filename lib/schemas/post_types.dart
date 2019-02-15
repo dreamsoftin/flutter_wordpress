@@ -3,16 +3,16 @@ import 'labels.dart';
 import 'capabilities.dart';
 
 class PostTypes {
-  Post post;
-  Page page;
+  PostTypePost post;
+  PostTypePage page;
   Attachment attachment;
   WpBlock wpBlock;
 
   PostTypes({this.post, this.page, this.attachment, this.wpBlock});
 
   PostTypes.fromJson(Map<String, dynamic> json) {
-    post = json['post'] != null ? new Post.fromJson(json['post']) : null;
-    page = json['page'] != null ? new Page.fromJson(json['page']) : null;
+    post = json['post'] != null ? new PostTypePost.fromJson(json['post']) : null;
+    page = json['page'] != null ? new PostTypePage.fromJson(json['page']) : null;
     attachment = json['attachment'] != null
         ? new Attachment.fromJson(json['attachment'])
         : null;
@@ -39,7 +39,7 @@ class PostTypes {
   }
 }
 
-class Post {
+class PostTypePost {
   Capabilities capabilities;
   String description;
   bool hierarchical;
@@ -52,7 +52,7 @@ class Post {
   String restBase;
   Links lLinks;
 
-  Post(
+  PostTypePost(
       {this.capabilities,
       this.description,
       this.hierarchical,
@@ -65,7 +65,7 @@ class Post {
       this.restBase,
       this.lLinks});
 
-  Post.fromJson(Map<String, dynamic> json) {
+  PostTypePost.fromJson(Map<String, dynamic> json) {
     capabilities = json['capabilities'] != null
         ? new Capabilities.fromJson(json['capabilities'])
         : null;
@@ -162,7 +162,7 @@ class Supports {
   }
 }
 
-class Page {
+class PostTypePage {
   Capabilities capabilities;
   String description;
   bool hierarchical;
@@ -175,7 +175,7 @@ class Page {
   String restBase;
   Links lLinks;
 
-  Page(
+  PostTypePage(
       {this.capabilities,
       this.description,
       this.hierarchical,
@@ -188,7 +188,7 @@ class Page {
       this.restBase,
       this.lLinks});
 
-  Page.fromJson(Map<String, dynamic> json) {
+  PostTypePage.fromJson(Map<String, dynamic> json) {
     capabilities = json['capabilities'] != null
         ? new Capabilities.fromJson(json['capabilities'])
         : null;

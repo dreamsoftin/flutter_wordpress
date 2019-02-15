@@ -19,6 +19,8 @@ class Links {
   List<WpActionAssignTags> wpActionAssignTags;
   List<WpItems> wpItems;
   List<Up> up;
+  List<InReplyTo> inReplyTo;
+  List<Children> children;
   List<Curies> curies;
 
   Links({
@@ -42,6 +44,8 @@ class Links {
     this.wpActionAssignTags,
     this.wpItems,
     this.up,
+    this.inReplyTo,
+    this.children,
     this.curies,
   });
 
@@ -166,6 +170,18 @@ class Links {
         up.add(new Up.fromJson(v));
       });
     }
+    if (json['in-reply-to'] != null) {
+      inReplyTo = new List<InReplyTo>();
+      json['in-reply-to'].forEach((v) {
+        inReplyTo.add(new InReplyTo.fromJson(v));
+      });
+    }
+    if (json['children'] != null) {
+      children = new List<Children>();
+      json['children'].forEach((v) {
+        children.add(new Children.fromJson(v));
+      });
+    }
     if (json['curies'] != null) {
       curies = new List<Curies>();
       json['curies'].forEach((v) {
@@ -244,6 +260,12 @@ class Links {
     }
     if (this.up != null) {
       data['up'] = this.up.map((v) => v.toJson()).toList();
+    }
+    if (this.inReplyTo != null) {
+      data['in-reply-to'] = this.inReplyTo.map((v) => v.toJson()).toList();
+    }
+    if (this.children != null) {
+      data['children'] = this.children.map((v) => v.toJson()).toList();
     }
     if (this.curies != null) {
       data['curies'] = this.curies.map((v) => v.toJson()).toList();
@@ -588,6 +610,42 @@ class Up {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['embeddable'] = this.embeddable;
     data['post_type'] = this.postType;
+    data['href'] = this.href;
+    return data;
+  }
+}
+
+
+class InReplyTo {
+  bool embeddable;
+  String href;
+
+  InReplyTo({this.embeddable, this.href});
+
+  InReplyTo.fromJson(Map<String, dynamic> json) {
+    embeddable = json['embeddable'];
+    href = json['href'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['embeddable'] = this.embeddable;
+    data['href'] = this.href;
+    return data;
+  }
+}
+
+class Children {
+  String href;
+
+  Children({this.href});
+
+  Children.fromJson(Map<String, dynamic> json) {
+    href = json['href'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
     data['href'] = this.href;
     return data;
   }

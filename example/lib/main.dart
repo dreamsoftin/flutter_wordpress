@@ -51,50 +51,98 @@ class PostsBuilder extends StatefulWidget {
 
 class PostsBuilderState extends State<PostsBuilder> {
   wp.WordPress wordPress;
-  Future<List<wp.Posts>> posts;
-  Future<List<wp.Users>> users;
+  Future<List<wp.Post>> posts;
+  Future<List<wp.User>> users;
 
   @override
   void initState() {
     super.initState();
 
-    wordPress = wp.WordPress(
-        'https://wordpress.dsoft.website', wp.WordpressContext.view);
+    try {
+      wordPress = wp.WordPress(
+        baseUrl: 'http://192.168.6.165',
+        authenticator: wp.WordPressAuthenticator.ApplicationPasswords,
+        adminName: 'admin',
+        adminKey: 'EOjD JsYA hKfM RHNI vufW hyUX',
+      );
+    } catch (err) {
+      print(err.toString());
+    }
 
-    Future<wp.AuthResponse> auth = wordPress.authenticateUser(
-        username: 'admin ', password: 'mypassword@123');
+   /* Future<wp.User> response = wordPress.authenticateUser(
+      username: 'username',
+      password: 'password',
+    );
 
-    auth.then((response) {
-      fetchPosts();
+    response.then((user) {
+      print(user.toString());
     }).catchError((err) {
-      print(err.message);
+      print(err.toString());
+    });*/
+
+    Future<List<wp.User>> users = wordPress.fetchUsers(
+      params: wp.ParamsUserList(
+        context: wp.WordPressContext.view,
+        pageNum: 1,
+        perPage: 30,
+        order: wp.Order.asc,
+        orderBy: wp.UsersOrderBy.name,
+      ),
+    );
+
+    users.then((response) {
+      print(response);
+    }).catchError((err) {
+      print(err.toString());
     });
 
-  }
+    Future<List<wp.Comment>> comments = wordPress.fetchComments(
+      params: wp.ParamsCommentList(
+        context: wp.WordPressContext.view,
+        pageNum: 1,
+        perPage: 30,
+      ),
+    );
 
-  void fetchPosts()
-  {
-    setState(() {
-      posts = wordPress.fetchPosts();
+    comments.then((response) {
+      print(response);
+    }).catchError((err) {
+      print(err.toString());
     });
   }
 
-  void fetchUsers()
-  {
+  void fetchPosts() {
     setState(() {
-      users = wordPress.fetchUsers();
+      posts = wordPress.fetchPosts(params: wp.ParamsPostList());
+    });
+  }
+
+  void fetchUsers() {
+    setState(() {
+      users = wordPress.fetchUsers(params: wp.ParamsUserList());
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<wp.Posts>>(
+    return FutureBuilder<List<wp.Post>>(
       future: posts,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ListView.separated(
             itemBuilder: (context, i) {
-              return Text(snapshot.data[i].title.rendered);
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    snapshot.data[i].title.rendered,
+                    style: Theme.of(context).textTheme.title,
+                  ),
+                  Text(
+                    snapshot.data[i].content.rendered,
+                  ),
+                ],
+              );
             },
             separatorBuilder: (context, i) {
               return Divider();
@@ -102,8 +150,10 @@ class PostsBuilderState extends State<PostsBuilder> {
             itemCount: snapshot.data.length,
           );
         } else if (snapshot.hasError) {
-          wp.WordpressError err = snapshot.error as wp.WordpressError;
-          return Text(err.message);
+          return Text(
+            snapshot.error.toString(),
+            style: TextStyle(color: Colors.red),
+          );
         }
         return CircularProgressIndicator();
       },
