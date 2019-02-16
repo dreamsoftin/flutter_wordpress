@@ -36,7 +36,6 @@ import 'requests/params_page_list.dart';
 
 export 'schemas/jwt_response.dart';
 export 'schemas/avatar_urls.dart';
-export 'schemas/capabilities.dart';
 export 'schemas/category.dart';
 export 'schemas/comment.dart';
 export 'schemas/content.dart';
@@ -46,12 +45,9 @@ export 'schemas/labels.dart';
 export 'schemas/links.dart';
 export 'schemas/media.dart';
 export 'schemas/page.dart';
-export 'schemas/post_statuses.dart';
-export 'schemas/post_types.dart';
 export 'schemas/post.dart';
 export 'schemas/settings.dart';
 export 'schemas/tag.dart';
-export 'schemas/taxonomies.dart';
 export 'schemas/title.dart';
 export 'schemas/user.dart';
 export 'schemas/wordpress_error.dart';
@@ -65,9 +61,7 @@ export 'requests/params_category_list.dart';
 export 'requests/params_tag_list.dart';
 export 'requests/params_page_list.dart';
 
-/// If [WordPressAuthenticator.ApplicationPasswords] is used as an authenticator,
-/// [adminName] and [adminKey] is necessary for authentication.
-/// https://wordpress.org/plugins/application-passwords/
+/// All WordPress related functionality are defined under this class.
 class WordPress {
   String _baseUrl;
   WordPressAuthenticator _authenticator;
@@ -76,6 +70,9 @@ class WordPress {
     'Authorization': '',
   };
 
+  /// If [WordPressAuthenticator.ApplicationPasswords] is used as an authenticator,
+  /// [adminName] and [adminKey] is necessary for authentication.
+  /// https://wordpress.org/plugins/application-passwords/
   WordPress(
       {@required String baseUrl,
       WordPressAuthenticator authenticator,
@@ -101,6 +98,10 @@ class WordPress {
     }
   }
 
+  /// This returns a [User] object when a user with valid [username] and [password]
+  /// has been successfully authenticated.
+  ///
+  /// In case of an error, a [WordPressError] object is thrown.
   async.Future<User> authenticateUser(
       {@required username, @required password}) async {
     if (_authenticator == WordPressAuthenticator.ApplicationPasswords) {
@@ -127,7 +128,7 @@ class WordPress {
       body: body,
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode < 300) {
       JWTResponse authResponse =
           JWTResponse.fromJson(json.decode(response.body));
       _urlHeader['Authorization'] = 'Bearer ${authResponse.token}';
@@ -144,10 +145,12 @@ class WordPress {
     }
   }
 
-  /// This returns [User] object if the user with [id], [email] or [username]
+  /// This returns a [User] object if the user with [id], [email] or [username]
   /// exists. Otherwise throws [WordPressError].
   ///
   /// Only one parameter is enough to search for the user.
+  ///
+  /// In case of an error, a [WordPressError] object is thrown.
   async.Future<User> fetchUser({int id, String email, String username}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_USERS);
     final Map<String, String> params = {
@@ -163,7 +166,7 @@ class WordPress {
 
     final response = await http.get(url.toString(), headers: _urlHeader);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode < 300) {
       final jsonStr = json.decode(response.body);
       if (jsonStr.length == 0)
         throw new WordPressError(
@@ -180,9 +183,11 @@ class WordPress {
     }
   }
 
-  /// This methods returns a list of [Post] based on the filter parameters
+  /// This returns a list of [Post] based on the filter parameters
   /// specified through [ParamsPostList] object. By default it returns only
   /// [ParamsPostList.perPage] number of posts in page [ParamsPostList.pageNum].
+  ///
+  /// In case of an error, a [WordPressError] object is thrown.
   async.Future<List<Post>> fetchPosts({@required ParamsPostList params}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS);
 
@@ -190,7 +195,7 @@ class WordPress {
 
     final response = await http.get(url.toString(), headers: _urlHeader);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode < 300) {
       List<Post> posts = new List<Post>();
 
       dynamic list = json.decode(response.body);
@@ -209,9 +214,11 @@ class WordPress {
     }
   }
 
-  /// This methods returns a list of [Page] based on the filter parameters
+  /// This returns a list of [Page] based on the filter parameters
   /// specified through [ParamsPageList] object. By default it returns only
   /// [ParamsPageList.perPage] number of pages in page [ParamsPageList.pageNum].
+  ///
+  /// In case of an error, a [WordPressError] object is thrown.
   async.Future<List<Page>> fetchPages({@required ParamsPageList params}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_PAGES);
 
@@ -219,7 +226,7 @@ class WordPress {
 
     final response = await http.get(url.toString(), headers: _urlHeader);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode < 300) {
       List<Page> pages = new List<Page>();
       dynamic list = json.decode(response.body);
       list.forEach((page) {
@@ -237,9 +244,11 @@ class WordPress {
     }
   }
 
-  /// This methods returns a list of [User] based on the filter parameters
+  /// This returns a list of [User] based on the filter parameters
   /// specified through [ParamsUserList] object. By default it returns only
   /// [ParamsUserList.perPage] number of users in page [ParamsUserList.pageNum].
+  ///
+  /// In case of an error, a [WordPressError] object is thrown.
   async.Future<List<User>> fetchUsers({@required ParamsUserList params}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_USERS);
 
@@ -247,7 +256,7 @@ class WordPress {
 
     final response = await http.get(url.toString(), headers: _urlHeader);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode < 300) {
       List<User> users = new List<User>();
       dynamic list = json.decode(response.body);
       list.forEach((user) {
@@ -265,9 +274,11 @@ class WordPress {
     }
   }
 
-  /// This methods returns a list of [Comment] based on the filter parameters
+  /// This returns a list of [Comment] based on the filter parameters
   /// specified through [ParamsCommentList] object. By default it returns only
   /// [ParamsCommentList.perPage] number of comments in page [ParamsCommentList.pageNum].
+  ///
+  /// In case of an error, a [WordPressError] object is thrown.
   async.Future<List<Comment>> fetchComments(
       {@required ParamsCommentList params}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_COMMENTS);
@@ -276,7 +287,7 @@ class WordPress {
 
     final response = await http.get(url.toString(), headers: _urlHeader);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode < 300) {
       List<Comment> comments = new List<Comment>();
       dynamic list = json.decode(response.body);
       list.forEach((comment) {
@@ -294,9 +305,11 @@ class WordPress {
     }
   }
 
-  /// This methods returns a list of [Category] based on the filter parameters
+  /// This returns a list of [Category] based on the filter parameters
   /// specified through [ParamsCategoryList] object. By default it returns only
   /// [ParamsCategoryList.perPage] number of categories in page [ParamsCategoryList.pageNum].
+  ///
+  /// In case of an error, a [WordPressError] object is thrown.
   async.Future<List<Category>> fetchCategories(
       {@required ParamsCategoryList params}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_CATEGORIES);
@@ -305,7 +318,7 @@ class WordPress {
 
     final response = await http.get(url.toString(), headers: _urlHeader);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode < 300) {
       List<Category> categories = new List<Category>();
       dynamic list = json.decode(response.body);
       list.forEach((category) {
@@ -323,9 +336,11 @@ class WordPress {
     }
   }
 
-  /// This methods returns a list of [Tag] based on the filter parameters
+  /// This returns a list of [Tag] based on the filter parameters
   /// specified through [ParamsTagList] object. By default it returns only
   /// [ParamsTagList.perPage] number of tags in page [ParamsTagList.pageNum].
+  ///
+  /// In case of an error, a [WordPressError] object is thrown.
   async.Future<List<Tag>> fetchTags({@required ParamsTagList params}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_TAGS);
 
@@ -333,13 +348,69 @@ class WordPress {
 
     final response = await http.get(url.toString(), headers: _urlHeader);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode < 300) {
       List<Tag> tags = new List<Tag>();
       dynamic list = json.decode(response.body);
       list.forEach((tag) {
         tags.add(Tag.fromJson(tag));
       });
       return tags;
+    } else {
+      try {
+        WordPressError err =
+            WordPressError.fromJson(json.decode(response.body));
+        throw err;
+      } catch (e) {
+        throw new WordPressError(message: response.body);
+      }
+    }
+  }
+
+  /// This is used to create a [Post] in the site. Before this method can be called,
+  /// [User] creating the post needs to be authenticated first by calling
+  /// [WordPress.authenticateUser]. On success, the [Post] object is returned containing
+  /// post information.
+  ///
+  /// In case of an error, a [WordPressError] object is thrown.
+  async.Future<Post> createPost({@required Post post}) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS);
+
+    final response = await http.post(
+      url.toString(),
+      headers: _urlHeader,
+      body: post.toJson(),
+    );
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return Post.fromJson(json.decode(response.body));
+    } else {
+      try {
+        WordPressError err =
+            WordPressError.fromJson(json.decode(response.body));
+        throw err;
+      } catch (e) {
+        throw new WordPressError(message: response.body);
+      }
+    }
+  }
+
+  /// This is used to create a [Comment] for a [Post]. Before this method can be called,
+  /// [User] writing the comment needs to be authenticated first by calling
+  /// [WordPress.authenticateUser]. On success, the [Comment] object is returned containing
+  /// comment information.
+  ///
+  /// In case of an error, a [WordPressError] object is thrown.
+  async.Future<Comment> createComment({@required Comment comment}) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_COMMENTS);
+
+    final response = await http.post(
+      url.toString(),
+      headers: _urlHeader,
+      body: comment.toJson(),
+    );
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return Comment.fromJson(json.decode(response.body));
     } else {
       try {
         WordPressError err =

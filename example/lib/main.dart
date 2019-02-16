@@ -61,17 +61,28 @@ class PostsBuilderState extends State<PostsBuilder> {
     try {
       wordPress = wp.WordPress(
         baseUrl: 'http://192.168.6.165',
-        authenticator: wp.WordPressAuthenticator.ApplicationPasswords,
-        adminName: 'admin',
-        adminKey: 'EOjD JsYA hKfM RHNI vufW hyUX',
+        authenticator: wp.WordPressAuthenticator.JWT,
+//        adminName: 'admin',
+//        adminKey: 'EOjD JsYA hKfM RHNI vufW hyUX',
       );
     } catch (err) {
       print(err.toString());
     }
 
+    Future<wp.User> response = wordPress.authenticateUser(
+      username: 'ChiefEditor',
+      password: 'chiefeditor@123',
+    );
+
+    response.then((user) {
+      createPost(user);
+    }).catchError((err) {
+      print('Failed to fetch user: $err');
+    });
+
     fetchPosts();
 
-    Future<List<wp.User>> users = wordPress.fetchUsers(
+    /*Future<List<wp.User>> users = wordPress.fetchUsers(
       params: wp.ParamsUserList(
         context: wp.WordPressContext.view,
         pageNum: 1,
@@ -126,6 +137,46 @@ class PostsBuilderState extends State<PostsBuilder> {
       print(response);
     }).catchError((err) {
       print(err.toString());
+    });*/
+  }
+
+  void createPost(wp.User user) {
+    final post = wordPress.createPost(
+      post: new wp.Post(
+        title: 'First post as a Chief Editor',
+        content: 'Blah! blah! blah!',
+        excerpt: 'Discussion about blah!',
+        author: user.id,
+        commentStatus: wp.PostCommentStatus.open,
+        pingStatus: wp.PostPingStatus.closed,
+        status: wp.PostPageStatus.publish,
+        format: wp.PostFormat.standard,
+        sticky: true,
+      ),
+    );
+
+    post.then((p) {
+      print('Post created successfully with ID: ${p.id}');
+      postComment(user, p);
+    }).catchError((err) {
+      print('Failed to create post: $err');
+    });
+  }
+
+  void postComment(wp.User user, wp.Post post) {
+    final comment = wordPress.createComment(
+      comment: new wp.Comment(
+        author: user.id,
+        post: post.id,
+        content: "First!",
+        parent: 0,
+      ),
+    );
+
+    comment.then((c) {
+      print('Comment successfully posted with ID: ${c.id}');
+    }).catchError((err) {
+      print('Failed to comment: $err');
     });
   }
 
@@ -149,8 +200,6 @@ class PostsBuilderState extends State<PostsBuilder> {
         if (snapshot.hasData) {
           return ListView.separated(
             itemBuilder: (context, i) {
-              print(
-                  "Post Status: ${snapshot.data[i].status} ${snapshot.data[i].format} ${snapshot.data[i].commentStatus} ${snapshot.data[i].pingStatus}");
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[

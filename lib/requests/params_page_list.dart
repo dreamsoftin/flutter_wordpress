@@ -57,7 +57,7 @@ class ParamsPageList {
       'before': '${this.beforeDate}',
       'exclude': '${listToUrlString(excludePageIDs)}',
       'include': '${listToUrlString(includePageIDs)}',
-      'menu_order': '${this.menuOrder == null ? '': this.menuOrder}',
+      'menu_order': '${this.menuOrder == null ? '' : this.menuOrder}',
       'offset': '${this.offset == null ? '' : this.offset}',
       'order': '${enumStringToName(this.order.toString())}',
       'orderby': '${enumStringToName(this.orderBy.toString())}',

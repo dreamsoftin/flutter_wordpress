@@ -1,73 +1,95 @@
-library flutter_wordpress;
-
 import 'package:flutter_wordpress/constants.dart';
+import 'package:meta/meta.dart';
 import 'links.dart';
 import 'content.dart';
 import 'guid.dart';
 import 'title.dart';
 import 'excerpt.dart';
 
+/// A [WordPress Post](https://developer.wordpress.org/rest-api/reference/posts/)
+///
+/// Refer the above link to see which arguments are set based on different context modes.
+/// ([WordPressContext]).
 class Post {
+  /// ID of the post
   int id;
+
+  /// The date the post was published, in the site's Timezone.
   String date;
+
+  /// The date the post was published, in GMT.
   String dateGmt;
   Guid guid;
   String modified;
   String modifiedGmt;
+
+  /// Password for the post in case it needs to be password protected.
   String password;
+
+  /// An alphanumeric identifier unique to each post.
   String slug;
-//  String status;
+
+  /// The state in which the post should be created (draft, publish etc.)
   PostPageStatus status;
   String type;
   String link;
+
+  /// Post title
   Title title;
+
+  /// Post content
   Content content;
+
+  /// Post excerpt
   Excerpt excerpt;
+
+  /// ID of the post author. Refer [User].
   int author;
   int featuredMedia;
-//  String commentStatus;
-  CommentStatus commentStatus;
-//  String pingStatus;
+
+  /// Whether the post allows commenting.
+  PostCommentStatus commentStatus;
+
+  /// Whether the post can be pinged.
   PostPingStatus pingStatus;
+
+  /// Whether the post needs to sticky i.e. a Featured post.
   bool sticky;
   String template;
-//  String format;
+
+  /// The format of the post.
   PostFormat format;
-//  List<Null> meta;
+
+  /// List of IDs of categories this post belongs to.
   List<int> categories;
+
+  /// List of IDs of tags this post should have.
   List<int> tags;
   String permalinkTemplate;
   String generatedSlug;
   Links lLinks;
 
-  Post(
-      {this.id,
-      this.date,
-      this.dateGmt,
-      this.guid,
-      this.modified,
-      this.modifiedGmt,
-      this.password,
-      this.slug,
-      this.status,
-      this.type,
-      this.link,
-      this.title,
-      this.content,
-      this.excerpt,
-      this.author,
-      this.featuredMedia,
-      this.commentStatus,
-      this.pingStatus,
-      this.sticky,
-      this.template,
-      this.format,
-//        this.meta,
-      this.categories,
-      this.tags,
-      this.permalinkTemplate,
-      this.generatedSlug,
-      this.lLinks});
+  Post({
+    this.date,
+    this.dateGmt,
+    this.password,
+    this.slug,
+    this.status = PostPageStatus.publish,
+    @required String title,
+    @required String content,
+    @required String excerpt,
+    @required this.author,
+    this.featuredMedia,
+    this.commentStatus = PostCommentStatus.open,
+    this.pingStatus = PostPingStatus.open,
+    this.sticky,
+    this.template,
+    this.format = PostFormat.standard,
+    this.categories,
+    this.tags,
+  })  : this.title = new Title(rendered: title),
+        this.content = new Content(rendered: content),
+        this.excerpt = new Excerpt(rendered: excerpt);
 
   Post.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -86,7 +108,6 @@ class Post {
         }
       });
     }
-//    status = json['status'];
     type = json['type'];
     link = json['link'];
     title = json['title'] != null ? new Title.fromJson(json['title']) : null;
@@ -97,7 +118,7 @@ class Post {
     author = json['author'];
     featuredMedia = json['featured_media'];
     if (json['comment_status'] != null) {
-      CommentStatus.values.forEach((val) {
+      PostCommentStatus.values.forEach((val) {
         if (enumStringToName(val.toString()) == json['comment_status']) {
           commentStatus = val;
           return;
@@ -112,8 +133,6 @@ class Post {
         }
       });
     }
-//    commentStatus = json['comment_status'];
-//    pingStatus = json['ping_status'];
     sticky = json['sticky'];
     template = json['template'];
     if (json['format'] != null) {
@@ -124,13 +143,6 @@ class Post {
         }
       });
     }
-//    format = json['format'];
-    /*if (json['meta'] != null) {
-      meta = new List<Null>();
-      json['meta'].forEach((v) {
-        meta.add(new Null.fromJson(v));
-      });
-    }*/
     categories = json['categories'].cast<int>();
     tags = json['tags'].cast<int>();
     permalinkTemplate = json['permalink_template'];
@@ -138,57 +150,31 @@ class Post {
     lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['date'] = this.date;
-    data['date_gmt'] = this.dateGmt;
-    if (this.guid != null) {
-      data['guid'] = this.guid.toJson();
-    }
-    data['modified'] = this.modified;
-    data['modified_gmt'] = this.modifiedGmt;
-    data['password'] = this.password;
-    data['slug'] = this.slug;
-//    data['status'] = this.status;
-    data['status'] =
-        this.status == null ? '' : enumStringToName(this.status.toString());
-    data['type'] = this.type;
-    data['link'] = this.link;
-    if (this.title != null) {
-      data['title'] = this.title.toJson();
-    }
-    if (this.content != null) {
-      data['content'] = this.content.toJson();
-    }
-    if (this.excerpt != null) {
-      data['excerpt'] = this.excerpt.toJson();
-    }
-    data['author'] = this.author;
-    data['featured_media'] = this.featuredMedia;
-//    data['comment_status'] = this.commentStatus;
-    data['comment_status'] = this.commentStatus == null
-        ? ''
-        : enumStringToName(this.commentStatus.toString());
-//    data['ping_status'] = this.pingStatus;
-    data['ping_status'] = this.pingStatus == null
-        ? ''
-        : enumStringToName(this.pingStatus.toString());
-    data['sticky'] = this.sticky;
-    data['template'] = this.template;
-//    data['format'] = this.format;
-    data['format'] =
-        this.format == null ? '' : enumStringToName(this.format.toString());
-    /*if (this.meta != null) {
-      data['meta'] = this.meta.map((v) => v.toJson()).toList();
-    }*/
-    data['categories'] = this.categories;
-    data['tags'] = this.tags;
-    data['permalink_template'] = this.permalinkTemplate;
-    data['generated_slug'] = this.generatedSlug;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
+    if (this.date != null) data['date'] = this.date;
+    if (this.dateGmt != null) data['date_gmt'] = this.dateGmt;
+    if (this.password != null) data['password'] = this.password;
+    if (this.slug != null) data['slug'] = this.slug;
+    if (this.status != null)
+      data['status'] = enumStringToName(this.status.toString());
+    if (this.title != null) data['title'] = this.title.rendered;
+    if (this.content != null) data['content'] = this.content.rendered;
+    if (this.excerpt != null) data['excerpt'] = this.excerpt.rendered;
+    if (this.author != null) data['author'] = this.author.toString();
+    if (this.featuredMedia != null)
+      data['featured_media'] = this.featuredMedia.toString();
+    if (this.commentStatus != null)
+      data['comment_status'] = enumStringToName(this.commentStatus.toString());
+    if (this.pingStatus != null)
+      data['ping_status'] = enumStringToName(this.pingStatus.toString());
+    if (this.sticky != null) data['sticky'] = this.sticky.toString();
+    if (this.template != null) data['template'] = this.template;
+    if (this.format != null)
+      data['format'] = enumStringToName(this.format.toString());
+    if (this.categories != null)
+      data['categories'] = listToUrlString(this.categories);
+    if (this.tags != null) data['tags'] = listToUrlString(this.tags);
     return data;
   }
 }

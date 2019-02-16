@@ -43,9 +43,9 @@ class ParamsCategoryList {
       'include': '${listToUrlString(this.includeCategoryIDs)}',
       'order': '${enumStringToName(this.order.toString())}',
       'orderby': '${enumStringToName(this.orderBy.toString())}',
-      'hide_empty': '${this.hideEmpty == null ? '': this.hideEmpty}',
-      'parent': '${this.parent == null ? '': this.parent}',
-      'post': '${this.post == null ? '': this.post}',
+      'hide_empty': '${this.hideEmpty == null ? '' : this.hideEmpty}',
+      'parent': '${this.parent == null ? '' : this.parent}',
+      'post': '${this.post == null ? '' : this.post}',
       'slug': '${this.slug}',
     };
   }

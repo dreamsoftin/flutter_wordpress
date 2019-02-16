@@ -3,7 +3,7 @@ class Excerpt {
   String rendered;
   bool protected;
 
-  Excerpt({this.raw, this.rendered, this.protected});
+  Excerpt({this.rendered});
 
   Excerpt.fromJson(Map<String, dynamic> json) {
     raw = json['raw'];
@@ -13,9 +13,9 @@ class Excerpt {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['raw'] = this.raw;
-    data['rendered'] = this.rendered;
-    data['protected'] = this.protected;
+    if (this.raw != null) data['raw'] = this.raw;
+    if (this.rendered != null) data['rendered'] = this.rendered;
+    if (this.protected != null) data['protected'] = this.protected;
     return data;
   }
 }
