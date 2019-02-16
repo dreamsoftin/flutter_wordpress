@@ -4,7 +4,7 @@ class Content {
   bool protected;
   int blockVersion;
 
-  Content({this.raw, this.rendered, this.protected, this.blockVersion});
+  Content({this.rendered});
 
   Content.fromJson(Map<String, dynamic> json) {
     raw = json['raw'];
@@ -15,10 +15,10 @@ class Content {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['raw'] = this.raw;
-    data['rendered'] = this.rendered;
-    data['protected'] = this.protected;
-    data['block_version'] = this.blockVersion;
+    if (this.raw != null) data['raw'] = this.raw;
+    if (this.rendered != null) data['rendered'] = this.rendered;
+    if (this.protected != null) data['protected'] = this.protected;
+    if (this.blockVersion != null) data['block_version'] = this.blockVersion;
     return data;
   }
 }

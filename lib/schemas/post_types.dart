@@ -11,8 +11,10 @@ class PostTypes {
   PostTypes({this.post, this.page, this.attachment, this.wpBlock});
 
   PostTypes.fromJson(Map<String, dynamic> json) {
-    post = json['post'] != null ? new PostTypePost.fromJson(json['post']) : null;
-    page = json['page'] != null ? new PostTypePage.fromJson(json['page']) : null;
+    post =
+        json['post'] != null ? new PostTypePost.fromJson(json['post']) : null;
+    page =
+        json['page'] != null ? new PostTypePage.fromJson(json['page']) : null;
     attachment = json['attachment'] != null
         ? new Attachment.fromJson(json['attachment'])
         : null;

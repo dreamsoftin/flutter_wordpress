@@ -1,12 +1,15 @@
-const URL_WP_BASE = '/wp-json/wp/v2';
 const URL_JWT_BASE = '/wp-json/jwt-auth/v1';
+const URL_WP_BASE = '/wp-json/wp/v2';
 
 const URL_JWT_TOKEN = '$URL_JWT_BASE/token';
 const URL_JWT_TOKEN_VALIDATE = '$URL_JWT_BASE/token/validate';
 
-const URL_POSTS = '$URL_WP_BASE/posts';
-const URL_USERS = '$URL_WP_BASE/users';
+const URL_CATEGORIES = '$URL_WP_BASE/categories';
 const URL_COMMENTS = '$URL_WP_BASE/comments';
+const URL_PAGES = '$URL_WP_BASE/pages';
+const URL_POSTS = '$URL_WP_BASE/posts';
+const URL_TAGS = '$URL_WP_BASE/tags';
+const URL_USERS = '$URL_WP_BASE/users';
 
 enum WordPressAuthenticator {
   JWT,
@@ -19,7 +22,7 @@ enum Order {
   desc,
 }
 
-enum PostsOrderBy {
+enum PostOrderBy {
   author,
   date,
   id,
@@ -30,7 +33,7 @@ enum PostsOrderBy {
   slug,
   title,
 }
-enum PostStatus {
+enum PostPageStatus {
   publish,
   future,
   draft,
@@ -45,7 +48,7 @@ enum PostPingStatus {
   open,
   closed,
 }
-enum ObjectFormat {
+enum PostFormat {
   standard,
   aside,
   chat,
@@ -58,7 +61,7 @@ enum ObjectFormat {
   audio,
 }
 
-enum UsersOrderBy {
+enum UserOrderBy {
   id,
   include,
   name,
@@ -75,7 +78,7 @@ enum UserRole {
   administrator,
 }
 
-enum CommentsOrderBy {
+enum CommentOrderBy {
   date,
   date_gmt,
   id,
@@ -94,6 +97,29 @@ enum CommentStatus {
 enum CommentType {
   comment,
   //TODO: Add all comment types
+}
+
+enum CategoryTagOrderBy {
+  id,
+  include,
+  name,
+  slug,
+  term_group,
+  description,
+  count,
+}
+
+enum PageOrderBy {
+  author,
+  date,
+  id,
+  include,
+  modified,
+  parent,
+  relevance,
+  slug,
+  title,
+  menu_order,
 }
 
 /// Converts an enum string to enum value name.

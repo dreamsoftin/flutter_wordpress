@@ -1,10 +1,10 @@
 import 'package:flutter_wordpress/constants.dart';
 
-/// This class holds all arguments which can be used to filter comments when using
-/// [WordPress.fetchComments] method.
+/// This class holds all arguments which can be used to filter pages when using
+/// [WordPress.fetchPages] method.
 ///
-/// [List Comments' Arguments](https://developer.wordpress.org/rest-api/reference/comments/#list-comments)
-class ParamsCommentList {
+/// [List Pages' Arguments](https://developer.wordpress.org/rest-api/reference/pages/#list-pages)
+class ParamsPageList {
   final WordPressContext context;
   final int pageNum;
   final int perPage;
@@ -12,21 +12,19 @@ class ParamsCommentList {
   final String afterDate;
   final List<int> includeAuthorIDs;
   final List<int> excludeAuthorIDs;
-  final String authorEmail;
   final String beforeDate;
-  final List<int> excludeCommentIDs;
-  final List<int> includeCommentIDs;
+  final List<int> excludePageIDs;
+  final List<int> includePageIDs;
+  final int menuOrder;
   final int offset;
   final Order order;
-  final CommentOrderBy orderBy;
+  final PageOrderBy orderBy;
   final List<int> includeParentIDs;
   final List<int> excludeParentIDs;
-  final List<int> includePostIDs;
-  final CommentStatus commentStatus;
-  final CommentType commentType;
-  final String postPassword;
+  final String slug;
+  final PostPageStatus pageStatus;
 
-  ParamsCommentList({
+  ParamsPageList({
     this.context = WordPressContext.view,
     this.pageNum = 1,
     this.perPage = 10,
@@ -34,19 +32,17 @@ class ParamsCommentList {
     this.afterDate = '',
     this.includeAuthorIDs,
     this.excludeAuthorIDs,
-    this.authorEmail = '',
     this.beforeDate = '',
-    this.excludeCommentIDs,
-    this.includeCommentIDs,
+    this.excludePageIDs,
+    this.includePageIDs,
+    this.menuOrder,
     this.offset,
     this.order = Order.desc,
-    this.orderBy = CommentOrderBy.date_gmt,
+    this.orderBy = PageOrderBy.date,
     this.includeParentIDs,
     this.excludeParentIDs,
-    this.includePostIDs,
-    this.commentStatus = CommentStatus.approve,
-    this.commentType = CommentType.comment,
-    this.postPassword = '',
+    this.slug = '',
+    this.pageStatus = PostPageStatus.publish,
   });
 
   Map<String, String> toMap() {
@@ -58,19 +54,17 @@ class ParamsCommentList {
       'after': '${this.afterDate}',
       'author': '${listToUrlString(this.includeAuthorIDs)}',
       'author_exclude': '${listToUrlString(this.excludeAuthorIDs)}',
-      'author_email': '${this.authorEmail}',
       'before': '${this.beforeDate}',
-      'exclude': '${listToUrlString(excludeCommentIDs)}',
-      'include': '${listToUrlString(includeCommentIDs)}',
+      'exclude': '${listToUrlString(excludePageIDs)}',
+      'include': '${listToUrlString(includePageIDs)}',
+      'menu_order': '${this.menuOrder == null ? '' : this.menuOrder}',
       'offset': '${this.offset == null ? '' : this.offset}',
       'order': '${enumStringToName(this.order.toString())}',
       'orderby': '${enumStringToName(this.orderBy.toString())}',
-      'parent': '${listToUrlString(this.includeParentIDs)}',
-      'parent_exclude': '${listToUrlString(this.excludeParentIDs)}',
-      'post': '${listToUrlString(this.includePostIDs)}',
-      'status': '${enumStringToName(this.commentStatus.toString())}',
-      'type': '${enumStringToName(this.commentType.toString())}',
-      'password': '${this.postPassword}',
+      'parent': '${listToUrlString(includeParentIDs)}',
+      'parent_exclude': '${listToUrlString(excludeParentIDs)}',
+      'slug': '${this.slug}',
+      'status': '${enumStringToName(this.pageStatus.toString())}',
     };
   }
 
