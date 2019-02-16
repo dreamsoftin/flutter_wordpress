@@ -23,32 +23,6 @@ class Links {
   List<Children> children;
   List<Curies> curies;
 
-  Links({
-    this.self,
-    this.collection,
-    this.about,
-    this.author,
-    this.replies,
-    this.archives,
-    this.versionHistory,
-    this.wpPostType,
-    this.wpAttachment,
-    this.wpTerm,
-    this.wpActionPublish,
-    this.wpActionUnfilteredHtml,
-    this.wpActionSticky,
-    this.wpActionAssignAuthor,
-    this.wpActionCreateCategories,
-    this.wpActionAssignCategories,
-    this.wpActionCreateTags,
-    this.wpActionAssignTags,
-    this.wpItems,
-    this.up,
-    this.inReplyTo,
-    this.children,
-    this.curies,
-  });
-
   Links.fromJson(Map<String, dynamic> json) {
     if (json['self'] != null) {
       self = new List<Self>();
@@ -285,7 +259,9 @@ class Self {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -301,7 +277,9 @@ class Collection {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -317,7 +295,9 @@ class About {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -335,8 +315,12 @@ class Author {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['embeddable'] = this.embeddable;
-    data['href'] = this.href;
+    if (this.embeddable != null) {
+      data['embeddable'] = this.embeddable;
+    }
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -354,8 +338,12 @@ class Replies {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['embeddable'] = this.embeddable;
-    data['href'] = this.href;
+    if (this.embeddable != null) {
+      data['embeddable'] = this.embeddable;
+    }
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -371,7 +359,9 @@ class Archives {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -389,8 +379,12 @@ class VersionHistory {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['count'] = this.count;
-    data['href'] = this.href;
+    if (this.count != null) {
+      data['count'] = this.count;
+    }
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -406,7 +400,9 @@ class WpPostType {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -422,7 +418,9 @@ class WpAttachment {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -442,9 +440,15 @@ class WpTerm {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['taxonomy'] = this.taxonomy;
-    data['embeddable'] = this.embeddable;
-    data['href'] = this.href;
+    if (this.taxonomy != null) {
+      data['taxonomy'] = this.taxonomy;
+    }
+    if (this.embeddable != null) {
+      data['embeddable'] = this.embeddable;
+    }
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -460,7 +464,9 @@ class WpActionPublish {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -476,7 +482,9 @@ class WpActionUnfilteredHtml {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -492,7 +500,9 @@ class WpActionSticky {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -508,7 +518,9 @@ class WpActionAssignAuthor {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -524,7 +536,9 @@ class WpActionCreateCategories {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -540,7 +554,9 @@ class WpActionAssignCategories {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -556,7 +572,9 @@ class WpActionCreateTags {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -572,7 +590,9 @@ class WpActionAssignTags {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -588,7 +608,9 @@ class WpItems {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -608,13 +630,18 @@ class Up {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['embeddable'] = this.embeddable;
-    data['post_type'] = this.postType;
-    data['href'] = this.href;
+    if (this.embeddable != null) {
+      data['embeddable'] = this.embeddable;
+    }
+    if (this.postType != null) {
+      data['post_type'] = this.postType;
+    }
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
-
 
 class InReplyTo {
   bool embeddable;
@@ -629,8 +656,12 @@ class InReplyTo {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['embeddable'] = this.embeddable;
-    data['href'] = this.href;
+    if (this.embeddable != null) {
+      data['embeddable'] = this.embeddable;
+    }
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -646,7 +677,9 @@ class Children {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
     return data;
   }
 }
@@ -666,9 +699,15 @@ class Curies {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['href'] = this.href;
-    data['templated'] = this.templated;
+    if (this.name != null) {
+      data['name'] = this.name;
+    }
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
+    if (this.templated != null) {
+      data['templated'] = this.templated;
+    }
     return data;
   }
 }

@@ -17,20 +17,20 @@ class Settings {
 
   Settings(
       {this.title,
-        this.description,
-        this.url,
-        this.email,
-        this.timezone,
-        this.dateFormat,
-        this.timeFormat,
-        this.startOfWeek,
-        this.language,
-        this.useSmilies,
-        this.defaultCategory,
-        this.defaultPostFormat,
-        this.postsPerPage,
-        this.defaultPingStatus,
-        this.defaultCommentStatus});
+      this.description,
+      this.url,
+      this.email,
+      this.timezone,
+      this.dateFormat,
+      this.timeFormat,
+      this.startOfWeek,
+      this.language,
+      this.useSmilies,
+      this.defaultCategory,
+      this.defaultPostFormat,
+      this.postsPerPage,
+      this.defaultPingStatus,
+      this.defaultCommentStatus});
 
   Settings.fromJson(Map<String, dynamic> json) {
     title = json['title'];

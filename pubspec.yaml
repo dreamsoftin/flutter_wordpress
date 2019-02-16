@@ -1,9 +1,10 @@
 name: flutter_wordpress
-description: Flutter Wordpress API
+description: This library uses WordPress REST-API-V2 to provide a way for your application to
+  interact with your WordPress website.
 version: 0.1.2
 authors:
-- Sachin Ganesh <sachinganesh13@gmail.com>
-- Suraj Shettigar <suri.shettigar@gmail.com>
+- Sachin Ganesh <sachin@dreamsoftin.com>
+- Suraj Shettigar <suraj@dreamsoftin.com>
 homepage: https://github.com/SachinGanesh/flutter_wordpress
 
 environment:

@@ -1,34 +1,34 @@
 import 'package:flutter_wordpress/constants.dart';
 
-/// This class holds all arguments which can be used to filter users when using
-/// [WordPress.fetchUsers] method.
+/// This class holds all arguments which can be used to filter Tags when using
+/// [WordPress.fetchTags] method.
 ///
-/// [List Users' Arguments](https://developer.wordpress.org/rest-api/reference/users/#list-users)
-class ParamsUserList {
+/// [List Tags' Arguments](https://developer.wordpress.org/rest-api/reference/tags/#list-tags)
+class ParamsTagList {
   final WordPressContext context;
   final int pageNum;
   final int perPage;
   final String searchQuery;
-  final List<int> includeUserIDs;
-  final List<int> excludeUserIDs;
-  final int offset;
+  final List<int> excludeTagIDs;
+  final List<int> includeTagIDs;
   final Order order;
-  final UserOrderBy orderBy;
+  final CategoryTagOrderBy orderBy;
+  final bool hideEmpty;
+  final int post;
   final String slug;
-  final UserRole role;
 
-  ParamsUserList({
+  ParamsTagList({
     this.context = WordPressContext.view,
     this.pageNum = 1,
     this.perPage = 10,
     this.searchQuery = '',
-    this.includeUserIDs,
-    this.excludeUserIDs,
-    this.offset,
+    this.excludeTagIDs,
+    this.includeTagIDs,
     this.order = Order.asc,
-    this.orderBy = UserOrderBy.name,
+    this.orderBy = CategoryTagOrderBy.name,
+    this.hideEmpty,
+    this.post,
     this.slug = '',
-    this.role,
   });
 
   Map<String, String> toMap() {
@@ -37,14 +37,13 @@ class ParamsUserList {
       'page': '${this.pageNum}',
       'per_page': '${this.perPage}',
       'search': '${this.searchQuery}',
-      'include': '${listToUrlString(this.includeUserIDs)}',
-      'exclude': '${listToUrlString(this.excludeUserIDs)}',
-      'offset': '${this.offset == null ? '' : this.offset}',
+      'exclude': '${listToUrlString(this.excludeTagIDs)}',
+      'include': '${listToUrlString(this.includeTagIDs)}',
       'order': '${enumStringToName(this.order.toString())}',
       'orderby': '${enumStringToName(this.orderBy.toString())}',
+      'hide_empty': '${this.hideEmpty == null ? '' : this.hideEmpty}',
+      'post': '${this.post == null ? '' : this.post}',
       'slug': '${this.slug}',
-      'roles':
-          '${this.role == null ? '' : enumStringToName(this.role.toString())}'
     };
   }
 

@@ -17,9 +17,9 @@ class ParamsPostList {
   final List<int> excludePostIDs;
   final int offset;
   final Order order;
-  final PostsOrderBy orderBy;
+  final PostOrderBy orderBy;
   final String slug;
-  final PostStatus postStatus;
+  final PostPageStatus postStatus;
   final List<int> includeCategories;
   final List<int> excludeCategories;
   final List<int> includeTags;
@@ -39,9 +39,9 @@ class ParamsPostList {
     this.excludePostIDs,
     this.offset,
     this.order = Order.desc,
-    this.orderBy = PostsOrderBy.date,
+    this.orderBy = PostOrderBy.date,
     this.slug = '',
-    this.postStatus = PostStatus.publish,
+    this.postStatus = PostPageStatus.publish,
     this.includeCategories,
     this.excludeCategories,
     this.includeTags,

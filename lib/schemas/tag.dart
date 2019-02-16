@@ -13,14 +13,14 @@ class Tag {
 
   Tag(
       {this.id,
-        this.count,
-        this.description,
-        this.link,
-        this.name,
-        this.slug,
-        this.taxonomy,
+      this.count,
+      this.description,
+      this.link,
+      this.name,
+      this.slug,
+      this.taxonomy,
 //        this.meta,
-        this.lLinks});
+      this.lLinks});
 
   Tag.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -57,4 +57,3 @@ class Tag {
     return data;
   }
 }
-

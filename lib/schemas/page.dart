@@ -33,30 +33,30 @@ class Page {
 
   Page(
       {this.id,
-        this.date,
-        this.dateGmt,
-        this.guid,
-        this.modified,
-        this.modifiedGmt,
-        this.password,
-        this.slug,
-        this.status,
-        this.type,
-        this.link,
-        this.title,
-        this.content,
-        this.excerpt,
-        this.author,
-        this.featuredMedia,
-        this.parent,
-        this.menuOrder,
-        this.commentStatus,
-        this.pingStatus,
-        this.template,
+      this.date,
+      this.dateGmt,
+      this.guid,
+      this.modified,
+      this.modifiedGmt,
+      this.password,
+      this.slug,
+      this.status,
+      this.type,
+      this.link,
+      this.title,
+      this.content,
+      this.excerpt,
+      this.author,
+      this.featuredMedia,
+      this.parent,
+      this.menuOrder,
+      this.commentStatus,
+      this.pingStatus,
+      this.template,
 //        this.meta,
-        this.permalinkTemplate,
-        this.generatedSlug,
-        this.lLinks});
+      this.permalinkTemplate,
+      this.generatedSlug,
+      this.lLinks});
 
   Page.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -72,9 +72,9 @@ class Page {
     link = json['link'];
     title = json['title'] != null ? new Title.fromJson(json['title']) : null;
     content =
-    json['content'] != null ? new Content.fromJson(json['content']) : null;
+        json['content'] != null ? new Content.fromJson(json['content']) : null;
     excerpt =
-    json['excerpt'] != null ? new Excerpt.fromJson(json['excerpt']) : null;
+        json['excerpt'] != null ? new Excerpt.fromJson(json['excerpt']) : null;
     author = json['author'];
     featuredMedia = json['featured_media'];
     parent = json['parent'];
@@ -135,5 +135,3 @@ class Page {
     return data;
   }
 }
-
-
