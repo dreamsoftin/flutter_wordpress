@@ -19,6 +19,7 @@ import 'package:http/http.dart' as http;
 import 'schemas/jwt_response.dart';
 import 'schemas/category.dart';
 import 'schemas/comment.dart';
+import 'schemas/media.dart';
 import 'schemas/page.dart';
 import 'schemas/post.dart';
 import 'schemas/tag.dart';
@@ -33,6 +34,7 @@ import 'requests/params_comment_list.dart';
 import 'requests/params_category_list.dart';
 import 'requests/params_tag_list.dart';
 import 'requests/params_page_list.dart';
+import 'requests/params_media_list.dart';
 
 export 'schemas/jwt_response.dart';
 export 'schemas/avatar_urls.dart';
@@ -60,6 +62,7 @@ export 'requests/params_comment_list.dart';
 export 'requests/params_category_list.dart';
 export 'requests/params_tag_list.dart';
 export 'requests/params_page_list.dart';
+export 'requests/params_media_list.dart';
 
 /// All WordPress related functionality are defined under this class.
 class WordPress {
@@ -136,9 +139,7 @@ class WordPress {
       return fetchUser(email: authResponse.userEmail);
     } else {
       try {
-        WordPressError err =
-            WordPressError.fromJson(json.decode(response.body));
-        throw err;
+        throw new WordPressError.fromJson(json.decode(response.body));
       } catch (e) {
         throw new WordPressError(message: response.body);
       }
@@ -198,7 +199,7 @@ class WordPress {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       List<Post> posts = new List<Post>();
 
-      dynamic list = json.decode(response.body);
+      final list = json.decode(response.body);
       list.forEach((post) {
         posts.add(Post.fromJson(post));
       });
@@ -228,7 +229,7 @@ class WordPress {
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       List<Page> pages = new List<Page>();
-      dynamic list = json.decode(response.body);
+      final list = json.decode(response.body);
       list.forEach((page) {
         pages.add(Page.fromJson(page));
       });
@@ -258,7 +259,7 @@ class WordPress {
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       List<User> users = new List<User>();
-      dynamic list = json.decode(response.body);
+      final list = json.decode(response.body);
       list.forEach((user) {
         users.add(User.fromJson(user));
       });
@@ -289,7 +290,7 @@ class WordPress {
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       List<Comment> comments = new List<Comment>();
-      dynamic list = json.decode(response.body);
+      final list = json.decode(response.body);
       list.forEach((comment) {
         comments.add(Comment.fromJson(comment));
       });
@@ -320,7 +321,7 @@ class WordPress {
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       List<Category> categories = new List<Category>();
-      dynamic list = json.decode(response.body);
+      final list = json.decode(response.body);
       list.forEach((category) {
         categories.add(Category.fromJson(category));
       });
@@ -350,7 +351,7 @@ class WordPress {
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       List<Tag> tags = new List<Tag>();
-      dynamic list = json.decode(response.body);
+      final list = json.decode(response.body);
       list.forEach((tag) {
         tags.add(Tag.fromJson(tag));
       });
@@ -359,6 +360,37 @@ class WordPress {
       try {
         WordPressError err =
             WordPressError.fromJson(json.decode(response.body));
+        throw err;
+      } catch (e) {
+        throw new WordPressError(message: response.body);
+      }
+    }
+  }
+
+  /// This returns a list of [Media] based on the filter parameters
+  /// specified through [ParamsMediaList] object. By default it returns only
+  /// [ParamsMediaList.perPage] number of tags in page [ParamsMediaList.pageNum].
+  ///
+  /// In case of an error, a [WordPressError] object is thrown.
+  async.Future<List<Media>> fetchMediaList(
+      {@required ParamsMediaList params}) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_MEDIA);
+
+    url.write(params.toString());
+
+    final response = await http.get(url.toString(), headers: _urlHeader);
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      List<Media> media = new List<Media>();
+      final list = json.decode(response.body);
+      list.forEach((m) {
+        media.add(Media.fromJson(m));
+      });
+      return media;
+    } else {
+      try {
+        WordPressError err =
+        WordPressError.fromJson(json.decode(response.body));
         throw err;
       } catch (e) {
         throw new WordPressError(message: response.body);

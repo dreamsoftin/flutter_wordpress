@@ -27,7 +27,7 @@ class Media {
   String mediaType;
   String mimeType;
   MediaDetails mediaDetails;
-  Null post;
+  int post;
   String sourceUrl;
   Links lLinks;
 
@@ -225,9 +225,16 @@ class Sizes {
   Medium medium;
   MediumLarge mediumLarge;
   Large large;
+  PostThumbnail postThumbnail;
   Full full;
 
-  Sizes({this.thumbnail, this.medium, this.mediumLarge, this.large, this.full});
+  Sizes(
+      {this.thumbnail,
+      this.medium,
+      this.mediumLarge,
+      this.postThumbnail,
+      this.large,
+      this.full});
 
   Sizes.fromJson(Map<String, dynamic> json) {
     thumbnail = json['thumbnail'] != null
@@ -239,6 +246,9 @@ class Sizes {
         ? new MediumLarge.fromJson(json['medium_large'])
         : null;
     large = json['large'] != null ? new Large.fromJson(json['large']) : null;
+    postThumbnail = json['post-thumbnail'] != null
+        ? new PostThumbnail.fromJson(json['post-thumbnail'])
+        : null;
     full = json['full'] != null ? new Full.fromJson(json['full']) : null;
   }
 
@@ -255,6 +265,9 @@ class Sizes {
     }
     if (this.large != null) {
       data['large'] = this.large.toJson();
+    }
+    if (this.postThumbnail != null) {
+      data['post-thumbnail'] = this.postThumbnail.toJson();
     }
     if (this.full != null) {
       data['full'] = this.full.toJson();
@@ -376,6 +389,36 @@ class Large {
     return data;
   }
 }
+class PostThumbnail {
+  String file;
+  int width;
+  int height;
+  String mimeType;
+  String sourceUrl;
+
+  PostThumbnail(
+      {this.file, this.width, this.height, this.mimeType, this.sourceUrl});
+
+  PostThumbnail.fromJson(Map<String, dynamic> json) {
+    file = json['file'];
+    width = json['width'];
+    height = json['height'];
+    mimeType = json['mime_type'];
+    sourceUrl = json['source_url'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['file'] = this.file;
+    data['width'] = this.width;
+    data['height'] = this.height;
+    data['mime_type'] = this.mimeType;
+    data['source_url'] = this.sourceUrl;
+    return data;
+  }
+}
+
+
 
 class Full {
   String file;
@@ -417,7 +460,7 @@ class ImageMeta {
   String shutterSpeed;
   String title;
   String orientation;
-  List<String> keywords;
+//  List<String> keywords;
 
   ImageMeta(
       {this.aperture,
@@ -431,7 +474,8 @@ class ImageMeta {
       this.shutterSpeed,
       this.title,
       this.orientation,
-      this.keywords});
+//      this.keywords,
+      });
 
   ImageMeta.fromJson(Map<String, dynamic> json) {
     aperture = json['aperture'];
@@ -445,7 +489,7 @@ class ImageMeta {
     shutterSpeed = json['shutter_speed'];
     title = json['title'];
     orientation = json['orientation'];
-    keywords = json['keywords'];
+//    keywords = json['keywords'];
   }
 
   Map<String, dynamic> toJson() {
@@ -461,7 +505,7 @@ class ImageMeta {
     data['shutter_speed'] = this.shutterSpeed;
     data['title'] = this.title;
     data['orientation'] = this.orientation;
-    data['keywords'] = this.keywords;
+//    data['keywords'] = this.keywords;
     return data;
   }
 }

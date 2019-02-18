@@ -7,6 +7,8 @@ class Links {
   List<Archives> archives;
   List<VersionHistory> versionHistory;
   List<WpPostType> wpPostType;
+  List<PredecessorVersion> predecessorVersion;
+  List<WpFeaturedmedia> wpFeaturedmedia;
   List<WpAttachment> wpAttachment;
   List<WpTerm> wpTerm;
   List<WpActionPublish> wpActionPublish;
@@ -70,6 +72,18 @@ class Links {
       wpPostType = new List<WpPostType>();
       json['wp:post_type'].forEach((v) {
         wpPostType.add(new WpPostType.fromJson(v));
+      });
+    }
+    if (json['predecessor-version'] != null) {
+      predecessorVersion = new List<PredecessorVersion>();
+      json['predecessor-version'].forEach((v) {
+        predecessorVersion.add(new PredecessorVersion.fromJson(v));
+      });
+    }
+    if (json['wp:featuredmedia'] != null) {
+      wpFeaturedmedia = new List<WpFeaturedmedia>();
+      json['wp:featuredmedia'].forEach((v) {
+        wpFeaturedmedia.add(new WpFeaturedmedia.fromJson(v));
       });
     }
     if (json['wp:attachment'] != null) {
@@ -190,6 +204,14 @@ class Links {
     }
     if (this.wpPostType != null) {
       data['wp:post_type'] = this.wpPostType.map((v) => v.toJson()).toList();
+    }
+    if (this.predecessorVersion != null) {
+      data['predecessor-version'] =
+          this.predecessorVersion.map((v) => v.toJson()).toList();
+    }
+    if (this.wpFeaturedmedia != null) {
+      data['wp:featuredmedia'] =
+          this.wpFeaturedmedia.map((v) => v.toJson()).toList();
     }
     if (this.wpAttachment != null) {
       data['wp:attachment'] = this.wpAttachment.map((v) => v.toJson()).toList();
@@ -400,6 +422,53 @@ class WpPostType {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
+    return data;
+  }
+}
+
+class PredecessorVersion {
+  int id;
+  String href;
+
+  PredecessorVersion({this.id, this.href});
+
+  PredecessorVersion.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    href = json['href'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+
+    if (this.id != null) {
+      data['id'] = this.id;
+    }
+    if (this.href != null) {
+      data['href'] = this.href;
+    }
+    return data;
+  }
+}
+
+class WpFeaturedmedia {
+  bool embeddable;
+  String href;
+
+  WpFeaturedmedia({this.embeddable, this.href});
+
+  WpFeaturedmedia.fromJson(Map<String, dynamic> json) {
+    embeddable = json['embeddable'];
+    href = json['href'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.embeddable != null) {
+      data['embeddable'] = this.embeddable;
+    }
     if (this.href != null) {
       data['href'] = this.href;
     }
