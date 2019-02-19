@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
-import 'package:html/dom.dart' as dom;
-import 'package:flutter_html/flutter_html.dart';
+import 'post_page.dart';
 
-class PostsPage extends StatefulWidget {
+class PostListPage extends StatelessWidget {
   final wp.WordPress wordPress;
 
-  PostsPage({Key key, @required this.wordPress});
+  PostListPage({Key key, @required this.wordPress});
 
-  @override
-  _PostsPageState createState() => _PostsPageState();
-}
-
-class _PostsPageState extends State<PostsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +15,7 @@ class _PostsPageState extends State<PostsPage> {
       ),
       body: Center(
         child: PostsBuilder(
-          wordPress: widget.wordPress,
+          wordPress: wordPress,
         ),
       ),
     );
@@ -52,23 +46,13 @@ class PostsBuilderState extends State<PostsBuilder> {
     fetchPosts();
   }
 
-  void fetchMedia() {
-    final media = widget.wordPress.fetchMediaList(params: wp.ParamsMediaList());
-
-    media.then((media) {
-      print(media);
-    }).catchError((err) {
-      print(err.toString());
-    });
-  }
-
   void createPost(wp.User user) {
     final post = widget.wordPress.createPost(
       post: new wp.Post(
         title: 'First post as a Chief Editor',
         content: 'Blah! blah! blah!',
         excerpt: 'Discussion about blah!',
-        author: user.id,
+        authorID: user.id,
         commentStatus: wp.PostCommentStatus.open,
         pingStatus: wp.PostPingStatus.closed,
         status: wp.PostPageStatus.publish,
@@ -104,7 +88,12 @@ class PostsBuilderState extends State<PostsBuilder> {
 
   Future<void> fetchPosts() {
     setState(() {
-      posts = widget.wordPress.fetchPosts(params: wp.ParamsPostList());
+      posts = widget.wordPress.fetchPosts(
+        params: wp.ParamsPostList(),
+        fetchAuthor: true,
+        fetchFeaturedMedia: true,
+        fetchComments: true,
+      );
     });
     return posts;
   }
@@ -118,13 +107,22 @@ class PostsBuilderState extends State<PostsBuilder> {
           return RefreshIndicator(
             child: ListView.builder(
               itemBuilder: (context, i) {
-                final title = snapshot.data[i].title.rendered;
-                String content = snapshot.data[i].content.rendered;
-                content = content.replaceAll(
-                    new RegExp(r'localhost'), '192.168.6.165');
+                String title = snapshot.data[i].title.rendered;
+                String author = snapshot.data[i].author.name;
+                wp.Media featuredMedia = snapshot.data[i].featuredMedia;
+
                 return Padding(
                   padding: paddingCardsList,
-                  child: _buildPostCard(title: title, content: content),
+                  child: GestureDetector(
+                    onTap: () {
+                      openPostPage(snapshot.data[i]);
+                    },
+                    child: _buildPostCard(
+                      author: author,
+                      title: title,
+                      featuredMedia: featuredMedia,
+                    ),
+                  ),
                 );
               },
               itemCount: snapshot.data.length,
@@ -145,7 +143,11 @@ class PostsBuilderState extends State<PostsBuilder> {
     );
   }
 
-  Widget _buildPostCard({String title, String content}) {
+  Widget _buildPostCard({
+    String author,
+    String title,
+    wp.Media featuredMedia,
+  }) {
     return Card(
       color: Colors.white,
       child: Column(
@@ -159,31 +161,57 @@ class PostsBuilderState extends State<PostsBuilder> {
               style: Theme.of(context).textTheme.title,
             ),
           ),
-          Divider(),
+          _buildFeaturedMedia(featuredMedia),
+          featuredMedia == null
+              ? Divider()
+              : SizedBox(
+                  width: 0,
+                  height: 0,
+                ),
           Padding(
-            padding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 4.0),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(),
-              child: Html(
-                blockSpacing: 0.0,
-                data: content,
-                /*customRender: (node, children) {
-                  if (node is dom.Element) {
-                    switch (node.localName) {
-                      case 'img':
-                        final src = node.attributes['src'];
-                        return Image.network(
-                          src,
-                          scale: 2,
-                        );
-                    }
-                  }
-                },*/
-              ),
+            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  author,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w200,
+                  ),
+                ),
+              ],
             ),
-          )
+          ),
         ],
       ),
+    );
+  }
+
+  Widget _buildFeaturedMedia(wp.Media featuredMedia) {
+    if (featuredMedia == null) {
+      return SizedBox(
+        width: 0.0,
+        height: 0.0,
+      );
+    }
+    String imgSource = featuredMedia.mediaDetails.sizes.mediumLarge.sourceUrl;
+    imgSource = imgSource.replaceAll('localhost', '192.168.6.165');
+    return Center(
+      child: Image.network(
+        imgSource,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  void openPostPage(wp.Post post) {
+    print('OnTapped');
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return SinglePostPage(wordPress: widget.wordPress, post: post);
+      }),
     );
   }
 }

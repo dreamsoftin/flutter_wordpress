@@ -175,7 +175,7 @@ class LoginFieldsState extends State<LoginFields> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => PostsPage(
+        builder: (context) => PostListPage(
               wordPress: wordPress,
             ),
       ),

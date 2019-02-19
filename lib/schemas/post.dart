@@ -6,6 +6,13 @@ import 'guid.dart';
 import 'title.dart';
 import 'excerpt.dart';
 
+import 'user.dart';
+import 'comment.dart';
+import 'category.dart';
+import 'tag.dart';
+import 'media.dart';
+
+
 /// A [WordPress Post](https://developer.wordpress.org/rest-api/reference/posts/)
 ///
 /// Refer the above link to see which arguments are set based on different context modes.
@@ -44,8 +51,9 @@ class Post {
   Excerpt excerpt;
 
   /// ID of the post author. Refer [User].
-  int author;
-  int featuredMedia;
+  int authorID;
+
+  int featuredMediaID;
 
   /// Whether the post allows commenting.
   PostCommentStatus commentStatus;
@@ -61,13 +69,20 @@ class Post {
   PostFormat format;
 
   /// List of IDs of categories this post belongs to.
-  List<int> categories;
+  List<int> categoryIDs;
 
   /// List of IDs of tags this post should have.
-  List<int> tags;
+  List<int> tagIDs;
   String permalinkTemplate;
   String generatedSlug;
   Links lLinks;
+
+  User author;
+  List<Comment> comments;
+  List<Category> categories;
+  List<Tag> tags;
+  List<Media> attachments;
+  Media featuredMedia;
 
   Post({
     this.date,
@@ -78,15 +93,15 @@ class Post {
     @required String title,
     @required String content,
     @required String excerpt,
-    @required this.author,
-    this.featuredMedia,
+    @required this.authorID,
+    this.featuredMediaID,
     this.commentStatus = PostCommentStatus.open,
     this.pingStatus = PostPingStatus.open,
     this.sticky,
     this.template,
     this.format = PostFormat.standard,
-    this.categories,
-    this.tags,
+    this.categoryIDs,
+    this.tagIDs,
   })  : this.title = new Title(rendered: title),
         this.content = new Content(rendered: content),
         this.excerpt = new Excerpt(rendered: excerpt);
@@ -115,8 +130,8 @@ class Post {
         json['content'] != null ? new Content.fromJson(json['content']) : null;
     excerpt =
         json['excerpt'] != null ? new Excerpt.fromJson(json['excerpt']) : null;
-    author = json['author'];
-    featuredMedia = json['featured_media'];
+    authorID = json['author'];
+    featuredMediaID = json['featured_media'];
     if (json['comment_status'] != null) {
       PostCommentStatus.values.forEach((val) {
         if (enumStringToName(val.toString()) == json['comment_status']) {
@@ -143,8 +158,8 @@ class Post {
         }
       });
     }
-    categories = json['categories'].cast<int>();
-    tags = json['tags'].cast<int>();
+    categoryIDs = json['categories'].cast<int>();
+    tagIDs = json['tags'].cast<int>();
     permalinkTemplate = json['permalink_template'];
     generatedSlug = json['generated_slug'];
     lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
@@ -161,9 +176,9 @@ class Post {
     if (this.title != null) data['title'] = this.title.rendered;
     if (this.content != null) data['content'] = this.content.rendered;
     if (this.excerpt != null) data['excerpt'] = this.excerpt.rendered;
-    if (this.author != null) data['author'] = this.author.toString();
-    if (this.featuredMedia != null)
-      data['featured_media'] = this.featuredMedia.toString();
+    if (this.authorID != null) data['author'] = this.authorID.toString();
+    if (this.featuredMediaID != null)
+      data['featured_media'] = this.featuredMediaID.toString();
     if (this.commentStatus != null)
       data['comment_status'] = enumStringToName(this.commentStatus.toString());
     if (this.pingStatus != null)
@@ -172,9 +187,9 @@ class Post {
     if (this.template != null) data['template'] = this.template;
     if (this.format != null)
       data['format'] = enumStringToName(this.format.toString());
-    if (this.categories != null)
-      data['categories'] = listToUrlString(this.categories);
-    if (this.tags != null) data['tags'] = listToUrlString(this.tags);
+    if (this.categoryIDs != null)
+      data['categories'] = listToUrlString(this.categoryIDs);
+    if (this.tagIDs != null) data['tags'] = listToUrlString(this.tagIDs);
     return data;
   }
 }

@@ -55,6 +55,9 @@ Future<List<wp.Post>> posts = wordPress.fetchPosts(
     order: wp.Order.desc,
     orderBy: wp.PostsOrderBy.date,
   ),
+  fetchAuthor: true,
+  fetchFeaturedMedia: true,
+  fetchComments: true,
 );
 ```
 
@@ -134,6 +137,4 @@ void postComment(wp.User user, wp.Post post) {
 
 ## Future Work
 1. Implementing OAuth 2.0 authentication.
-
-
 

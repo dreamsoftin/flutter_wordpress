@@ -188,8 +188,25 @@ class WordPress {
   /// specified through [ParamsPostList] object. By default it returns only
   /// [ParamsPostList.perPage] number of posts in page [ParamsPostList.pageNum].
   ///
+  /// [fetchAuthor], [fetchComments], [fetchCategories], [fetchTags],
+  /// [fetchFeaturedMedia] and [fetchAttachments] will fetch and set [Post.author],
+  /// [Post.comments], [Post.categories], [Post.tags], [Post.featuredMedia] and
+  /// [Post.attachments] respectively. If they are non-existent, their values will
+  /// null.
+  ///
+  /// (**Note:** *Set only those fetch boolean parameters which you need because
+  /// the more information to fetch, the longer it will take to return all Posts*)
+  ///
   /// In case of an error, a [WordPressError] object is thrown.
-  async.Future<List<Post>> fetchPosts({@required ParamsPostList params}) async {
+  async.Future<List<Post>> fetchPosts({
+    @required ParamsPostList params,
+    bool fetchAuthor = false,
+    bool fetchComments = false,
+    bool fetchCategories = false,
+    bool fetchTags = false,
+    bool fetchFeaturedMedia = false,
+    bool fetchAttachments = false,
+  }) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS);
 
     url.write(params.toString());
@@ -197,12 +214,20 @@ class WordPress {
     final response = await http.get(url.toString(), headers: _urlHeader);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      List<Post> posts = new List<Post>();
-
+      List<Post> posts = new List();
       final list = json.decode(response.body);
-      list.forEach((post) {
-        posts.add(Post.fromJson(post));
-      });
+
+      for (final post in list) {
+        posts.add(await _postBuilder(
+          post: Post.fromJson(post),
+          setAuthor: fetchAuthor,
+          setComments: fetchComments,
+          setCategories: fetchCategories,
+          setTags: fetchTags,
+          setFeaturedMedia: fetchFeaturedMedia,
+          setAttachments: fetchAttachments,
+        ));
+      }
       return posts;
     } else {
       try {
@@ -213,6 +238,55 @@ class WordPress {
         throw new WordPressError(message: response.body);
       }
     }
+  }
+
+  /// This function fetches post information such as author, comments, categories,
+  /// tags, featuredMedia and attachments.
+  Future<Post> _postBuilder({
+    Post post,
+    bool setAuthor = false,
+    bool setComments = false,
+    bool setCategories = false,
+    bool setTags = false,
+    bool setFeaturedMedia = false,
+    bool setAttachments = false,
+  }) async {
+    if (setAuthor) {
+      User author = await fetchUser(id: post.authorID);
+      if (author != null) post.author = author;
+    }
+    if (setComments) {
+      List<Comment> comments = await fetchComments(
+          params: ParamsCommentList(includePostIDs: [post.id]));
+      if (comments != null && comments.length != 0) post.comments = comments;
+    }
+    if (setCategories) {
+      List<Category> categories =
+          await fetchCategories(params: ParamsCategoryList(post: post.id));
+      if (categories != null && categories.length != 0)
+        post.categories = categories;
+    }
+    if (setTags) {
+      List<Tag> tags = await fetchTags(params: ParamsTagList(post: post.id));
+      if (tags != null && tags.length != 0) post.tags = tags;
+    }
+    if (setFeaturedMedia) {
+      List<Media> media = await fetchMediaList(
+        params: ParamsMediaList(
+          includeMediaIDs: [post.featuredMediaID],
+        ),
+      );
+      if (media != null && media.length != 0) post.featuredMedia = media[0];
+    }
+    if (setAttachments) {
+      List<Media> media = await fetchMediaList(
+        params: ParamsMediaList(
+          includeParentIDs: [post.id],
+        ),
+      );
+      if (media != null && media.length != 0) post.attachments = media;
+    }
+    return post;
   }
 
   /// This returns a list of [Page] based on the filter parameters
@@ -390,7 +464,7 @@ class WordPress {
     } else {
       try {
         WordPressError err =
-        WordPressError.fromJson(json.decode(response.body));
+            WordPressError.fromJson(json.decode(response.body));
         throw err;
       } catch (e) {
         throw new WordPressError(message: response.body);
