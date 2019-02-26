@@ -389,6 +389,7 @@ class Large {
     return data;
   }
 }
+
 class PostThumbnail {
   String file;
   int width;
@@ -417,8 +418,6 @@ class PostThumbnail {
     return data;
   }
 }
-
-
 
 class Full {
   String file;
@@ -462,20 +461,20 @@ class ImageMeta {
   String orientation;
 //  List<String> keywords;
 
-  ImageMeta(
-      {this.aperture,
-      this.credit,
-      this.camera,
-      this.caption,
-      this.createdTimestamp,
-      this.copyright,
-      this.focalLength,
-      this.iso,
-      this.shutterSpeed,
-      this.title,
-      this.orientation,
+  ImageMeta({
+    this.aperture,
+    this.credit,
+    this.camera,
+    this.caption,
+    this.createdTimestamp,
+    this.copyright,
+    this.focalLength,
+    this.iso,
+    this.shutterSpeed,
+    this.title,
+    this.orientation,
 //      this.keywords,
-      });
+  });
 
   ImageMeta.fromJson(Map<String, dynamic> json) {
     aperture = json['aperture'];

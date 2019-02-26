@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
+import 'package:flutter_html/flutter_html.dart';
 import 'post_page.dart';
 
 class PostListPage extends StatelessWidget {
@@ -89,10 +90,9 @@ class PostsBuilderState extends State<PostsBuilder> {
   Future<void> fetchPosts() {
     setState(() {
       posts = widget.wordPress.fetchPosts(
-        params: wp.ParamsPostList(),
+        postParams: wp.ParamsPostList(),
         fetchAuthor: true,
         fetchFeaturedMedia: true,
-        fetchComments: true,
       );
     });
     return posts;
@@ -109,6 +109,7 @@ class PostsBuilderState extends State<PostsBuilder> {
               itemBuilder: (context, i) {
                 String title = snapshot.data[i].title.rendered;
                 String author = snapshot.data[i].author.name;
+                String content = snapshot.data[i].content.rendered;
                 wp.Media featuredMedia = snapshot.data[i].featuredMedia;
 
                 return Padding(
@@ -120,6 +121,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                     child: _buildPostCard(
                       author: author,
                       title: title,
+                      content: content,
                       featuredMedia: featuredMedia,
                     ),
                   ),
@@ -146,6 +148,7 @@ class PostsBuilderState extends State<PostsBuilder> {
   Widget _buildPostCard({
     String author,
     String title,
+    String content,
     wp.Media featuredMedia,
   }) {
     return Card(
@@ -210,7 +213,7 @@ class PostsBuilderState extends State<PostsBuilder> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) {
-        return SinglePostPage(wordPress: widget.wordPress, post: post);
+        return SinglePostPage(wordPress: widget.wordPress, post: post,);
       }),
     );
   }

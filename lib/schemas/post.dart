@@ -8,10 +8,10 @@ import 'excerpt.dart';
 
 import 'user.dart';
 import 'comment.dart';
+import 'comment_hierarchy.dart';
 import 'category.dart';
 import 'tag.dart';
 import 'media.dart';
-
 
 /// A [WordPress Post](https://developer.wordpress.org/rest-api/reference/posts/)
 ///
@@ -77,11 +77,27 @@ class Post {
   String generatedSlug;
   Links lLinks;
 
+  /// The [User] object denoting the author of the post.
   User author;
+
+  /// A list of comments for the post.
   List<Comment> comments;
+
+  /// A list of comments for the post, where each
+  /// [CommentHierarchy] object is a direct comment to the post, with
+  /// [CommentHierarchy.children] containing replies to that comment.
+  List<CommentHierarchy> commentsHierarchy;
+
+  /// A list of categories assigned to the post.
   List<Category> categories;
+
+  /// A list of tags assigned to the post.
   List<Tag> tags;
+
+  /// A list of attachments contained in the post.
   List<Media> attachments;
+
+  /// The featured Media of the post.
   Media featuredMedia;
 
   Post({
@@ -191,5 +207,11 @@ class Post {
       data['categories'] = listToUrlString(this.categoryIDs);
     if (this.tagIDs != null) data['tags'] = listToUrlString(this.tagIDs);
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'Post: { id: $id, title: ${title.rendered}, '
+        'author: {id: $authorID, name: ${author.name}}}';
   }
 }

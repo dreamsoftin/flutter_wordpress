@@ -19,6 +19,7 @@ import 'package:http/http.dart' as http;
 import 'schemas/jwt_response.dart';
 import 'schemas/category.dart';
 import 'schemas/comment.dart';
+import 'schemas/comment_hierarchy.dart';
 import 'schemas/media.dart';
 import 'schemas/page.dart';
 import 'schemas/post.dart';
@@ -40,6 +41,7 @@ export 'schemas/jwt_response.dart';
 export 'schemas/avatar_urls.dart';
 export 'schemas/category.dart';
 export 'schemas/comment.dart';
+export 'schemas/comment_hierarchy.dart';
 export 'schemas/content.dart';
 export 'schemas/excerpt.dart';
 export 'schemas/guid.dart';
@@ -199,9 +201,11 @@ class WordPress {
   ///
   /// In case of an error, a [WordPressError] object is thrown.
   async.Future<List<Post>> fetchPosts({
-    @required ParamsPostList params,
+    @required ParamsPostList postParams,
     bool fetchAuthor = false,
     bool fetchComments = false,
+    Order orderComments = Order.desc,
+    CommentOrderBy orderCommentsBy = CommentOrderBy.date,
     bool fetchCategories = false,
     bool fetchTags = false,
     bool fetchFeaturedMedia = false,
@@ -209,7 +213,7 @@ class WordPress {
   }) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS);
 
-    url.write(params.toString());
+    url.write(postParams.toString());
 
     final response = await http.get(url.toString(), headers: _urlHeader);
 
@@ -222,6 +226,8 @@ class WordPress {
           post: Post.fromJson(post),
           setAuthor: fetchAuthor,
           setComments: fetchComments,
+          orderComments: orderComments,
+          orderCommentsBy: orderCommentsBy,
           setCategories: fetchCategories,
           setTags: fetchTags,
           setFeaturedMedia: fetchFeaturedMedia,
@@ -246,6 +252,8 @@ class WordPress {
     Post post,
     bool setAuthor = false,
     bool setComments = false,
+    Order orderComments = Order.desc,
+    CommentOrderBy orderCommentsBy = CommentOrderBy.date,
     bool setCategories = false,
     bool setTags = false,
     bool setFeaturedMedia = false,
@@ -257,8 +265,21 @@ class WordPress {
     }
     if (setComments) {
       List<Comment> comments = await fetchComments(
-          params: ParamsCommentList(includePostIDs: [post.id]));
-      if (comments != null && comments.length != 0) post.comments = comments;
+          params: ParamsCommentList(
+        includePostIDs: [post.id],
+        order: orderComments,
+        orderBy: orderCommentsBy,
+      ));
+      if (comments != null && comments.length != 0) {
+        post.comments = comments;
+
+        post.commentsHierarchy = new List();
+        post.comments.forEach((comment) {
+          if (comment.parent == 0)
+            post.commentsHierarchy
+                .add(_commentHierarchyBuilder(post.comments, comment));
+        });
+      }
     }
     if (setCategories) {
       List<Category> categories =
@@ -287,6 +308,28 @@ class WordPress {
       if (media != null && media.length != 0) post.attachments = media;
     }
     return post;
+  }
+
+  ///This recursive function builds the hierarchy of comments for the given post
+  ///and comment. Only parent comments (direct comments to post) need to be
+  ///supplied.
+  CommentHierarchy _commentHierarchyBuilder(
+      List<Comment> commentList, Comment comment) {
+    final childComments = commentList.where((ele) =>
+        ele.id != comment.id && ele.parent != 0 && ele.parent == comment.id);
+
+    if (childComments == null || childComments.length == 0) {
+      return new CommentHierarchy(comment: comment, children: null);
+    } else {
+      List<CommentHierarchy> children = new List();
+      childComments.forEach((c) {
+        children.add(_commentHierarchyBuilder(commentList, c));
+      });
+      return new CommentHierarchy(
+        comment: comment,
+        children: children,
+      );
+    }
   }
 
   /// This returns a list of [Page] based on the filter parameters
@@ -369,6 +412,44 @@ class WordPress {
         comments.add(Comment.fromJson(comment));
       });
       return comments;
+    } else {
+      try {
+        WordPressError err =
+            WordPressError.fromJson(json.decode(response.body));
+        throw err;
+      } catch (e) {
+        throw new WordPressError(message: response.body);
+      }
+    }
+  }
+
+  /// This returns a list of [CommentHierarchy] based on the filter parameters
+  /// specified through [ParamsCommentList] object. The list returned has all
+  /// parent comments (i.e. comments directed towards posts) with
+  /// [CommentHierarchy.children] containing the replies to that comment.
+  ///
+  /// In case of an error, a [WordPressError] object is thrown.
+  async.Future<List<CommentHierarchy>> fetchCommentsAsHierarchy(
+      {@required ParamsCommentList params}) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_COMMENTS);
+
+    url.write(params.toString());
+
+    final response = await http.get(url.toString(), headers: _urlHeader);
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      List<Comment> comments = new List<Comment>();
+      List<CommentHierarchy> commentsHierarchy = new List<CommentHierarchy>();
+      final list = json.decode(response.body);
+      list.forEach((comment) {
+        comments.add(Comment.fromJson(comment));
+      });
+
+      comments.forEach((comment) {
+        if (comment.parent == 0)
+          commentsHierarchy.add(_commentHierarchyBuilder(comments, comment));
+      });
+      return commentsHierarchy;
     } else {
       try {
         WordPressError err =
