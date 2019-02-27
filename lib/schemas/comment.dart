@@ -139,4 +139,9 @@ class Comment {
     }
     return data;
   }
+
+  @override
+  String toString() {
+    return 'Comment: {id: $id, author: $authorName, post: $post, parent: $parent}';
+  }
 }

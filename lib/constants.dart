@@ -6,6 +6,7 @@ const URL_JWT_TOKEN_VALIDATE = '$URL_JWT_BASE/token/validate';
 
 const URL_CATEGORIES = '$URL_WP_BASE/categories';
 const URL_COMMENTS = '$URL_WP_BASE/comments';
+const URL_MEDIA = '$URL_WP_BASE/media';
 const URL_PAGES = '$URL_WP_BASE/pages';
 const URL_POSTS = '$URL_WP_BASE/posts';
 const URL_TAGS = '$URL_WP_BASE/tags';
@@ -120,6 +121,32 @@ enum PageOrderBy {
   slug,
   title,
   menu_order,
+}
+
+enum MediaOrderBy {
+  author,
+  date,
+  id,
+  include,
+  modified,
+  parent,
+  relevance,
+  slug,
+  title,
+}
+enum MediaStatus {
+  inherit,
+  publish,
+  future,
+  draft,
+  pending,
+  private,
+}
+enum MediaType {
+  image,
+  video,
+  audio,
+  application,
 }
 
 /// Converts an enum string to enum value name.

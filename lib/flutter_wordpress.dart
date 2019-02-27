@@ -19,6 +19,8 @@ import 'package:http/http.dart' as http;
 import 'schemas/jwt_response.dart';
 import 'schemas/category.dart';
 import 'schemas/comment.dart';
+import 'schemas/comment_hierarchy.dart';
+import 'schemas/media.dart';
 import 'schemas/page.dart';
 import 'schemas/post.dart';
 import 'schemas/tag.dart';
@@ -33,11 +35,13 @@ import 'requests/params_comment_list.dart';
 import 'requests/params_category_list.dart';
 import 'requests/params_tag_list.dart';
 import 'requests/params_page_list.dart';
+import 'requests/params_media_list.dart';
 
 export 'schemas/jwt_response.dart';
 export 'schemas/avatar_urls.dart';
 export 'schemas/category.dart';
 export 'schemas/comment.dart';
+export 'schemas/comment_hierarchy.dart';
 export 'schemas/content.dart';
 export 'schemas/excerpt.dart';
 export 'schemas/guid.dart';
@@ -60,6 +64,7 @@ export 'requests/params_comment_list.dart';
 export 'requests/params_category_list.dart';
 export 'requests/params_tag_list.dart';
 export 'requests/params_page_list.dart';
+export 'requests/params_media_list.dart';
 
 /// All WordPress related functionality are defined under this class.
 class WordPress {
@@ -136,9 +141,7 @@ class WordPress {
       return fetchUser(email: authResponse.userEmail);
     } else {
       try {
-        WordPressError err =
-            WordPressError.fromJson(json.decode(response.body));
-        throw err;
+        throw new WordPressError.fromJson(json.decode(response.body));
       } catch (e) {
         throw new WordPressError(message: response.body);
       }
@@ -187,21 +190,50 @@ class WordPress {
   /// specified through [ParamsPostList] object. By default it returns only
   /// [ParamsPostList.perPage] number of posts in page [ParamsPostList.pageNum].
   ///
+  /// [fetchAuthor], [fetchComments], [fetchCategories], [fetchTags],
+  /// [fetchFeaturedMedia] and [fetchAttachments] will fetch and set [Post.author],
+  /// [Post.comments], [Post.categories], [Post.tags], [Post.featuredMedia] and
+  /// [Post.attachments] respectively. If they are non-existent, their values will
+  /// null.
+  ///
+  /// (**Note:** *Set only those fetch boolean parameters which you need because
+  /// the more information to fetch, the longer it will take to return all Posts*)
+  ///
   /// In case of an error, a [WordPressError] object is thrown.
-  async.Future<List<Post>> fetchPosts({@required ParamsPostList params}) async {
+  async.Future<List<Post>> fetchPosts({
+    @required ParamsPostList postParams,
+    bool fetchAuthor = false,
+    bool fetchComments = false,
+    Order orderComments = Order.desc,
+    CommentOrderBy orderCommentsBy = CommentOrderBy.date,
+    bool fetchCategories = false,
+    bool fetchTags = false,
+    bool fetchFeaturedMedia = false,
+    bool fetchAttachments = false,
+  }) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS);
 
-    url.write(params.toString());
+    url.write(postParams.toString());
 
     final response = await http.get(url.toString(), headers: _urlHeader);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      List<Post> posts = new List<Post>();
+      List<Post> posts = new List();
+      final list = json.decode(response.body);
 
-      dynamic list = json.decode(response.body);
-      list.forEach((post) {
-        posts.add(Post.fromJson(post));
-      });
+      for (final post in list) {
+        posts.add(await _postBuilder(
+          post: Post.fromJson(post),
+          setAuthor: fetchAuthor,
+          setComments: fetchComments,
+          orderComments: orderComments,
+          orderCommentsBy: orderCommentsBy,
+          setCategories: fetchCategories,
+          setTags: fetchTags,
+          setFeaturedMedia: fetchFeaturedMedia,
+          setAttachments: fetchAttachments,
+        ));
+      }
       return posts;
     } else {
       try {
@@ -211,6 +243,92 @@ class WordPress {
       } catch (e) {
         throw new WordPressError(message: response.body);
       }
+    }
+  }
+
+  /// This function fetches post information such as author, comments, categories,
+  /// tags, featuredMedia and attachments.
+  Future<Post> _postBuilder({
+    Post post,
+    bool setAuthor = false,
+    bool setComments = false,
+    Order orderComments = Order.desc,
+    CommentOrderBy orderCommentsBy = CommentOrderBy.date,
+    bool setCategories = false,
+    bool setTags = false,
+    bool setFeaturedMedia = false,
+    bool setAttachments = false,
+  }) async {
+    if (setAuthor) {
+      User author = await fetchUser(id: post.authorID);
+      if (author != null) post.author = author;
+    }
+    if (setComments) {
+      List<Comment> comments = await fetchComments(
+          params: ParamsCommentList(
+        includePostIDs: [post.id],
+        order: orderComments,
+        orderBy: orderCommentsBy,
+      ));
+      if (comments != null && comments.length != 0) {
+        post.comments = comments;
+
+        post.commentsHierarchy = new List();
+        post.comments.forEach((comment) {
+          if (comment.parent == 0)
+            post.commentsHierarchy
+                .add(_commentHierarchyBuilder(post.comments, comment));
+        });
+      }
+    }
+    if (setCategories) {
+      List<Category> categories =
+          await fetchCategories(params: ParamsCategoryList(post: post.id));
+      if (categories != null && categories.length != 0)
+        post.categories = categories;
+    }
+    if (setTags) {
+      List<Tag> tags = await fetchTags(params: ParamsTagList(post: post.id));
+      if (tags != null && tags.length != 0) post.tags = tags;
+    }
+    if (setFeaturedMedia) {
+      List<Media> media = await fetchMediaList(
+        params: ParamsMediaList(
+          includeMediaIDs: [post.featuredMediaID],
+        ),
+      );
+      if (media != null && media.length != 0) post.featuredMedia = media[0];
+    }
+    if (setAttachments) {
+      List<Media> media = await fetchMediaList(
+        params: ParamsMediaList(
+          includeParentIDs: [post.id],
+        ),
+      );
+      if (media != null && media.length != 0) post.attachments = media;
+    }
+    return post;
+  }
+
+  ///This recursive function builds the hierarchy of comments for the given post
+  ///and comment. Only parent comments (direct comments to post) need to be
+  ///supplied.
+  CommentHierarchy _commentHierarchyBuilder(
+      List<Comment> commentList, Comment comment) {
+    final childComments = commentList.where((ele) =>
+        ele.id != comment.id && ele.parent != 0 && ele.parent == comment.id);
+
+    if (childComments == null || childComments.length == 0) {
+      return new CommentHierarchy(comment: comment, children: null);
+    } else {
+      List<CommentHierarchy> children = new List();
+      childComments.forEach((c) {
+        children.add(_commentHierarchyBuilder(commentList, c));
+      });
+      return new CommentHierarchy(
+        comment: comment,
+        children: children,
+      );
     }
   }
 
@@ -228,7 +346,7 @@ class WordPress {
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       List<Page> pages = new List<Page>();
-      dynamic list = json.decode(response.body);
+      final list = json.decode(response.body);
       list.forEach((page) {
         pages.add(Page.fromJson(page));
       });
@@ -258,7 +376,7 @@ class WordPress {
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       List<User> users = new List<User>();
-      dynamic list = json.decode(response.body);
+      final list = json.decode(response.body);
       list.forEach((user) {
         users.add(User.fromJson(user));
       });
@@ -289,11 +407,49 @@ class WordPress {
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       List<Comment> comments = new List<Comment>();
-      dynamic list = json.decode(response.body);
+      final list = json.decode(response.body);
       list.forEach((comment) {
         comments.add(Comment.fromJson(comment));
       });
       return comments;
+    } else {
+      try {
+        WordPressError err =
+            WordPressError.fromJson(json.decode(response.body));
+        throw err;
+      } catch (e) {
+        throw new WordPressError(message: response.body);
+      }
+    }
+  }
+
+  /// This returns a list of [CommentHierarchy] based on the filter parameters
+  /// specified through [ParamsCommentList] object. The list returned has all
+  /// parent comments (i.e. comments directed towards posts) with
+  /// [CommentHierarchy.children] containing the replies to that comment.
+  ///
+  /// In case of an error, a [WordPressError] object is thrown.
+  async.Future<List<CommentHierarchy>> fetchCommentsAsHierarchy(
+      {@required ParamsCommentList params}) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_COMMENTS);
+
+    url.write(params.toString());
+
+    final response = await http.get(url.toString(), headers: _urlHeader);
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      List<Comment> comments = new List<Comment>();
+      List<CommentHierarchy> commentsHierarchy = new List<CommentHierarchy>();
+      final list = json.decode(response.body);
+      list.forEach((comment) {
+        comments.add(Comment.fromJson(comment));
+      });
+
+      comments.forEach((comment) {
+        if (comment.parent == 0)
+          commentsHierarchy.add(_commentHierarchyBuilder(comments, comment));
+      });
+      return commentsHierarchy;
     } else {
       try {
         WordPressError err =
@@ -320,7 +476,7 @@ class WordPress {
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       List<Category> categories = new List<Category>();
-      dynamic list = json.decode(response.body);
+      final list = json.decode(response.body);
       list.forEach((category) {
         categories.add(Category.fromJson(category));
       });
@@ -350,11 +506,42 @@ class WordPress {
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       List<Tag> tags = new List<Tag>();
-      dynamic list = json.decode(response.body);
+      final list = json.decode(response.body);
       list.forEach((tag) {
         tags.add(Tag.fromJson(tag));
       });
       return tags;
+    } else {
+      try {
+        WordPressError err =
+            WordPressError.fromJson(json.decode(response.body));
+        throw err;
+      } catch (e) {
+        throw new WordPressError(message: response.body);
+      }
+    }
+  }
+
+  /// This returns a list of [Media] based on the filter parameters
+  /// specified through [ParamsMediaList] object. By default it returns only
+  /// [ParamsMediaList.perPage] number of tags in page [ParamsMediaList.pageNum].
+  ///
+  /// In case of an error, a [WordPressError] object is thrown.
+  async.Future<List<Media>> fetchMediaList(
+      {@required ParamsMediaList params}) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_MEDIA);
+
+    url.write(params.toString());
+
+    final response = await http.get(url.toString(), headers: _urlHeader);
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      List<Media> media = new List<Media>();
+      final list = json.decode(response.body);
+      list.forEach((m) {
+        media.add(Media.fromJson(m));
+      });
+      return media;
     } else {
       try {
         WordPressError err =
