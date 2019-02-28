@@ -1,3 +1,9 @@
+## [0.1.4] - 27/02/2019
+* Updated homepage URL
+
+## [0.1.3] - 26/02/2019
+* Update example. Update post fetching to include author, comments. Add fetching comments as a hierarchy.
+
 ## [0.1.2] - 16/02/2019
 * Add fetch categories, tags, pages. Add create post, comments.
 
