@@ -3,7 +3,7 @@
 This library uses [WordPress REST API V2](https://developer.wordpress.org/rest-api/) to provide a way for your application to interact with your WordPress website.
 
 ## Screenshots
-<img src='example/images/screenshots/posts.png' height='400'>
+<img src='https://raw.githubusercontent.com/dreamsoftin/flutter_wordpress/master/example/images/screenshots/posts.png' height='400'>
 
 ## Requirements
 For authentication and usage of administrator level REST APIs, you need to use either of the two popular authentication plugins in your WordPress site:
