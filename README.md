@@ -15,7 +15,7 @@ For authentication and usage of administrator level REST APIs, you need to use e
 ### 1. Import library
 
 #### First:
-Find your pubspec.yaml in the root of your project and add the flutter_wordpress: ^0.1.4 under cupertino_icons: ^0.1.2
+Find your pubspec.yaml in the root of your project and add flutter_wordpress: ^0.1.4 under dependencies:
 
 #### Second:
 ```dart
