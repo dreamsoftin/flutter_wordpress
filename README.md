@@ -2,6 +2,8 @@
 
 This library uses [WordPress REST API V2](https://developer.wordpress.org/rest-api/) to provide a way for your application to interact with your WordPress website.
 
+[Tutorial - by Ritesh Sharma](https://medium.com/flutter-community/building-flutter-apps-with-wordpress-backend-part-1-e56414a4a79b)
+
 ## Screenshots
 <img src='https://raw.githubusercontent.com/dreamsoftin/flutter_wordpress/master/example/images/screenshots/posts.png' height='400'>
 
