@@ -19,7 +19,7 @@ class User {
   UserCapabilities capabilities;
   UserExtraCapabilities extraCapabilities;
   AvatarUrls avatarUrls;
-//  List<Null> meta;
+  Map<String, dynamic> meta;
   Links lLinks;
 
   User(
@@ -40,7 +40,7 @@ class User {
       this.capabilities,
       this.extraCapabilities,
       this.avatarUrls,
-//        this.meta,
+      this.meta,
       this.lLinks});
 
   User.fromJson(Map<String, dynamic> json) {
@@ -67,12 +67,13 @@ class User {
     avatarUrls = json['avatar_urls'] != null
         ? new AvatarUrls.fromJson(json['avatar_urls'])
         : null;
-    /*if (json['meta'] != null) {
-      meta = new List<Null>();
-      json['meta'].forEach((v) {
-        meta.add(new Null.fromJson(v));
+
+    if (json['meta'] != null) {
+      meta = new Map<String, dynamic>();
+      json['meta'].forEach((k, v) {
+        meta[k] = v;
       });
-    }*/
+    }
     lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
   }
 
@@ -101,9 +102,9 @@ class User {
     if (this.avatarUrls != null) {
       data['avatar_urls'] = this.avatarUrls.toJson();
     }
-    /*if (this.meta != null) {
-      data['meta'] = this.meta.map((v) => v.toJson()).toList();
-    }*/
+    if (this.meta != null) {
+      data['meta'] = this.meta;
+    }
     if (this.lLinks != null) {
       data['_links'] = this.lLinks.toJson();
     }
