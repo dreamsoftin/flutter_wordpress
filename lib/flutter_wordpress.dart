@@ -45,6 +45,7 @@ export 'schemas/comment.dart';
 export 'schemas/comment_hierarchy.dart';
 export 'schemas/content.dart';
 export 'schemas/excerpt.dart';
+export 'schemas/fetch_user_result.dart';
 export 'schemas/guid.dart';
 export 'schemas/labels.dart';
 export 'schemas/links.dart';
