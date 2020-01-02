@@ -20,6 +20,7 @@ import 'schemas/jwt_response.dart';
 import 'schemas/category.dart';
 import 'schemas/comment.dart';
 import 'schemas/comment_hierarchy.dart';
+import 'schemas/fetch_user_result.dart';
 import 'schemas/media.dart';
 import 'schemas/page.dart';
 import 'schemas/post.dart';
@@ -367,7 +368,8 @@ class WordPress {
   /// [ParamsUserList.perPage] number of users in page [ParamsUserList.pageNum].
   ///
   /// In case of an error, a [WordPressError] object is thrown.
-  async.Future<List<User>> fetchUsers({@required ParamsUserList params}) async {
+  async.Future<FetchUsersResult> fetchUsers(
+      {@required ParamsUserList params}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_USERS);
 
     url.write(params.toString());
@@ -377,10 +379,12 @@ class WordPress {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       List<User> users = new List<User>();
       final list = json.decode(response.body);
+      int totalUsers = int.parse(response.headers['x-wp-total']);
+
       list.forEach((user) {
         users.add(User.fromJson(user));
       });
-      return users;
+      return FetchUsersResult(users, totalUsers, params.pageNum);
     } else {
       try {
         WordPressError err =
