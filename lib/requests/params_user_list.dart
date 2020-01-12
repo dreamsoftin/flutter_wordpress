@@ -15,7 +15,7 @@ class ParamsUserList {
   final Order order;
   final UserOrderBy orderBy;
   final String slug;
-  final UserRole role;
+  final List<String> roles;
 
   ParamsUserList({
     this.context = WordPressContext.view,
@@ -28,7 +28,7 @@ class ParamsUserList {
     this.order = Order.asc,
     this.orderBy = UserOrderBy.name,
     this.slug = '',
-    this.role,
+    this.roles,
   });
 
   Map<String, String> toMap() {
@@ -43,8 +43,7 @@ class ParamsUserList {
       'order': '${enumStringToName(this.order.toString())}',
       'orderby': '${enumStringToName(this.orderBy.toString())}',
       'slug': '${this.slug}',
-      'roles':
-          '${this.role == null ? '' : enumStringToName(this.role.toString())}'
+      'roles': '${listToUrlString(this.roles)}',
     };
   }
 

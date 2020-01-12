@@ -71,13 +71,6 @@ enum UserOrderBy {
   email,
   url,
 }
-enum UserRole {
-  subscriber,
-  contributor,
-  author,
-  editor,
-  administrator,
-}
 
 enum CommentOrderBy {
   date,
