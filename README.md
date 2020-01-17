@@ -5,10 +5,13 @@ This library uses [WordPress REST API V2](https://developer.wordpress.org/rest-a
 [Tutorial - by Ritesh Sharma](https://medium.com/flutter-community/building-flutter-apps-with-wordpress-backend-part-1-e56414a4a79b)
 
 ## Screenshots
+
 <img src='https://raw.githubusercontent.com/dreamsoftin/flutter_wordpress/master/example/images/screenshots/posts.png' height='400'>
 
 ## Requirements
+
 For authentication and usage of administrator level REST APIs, you need to use either of the two popular authentication plugins in your WordPress site:
+
 1. [Application Passwords](https://wordpress.org/plugins/application-passwords/)
 2. [JWT Authentication for WP REST API](https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/) <strong>(recommended)</strong>
 
@@ -17,9 +20,11 @@ For authentication and usage of administrator level REST APIs, you need to use e
 ### 1. Import library
 
 #### First:
+
 Find your pubspec.yaml in the root of your project and add flutter_wordpress: ^0.1.4 under dependencies:
 
 #### Second:
+
 ```dart
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
 ```
@@ -33,7 +38,7 @@ wp.WordPress wordPress;
 wordPress = wp.WordPress(
   baseUrl: 'http://localhost',
   authenticator: wp.WordPressAuthenticator.JWT,
-  adminName: '', 
+  adminName: '',
   adminKey: '',
 );
 ```
@@ -80,7 +85,7 @@ Future<List<wp.User>> users = wordPress.fetchUsers(
     perPage: 30,
     order: wp.Order.asc,
     orderBy: wp.UsersOrderBy.name,
-    role: wp.UserRole.subscriber,
+    roles: ['subscriber'],
   ),
 );
 ```
@@ -97,6 +102,7 @@ Future<List<wp.Comment>> comments = wordPress.fetchComments(
   ),
 );
 ```
+
 ### 7. Create Post
 
 ```dart
@@ -123,6 +129,7 @@ void createPost(wp.User user) {
   });
 }
 ```
+
 ### 8. Post Comment
 
 ```dart
@@ -145,4 +152,5 @@ void postComment(wp.User user, wp.Post post) {
 ```
 
 ## Future Work
+
 1. Implementing OAuth 2.0 authentication.
