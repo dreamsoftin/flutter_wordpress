@@ -125,7 +125,7 @@ class WordPress {
     return fetchUser(username: username);
   }
 
-    async.Future<User> _authenticateViaJWT(username, password) async {
+  async.Future<User> _authenticateViaJWT(username, password) async {
     final body = {
       'username': username,
       'password': password,
@@ -159,7 +159,8 @@ class WordPress {
   async.Future<User> authenticateViaToken(String token) async {
     _urlHeader['Authorization'] = 'Bearer ${token}';
 
-    final response = await http.post(_baseUrl + URL_JWT_TOKEN_VALIDATE, headers: _urlHeader);
+    final response =
+        await http.post(_baseUrl + URL_JWT_TOKEN_VALIDATE, headers: _urlHeader);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return fetchMeUser();
@@ -210,7 +211,8 @@ class WordPress {
   ///
   /// In case of an error, a [WordPressError] object is thrown.
   async.Future<User> fetchMeUser() async {
-    final response = await http.get(_baseUrl + URL_USER_ME, headers: _urlHeader);
+    final response =
+        await http.get(_baseUrl + URL_USER_ME, headers: _urlHeader);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       final jsonStr = json.decode(response.body);
@@ -221,7 +223,7 @@ class WordPress {
     } else {
       try {
         WordPressError err =
-        WordPressError.fromJson(json.decode(response.body));
+            WordPressError.fromJson(json.decode(response.body));
         throw err;
       } catch (e) {
         throw new WordPressError(message: response.body);
