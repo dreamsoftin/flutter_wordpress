@@ -73,6 +73,7 @@ class WordPress {
   String _baseUrl;
   WordPressAuthenticator _authenticator;
 
+  String _token = "";
   Map<String, String> _urlHeader = {
     'Authorization': '',
   };
@@ -138,6 +139,7 @@ class WordPress {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       JWTResponse authResponse =
           JWTResponse.fromJson(json.decode(response.body));
+      _token = authResponse.token;
       _urlHeader['Authorization'] = 'Bearer ${authResponse.token}';
 
       return fetchUser(email: authResponse.userEmail);
@@ -147,6 +149,23 @@ class WordPress {
       } catch (e) {
         throw new WordPressError(message: response.body);
       }
+    }
+  }
+
+  String getToken() {
+    return _token;
+  }
+
+  async.Future<bool> isTokenValid(String token) async {
+    _urlHeader['Authorization'] = 'Bearer ${token}';
+
+    final response =
+        await http.post(_baseUrl + URL_JWT_TOKEN_VALIDATE, headers: _urlHeader);
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return true;
+    } else {
+      return false;
     }
   }
 
