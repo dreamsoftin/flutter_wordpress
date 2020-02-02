@@ -125,7 +125,7 @@ class WordPress {
     return fetchUser(username: username);
   }
 
-  async.Future<User> _authenticateViaJWT(username, password) async {
+    async.Future<User> _authenticateViaJWT(username, password) async {
     final body = {
       'username': username,
       'password': password,
@@ -156,16 +156,15 @@ class WordPress {
     return _token;
   }
 
-  async.Future<bool> isTokenValid(String token) async {
+  async.Future<User> authenticateViaToken(String token) async {
     _urlHeader['Authorization'] = 'Bearer ${token}';
 
-    final response =
-        await http.post(_baseUrl + URL_JWT_TOKEN_VALIDATE, headers: _urlHeader);
+    final response = await http.post(_baseUrl + URL_JWT_TOKEN_VALIDATE, headers: _urlHeader);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      return true;
+      return fetchMeUser();
     } else {
-      return false;
+      throw new WordPressError(message: response.body);
     }
   }
 
@@ -200,6 +199,29 @@ class WordPress {
       try {
         WordPressError err =
             WordPressError.fromJson(json.decode(response.body));
+        throw err;
+      } catch (e) {
+        throw new WordPressError(message: response.body);
+      }
+    }
+  }
+
+  /// This returns the me [User] object with the current token. Otherwise throws [WordPressError].
+  ///
+  /// In case of an error, a [WordPressError] object is thrown.
+  async.Future<User> fetchMeUser() async {
+    final response = await http.get(_baseUrl + URL_USER_ME, headers: _urlHeader);
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      final jsonStr = json.decode(response.body);
+      if (jsonStr.length == 0)
+        throw new WordPressError(
+            code: 'wp_empty_user', message: "No user found");
+      return User.fromJson(jsonStr);
+    } else {
+      try {
+        WordPressError err =
+        WordPressError.fromJson(json.decode(response.body));
         throw err;
       } catch (e) {
         throw new WordPressError(message: response.body);
