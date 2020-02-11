@@ -432,7 +432,7 @@ class WordPress {
     return _doUsersFetch(url);
   }
 
-  async.Future<FetchUsersResult> _doUsersFetch(StringBuffer url) {
+  async.Future<FetchUsersResult> _doUsersFetch(StringBuffer url) async {
     final response = await http.get(url.toString(), headers: _urlHeader);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
