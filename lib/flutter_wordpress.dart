@@ -13,14 +13,22 @@ library flutter_wordpress;
 import 'dart:async' as async;
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
 
-import 'schemas/jwt_response.dart';
+import 'constants.dart';
+import 'requests/params_category_list.dart';
+import 'requests/params_comment_list.dart';
+import 'requests/params_media_list.dart';
+import 'requests/params_page_list.dart';
+import 'requests/params_post_list.dart';
+import 'requests/params_tag_list.dart';
+import 'requests/params_user_list.dart';
 import 'schemas/category.dart';
 import 'schemas/comment.dart';
 import 'schemas/comment_hierarchy.dart';
 import 'schemas/fetch_user_result.dart';
+import 'schemas/jwt_response.dart';
 import 'schemas/media.dart';
 import 'schemas/page.dart';
 import 'schemas/post.dart';
@@ -28,17 +36,14 @@ import 'schemas/tag.dart';
 import 'schemas/user.dart';
 import 'schemas/wordpress_error.dart';
 
-import 'constants.dart';
-
-import 'requests/params_post_list.dart';
-import 'requests/params_user_list.dart';
-import 'requests/params_comment_list.dart';
-import 'requests/params_category_list.dart';
-import 'requests/params_tag_list.dart';
-import 'requests/params_page_list.dart';
-import 'requests/params_media_list.dart';
-
-export 'schemas/jwt_response.dart';
+export 'constants.dart';
+export 'requests/params_category_list.dart';
+export 'requests/params_comment_list.dart';
+export 'requests/params_media_list.dart';
+export 'requests/params_page_list.dart';
+export 'requests/params_post_list.dart';
+export 'requests/params_tag_list.dart';
+export 'requests/params_user_list.dart';
 export 'schemas/avatar_urls.dart';
 export 'schemas/category.dart';
 export 'schemas/comment.dart';
@@ -47,6 +52,7 @@ export 'schemas/content.dart';
 export 'schemas/excerpt.dart';
 export 'schemas/fetch_user_result.dart';
 export 'schemas/guid.dart';
+export 'schemas/jwt_response.dart';
 export 'schemas/labels.dart';
 export 'schemas/links.dart';
 export 'schemas/media.dart';
@@ -57,16 +63,6 @@ export 'schemas/tag.dart';
 export 'schemas/title.dart';
 export 'schemas/user.dart';
 export 'schemas/wordpress_error.dart';
-
-export 'constants.dart';
-
-export 'requests/params_post_list.dart';
-export 'requests/params_user_list.dart';
-export 'requests/params_comment_list.dart';
-export 'requests/params_category_list.dart';
-export 'requests/params_tag_list.dart';
-export 'requests/params_page_list.dart';
-export 'requests/params_media_list.dart';
 
 /// All WordPress related functionality are defined under this class.
 class WordPress {
@@ -140,6 +136,7 @@ class WordPress {
       JWTResponse authResponse =
           JWTResponse.fromJson(json.decode(response.body));
       _token = authResponse.token;
+
       _urlHeader['Authorization'] = 'Bearer ${authResponse.token}';
 
       return fetchUser(email: authResponse.userEmail);
@@ -407,7 +404,7 @@ class WordPress {
     }
   }
 
-  /// This returns a list of [User] based on the filter parameters
+  /// This returns an object FetchUsersResult based on the filter parameters
   /// specified through [ParamsUserList] object. By default it returns only
   /// [ParamsUserList.perPage] number of users in page [ParamsUserList.pageNum].
   ///
@@ -418,6 +415,24 @@ class WordPress {
 
     url.write(params.toString());
 
+    return _doUsersFetch(url);
+  }
+
+  /// This returns an object FetchUsersResult as defined by the input, based on the filter parameters
+  /// specified through [ParamsUserList] object. The url it fetches to is defined by the input [String] path. By default it returns only
+  /// [ParamsUserList.perPage] number of users in page [ParamsUserList.pageNum].
+  ///
+  /// In case of an error, a [WordPressError] object is thrown.
+  async.Future<FetchUsersResult> fetchCustomUsers(
+      {@required String path, @required ParamsUserList params}) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + path);
+
+    url.write(params.toString());
+
+    return _doUsersFetch(url);
+  }
+
+  async.Future<FetchUsersResult> _doUsersFetch(StringBuffer url) {
     final response = await http.get(url.toString(), headers: _urlHeader);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
