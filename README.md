@@ -62,12 +62,12 @@ response.then((user) {
 
 ```dart
 Future<List<wp.Post>> posts = wordPress.fetchPosts(
-  params: wp.ParamsPostList(
+  postParams: wp.ParamsPostList(
     context: wp.WordPressContext.view,
     pageNum: 1,
     perPage: 20,
     order: wp.Order.desc,
-    orderBy: wp.PostsOrderBy.date,
+    orderBy: wp.PostOrderBy.date,
   ),
   fetchAuthor: true,
   fetchFeaturedMedia: true,
