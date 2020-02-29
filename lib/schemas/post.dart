@@ -174,8 +174,8 @@ class Post {
         }
       });
     }
-    categoryIDs = json['categories'].cast<int>();
-    tagIDs = json['tags'].cast<int>();
+    categoryIDs = json['categories'] != null ? json['categories'].cast<int>() : null;
+    tagIDs = json['tags'] != null ? json['tags'].cast<int>() : null;
     permalinkTemplate = json['permalink_template'];
     generatedSlug = json['generated_slug'];
     lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
