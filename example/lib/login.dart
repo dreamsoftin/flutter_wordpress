@@ -40,8 +40,8 @@ class LoginFieldsState extends State<LoginFields> {
   @override
   void initState() {
     super.initState();
-    _username = 'ChiefEditor';
-    _password = 'chiefeditor@123';
+    _username = 'yahya';
+    _password = '123';
   }
 
   @override
@@ -49,64 +49,64 @@ class LoginFieldsState extends State<LoginFields> {
     // TODO: implement build
     return Center(
         child: SingleChildScrollView(
-      child: Container(
-        padding: PADDING_16,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: PADDING_8,
-              child: _buildFormField(
-                icon: Icon(Icons.person),
-                labelText: "Username",
-                hintText: "Username",
-                initialText: _username,
-                onChanged: _onUsernameChanged,
-              ),
-            ),
-            Padding(
-              padding: PADDING_8,
-              child: _buildFormField(
-                icon: Icon(Icons.lock),
-                labelText: "Password",
-                hintText: "Password",
-                initialText: _password,
-                obscureText: true,
-                onChanged: _onPasswordChanged,
-              ),
-            ),
-            _isDetailValid
-                ? SizedBox(
-                    width: 0.0,
-                    height: 0.0,
-                  )
-                : Padding(
-                    padding: PADDING_8,
-                    child: Text(
-                      "Invalid Username / Password",
-                      style: TextStyle(
-                        color: Colors.red,
-                      ),
+          child: Container(
+            padding: PADDING_16,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: PADDING_8,
+                  child: _buildFormField(
+                    icon: Icon(Icons.person),
+                    labelText: "Username",
+                    hintText: "Username",
+                    initialText: _username,
+                    onChanged: _onUsernameChanged,
+                  ),
+                ),
+                Padding(
+                  padding: PADDING_8,
+                  child: _buildFormField(
+                    icon: Icon(Icons.lock),
+                    labelText: "Password",
+                    hintText: "Password",
+                    initialText: _password,
+                    obscureText: true,
+                    onChanged: _onPasswordChanged,
+                  ),
+                ),
+                _isDetailValid
+                    ? SizedBox(
+                  width: 0.0,
+                  height: 0.0,
+                )
+                    : Padding(
+                  padding: PADDING_8,
+                  child: Text(
+                    "Invalid Username / Password",
+                    style: TextStyle(
+                      color: Colors.red,
                     ),
                   ),
-            RaisedButton(
-              onPressed: _isValidating ? () {} : _validateUser,
-              color: Colors.blue,
-              textColor: Colors.white,
-              child: Padding(
-                padding: PADDING_8,
-                child: _isValidating
-                    ? CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation(Colors.white),
-                      )
-                    : Text('Login'),
-              ),
-            )
-          ],
-        ),
-      ),
-    ));
+                ),
+                RaisedButton(
+                  onPressed: _isValidating ? () {} : _validateUser,
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  child: Padding(
+                    padding: PADDING_8,
+                    child: _isValidating
+                        ? CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation(Colors.white),
+                    )
+                        : Text('Login'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 
   Widget _buildFormField({
@@ -148,12 +148,14 @@ class LoginFieldsState extends State<LoginFields> {
     });
 
     wp.WordPress wordPress = new wp.WordPress(
-      baseUrl: 'http://192.168.6.165',
+      baseUrl: 'http://newschin.com/en',
       authenticator: wp.WordPressAuthenticator.JWT,
+      adminName: 'yahya',
+      adminKey: '',
     );
 
     final response =
-        wordPress.authenticateUser(username: _username, password: _password);
+    wordPress.authenticateUser(username: _username, password: _password);
 
     response.then((user) {
       setState(() {
@@ -176,8 +178,9 @@ class LoginFieldsState extends State<LoginFields> {
       context,
       MaterialPageRoute(
         builder: (context) => PostListPage(
-              wordPress: wordPress,
-            ),
+          wordPress: wordPress,
+          user: user,
+        ),
       ),
     );
   }

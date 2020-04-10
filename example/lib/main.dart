@@ -16,5 +16,3 @@ class WordPressApp extends StatelessWidget {
     );
   }
 }
-
-

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
-import 'package:flutter_html/flutter_html.dart';
 import 'post_page.dart';
 
 class PostListPage extends StatelessWidget {
   final wp.WordPress wordPress;
+  final wp.User user;
 
-  PostListPage({Key key, @required this.wordPress});
+  PostListPage({Key key, @required this.wordPress, this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +17,7 @@ class PostListPage extends StatelessWidget {
       body: Center(
         child: PostsBuilder(
           wordPress: wordPress,
+          user: user,
         ),
       ),
     );
@@ -25,8 +26,9 @@ class PostListPage extends StatelessWidget {
 
 class PostsBuilder extends StatefulWidget {
   final wp.WordPress wordPress;
+  final wp.User user;
 
-  PostsBuilder({Key key, @required this.wordPress});
+  PostsBuilder({Key key, @required this.wordPress, this.user});
 
   @override
   PostsBuilderState createState() => PostsBuilderState();
@@ -70,6 +72,33 @@ class PostsBuilderState extends State<PostsBuilder> {
     });
   }
 
+//  yahya
+
+  void updatePost(wp.User user) {
+    final post = widget.wordPress.updatePost(
+      post: new wp.Post(
+        title: 'First post as a Chief Editor',
+        content: 'Blah! blah! blah!',
+        excerpt: 'Discussion about blah!',
+        authorID: user.id,
+        commentStatus: wp.PostCommentStatus.open,
+        pingStatus: wp.PostPingStatus.closed,
+        status: wp.PostPageStatus.publish,
+        format: wp.PostFormat.standard,
+        sticky: true,
+      ),
+      id: 1,
+    );
+
+    post.then((p) {
+      print('Post updated successfully with ID');
+    }).catchError((err) {
+      print('Failed to update post: $err');
+    });
+  }
+
+//  end yahya
+
   void postComment(wp.User user, wp.Post post) {
     final comment = widget.wordPress.createComment(
       comment: new wp.Comment(
@@ -90,7 +119,7 @@ class PostsBuilderState extends State<PostsBuilder> {
   Future<void> fetchPosts() {
     setState(() {
       posts = widget.wordPress.fetchPosts(
-        postParams: wp.ParamsPostList(),
+        postParams: wp.ParamsPostList(perPage: 1),
         fetchAuthor: true,
         fetchFeaturedMedia: true,
       );
@@ -183,6 +212,12 @@ class PostsBuilderState extends State<PostsBuilder> {
                     fontWeight: FontWeight.w200,
                   ),
                 ),
+                RaisedButton.icon(
+                    onPressed: () {
+                      updatePost(widget.user);
+                    },
+                    icon: Icon(Icons.settings),
+                    label: Text("Update")),
               ],
             ),
           ),
@@ -213,7 +248,10 @@ class PostsBuilderState extends State<PostsBuilder> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) {
-        return SinglePostPage(wordPress: widget.wordPress, post: post,);
+        return SinglePostPage(
+          wordPress: widget.wordPress,
+          post: post,
+        );
       }),
     );
   }
