@@ -6,8 +6,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73f4dbd7-3b98-4a12-b0ae-5e3c44fac77c" name="Default Changelist" comment="CommentDelete Added!">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="73f4dbd7-3b98-4a12-b0ae-5e3c44fac77c" name="Default Changelist" comment="updateComment Added!">
       <change beforePath="$PROJECT_DIR$/example/lib/display_posts.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/display_posts.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/flutter_wordpress.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/flutter_wordpress.dart" afterDir="false" />
     </list>
@@ -103,13 +102,25 @@
       <file leaf-file-name="display_posts.dart" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/example/lib/display_posts.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="119" column="22" lean-forward="true" selection-start-line="119" selection-start-column="22" selection-end-line="119" selection-end-column="22" />
+            <state relative-caret-position="228">
+              <caret line="124" column="8" lean-forward="true" selection-start-line="124" selection-start-column="8" selection-end-line="124" selection-end-column="8" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#1997#2619#0" />
+                <element signature="e#2676#3039#0" />
                 <element signature="e#2531#2598#0" />
                 <element signature="e#2811#3023#0" />
+                <element signature="e#3094#3325#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="post_page.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/example/lib/post_page.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -117,11 +128,13 @@
       <file leaf-file-name="flutter_wordpress.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/flutter_wordpress.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="690" column="58" lean-forward="true" selection-start-line="690" selection-start-column="58" selection-end-line="690" selection-end-column="58" />
+            <state relative-caret-position="-403">
+              <caret line="711" column="79" lean-forward="true" selection-start-line="711" selection-start-column="79" selection-end-line="711" selection-end-column="79" />
               <folding>
-                <element signature="e#22597#23705#0" />
+                <element signature="e#23860#24968#0" />
+                <element signature="e#23784#24892#0" />
                 <element signature="e#24826#25834#0" />
+                <element signature="e#25905#26919#0" />
               </folding>
             </state>
           </provider>
@@ -138,8 +151,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Guid</find>
-      <find>Title</find>
       <find>Descript</find>
       <find>Excerpt</find>
       <find>export</find>
@@ -168,6 +179,8 @@
       <find>fetchPosts</find>
       <find>_onValidUser</find>
       <find>comment</find>
+      <find>me</find>
+      <find>updateUser</find>
     </findStrings>
     <replaceStrings>
       <replace>import</replace>
@@ -360,7 +373,21 @@
       <option name="project" value="LOCAL" />
       <updated>1587209299445</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="UserDelete Added!">
+      <created>1587209498939</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1587209498939</updated>
+    </task>
+    <task id="LOCAL-00005" summary="updateComment Added!">
+      <created>1587210411959</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1587210411959</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -383,11 +410,11 @@
       <window_info id="Image Layers" order="0" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Flutter Performance" order="5" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Run" order="0" visible="true" weight="0.40112993" />
+      <window_info anchor="bottom" id="Run" order="0" visible="true" weight="0.40112993" />
       <window_info anchor="bottom" id="Version Control" order="6" />
       <window_info anchor="bottom" id="Terminal" order="3" weight="0.32909605" />
       <window_info id="Captures" order="7" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.24161074" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.24161074" />
       <window_info anchor="right" id="Android WiFi ADB" order="6" />
       <window_info anchor="right" id="Theme Preview" order="0" />
       <window_info id="Favorites" order="1" side_tool="true" />
@@ -439,7 +466,9 @@
     <MESSAGE value="PostUpdate Added!" />
     <MESSAGE value="PostDelete Added!" />
     <MESSAGE value="CommentDelete Added!" />
-    <option name="LAST_COMMIT_MESSAGE" value="CommentDelete Added!" />
+    <MESSAGE value="UserDelete Added!" />
+    <MESSAGE value="updateComment Added!" />
+    <option name="LAST_COMMIT_MESSAGE" value="updateComment Added!" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/lib/schemas/category.dart" />
@@ -504,13 +533,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="6" column="2" selection-start-line="6" selection-start-column="2" selection-end-line="6" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/lib/post_page.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
@@ -623,25 +645,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/example/lib/post_page.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/flutter_wordpress.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="690" column="58" lean-forward="true" selection-start-line="690" selection-start-column="58" selection-end-line="690" selection-end-column="58" />
+        <state relative-caret-position="-403">
+          <caret line="711" column="79" lean-forward="true" selection-start-line="711" selection-start-column="79" selection-end-line="711" selection-end-column="79" />
           <folding>
-            <element signature="e#22597#23705#0" />
+            <element signature="e#23860#24968#0" />
+            <element signature="e#23784#24892#0" />
             <element signature="e#24826#25834#0" />
+            <element signature="e#25905#26919#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/example/lib/display_posts.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="119" column="22" lean-forward="true" selection-start-line="119" selection-start-column="22" selection-end-line="119" selection-end-column="22" />
+        <state relative-caret-position="228">
+          <caret line="124" column="8" lean-forward="true" selection-start-line="124" selection-start-column="8" selection-end-line="124" selection-end-column="8" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#1997#2619#0" />
+            <element signature="e#2676#3039#0" />
             <element signature="e#2531#2598#0" />
             <element signature="e#2811#3023#0" />
+            <element signature="e#3094#3325#0" />
           </folding>
         </state>
       </provider>

@@ -118,6 +118,21 @@ class PostsBuilderState extends State<PostsBuilder> {
     });
   }
 
+  void updateUser({@required int id}) {
+    final user = widget.wordPress.updateUser(
+      user: new wp.User(
+        description: "This is description for this user",
+      ),
+      id: id,
+    );
+
+    user.then((u) {
+      print('User updated successfully with ID ${u.id}');
+    }).catchError((err) {
+      print('Failed to update User: $err');
+    });
+  }
+
 //  =====================
 //  UPDATE END
 //  =====================
