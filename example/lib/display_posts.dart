@@ -74,7 +74,11 @@ class PostsBuilderState extends State<PostsBuilder> {
 
 //  yahya
 
-  void updatePost({@required wp.User user}) {
+//  =====================
+//  UPDATE START
+//  =====================
+
+  void updatePost({@required int id, @required wp.User user}) {
     final post = widget.wordPress.updatePost(
       post: new wp.Post(
         title: 'First post as a Chief Editor',
@@ -87,7 +91,7 @@ class PostsBuilderState extends State<PostsBuilder> {
         format: wp.PostFormat.standard,
         sticky: true,
       ),
-      id: 1,
+      id: id, //
     );
 
     post.then((p) {
@@ -96,6 +100,31 @@ class PostsBuilderState extends State<PostsBuilder> {
       print('Failed to update post: $err');
     });
   }
+
+  void updateComment({@required int id, @required int postId, @required wp.User user}) {
+    final comment = widget.wordPress.updateComment(
+      comment: new wp.Comment(
+        content: "Comment Updated!",
+        author: user.id,
+        post: postId,
+      ),
+      id: id,
+    );
+
+    comment.then((c) {
+      print('Comment updated successfully with ID ${c.id}');
+    }).catchError((err) {
+      print('Failed to update Comment: $err');
+    });
+  }
+
+//  =====================
+//  UPDATE END
+//  =====================
+
+//  =====================
+//  DELETE START
+//  =====================
 
   void deletePost({@required int id}) {
     final post = widget.wordPress.deletePost(id: id);
@@ -123,6 +152,10 @@ class PostsBuilderState extends State<PostsBuilder> {
       print('Failed to Delete user: $err');
     });
   }
+
+//  =====================
+//  DELETE END
+//  =====================
 
 //  end yahya
 
@@ -244,7 +277,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                 ),
                 RaisedButton.icon(
                   onPressed: () {
-                    updatePost(user: widget.user);
+                    updatePost(user: widget.user, id: id);
                   },
                   icon: Icon(Icons.settings),
                   label: Text(

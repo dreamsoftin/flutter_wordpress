@@ -646,7 +646,11 @@ class WordPress {
     }
   }
 
-  //  yahya
+//  yahya - @mymakarim
+
+//  =====================
+//  UPDATE START
+//  =====================
   async.Future<Post> updatePost({@required int id, @required Post post}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS + '/$id');
 
@@ -675,6 +679,43 @@ class WordPress {
         });
       }
   }
+
+  async.Future<Post> updateComment({@required int id, @required Comment comment}) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_COMMENTS + '/$id');
+
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url.toString()));
+    request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+    request.headers.set(HttpHeaders.acceptHeader, "application/json");
+    request.headers.set('Authorization', "${_urlHeader['Authorization']}");
+
+    request.add(utf8.encode(json.encode(comment.toJson())));
+    HttpClientResponse response = await request.close();
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      response.transform(utf8.decoder).listen((contents) {
+        return Comment.fromJson(json.decode(contents));
+      });
+    } else {
+      response.transform(utf8.decoder).listen((contents) {
+        try {
+          WordPressError err =
+          WordPressError.fromJson(json.decode(contents));
+          throw err;
+        } catch (e) {
+          throw new WordPressError(message: contents);
+        }
+      });
+    }
+  }
+
+//  =====================
+//  UPDATE END
+//  =====================
+
+//  =====================
+//  DELETE START
+//  =====================
 
   async.Future<Post> deletePost({@required int id}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS + '/$id');
@@ -760,7 +801,11 @@ class WordPress {
     }
   }
 
-  //  end yahya
+//  =====================
+//  UPDATE END
+//  =====================
+
+//  end yahya - @mymakarim
 
   /// This is used to create a [Comment] for a [Post]. Before this method can be called,
   /// [User] writing the comment needs to be authenticated first by calling
