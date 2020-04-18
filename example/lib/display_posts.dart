@@ -100,9 +100,18 @@ class PostsBuilderState extends State<PostsBuilder> {
   void deletePost({@required int id}) {
     final post = widget.wordPress.deletePost(id: id);
     post.then((p) {
-      print('Post Deleted successfully with ${p.id}');
+      print('Post Deleted successfully with ID: ${p.id}');
     }).catchError((err) {
       print('Failed to Delete post: $err');
+    });
+  }
+
+  void deleteComment({@required int id}) {
+    final comment = widget.wordPress.deleteComment(id: id);
+    comment.then((c) {
+      print('Comment Deleted successfully with ID: ${c.id}');
+    }).catchError((err) {
+      print('Failed to Delete comment: $err');
     });
   }
 
