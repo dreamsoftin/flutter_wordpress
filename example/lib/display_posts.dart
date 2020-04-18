@@ -115,6 +115,15 @@ class PostsBuilderState extends State<PostsBuilder> {
     });
   }
 
+  void deleteUser({@required int id}) {
+    final comment = widget.wordPress.deleteUser(id: id);
+    comment.then((u) {
+      print('User Deleted successfully with ID: ${u.id}');
+    }).catchError((err) {
+      print('Failed to Delete user: $err');
+    });
+  }
+
 //  end yahya
 
   void postComment(wp.User user, wp.Post post) {

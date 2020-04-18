@@ -6,7 +6,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73f4dbd7-3b98-4a12-b0ae-5e3c44fac77c" name="Default Changelist" comment="PostUpdate Added!">
+    <list default="true" id="73f4dbd7-3b98-4a12-b0ae-5e3c44fac77c" name="Default Changelist" comment="CommentDelete Added!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/display_posts.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/display_posts.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/flutter_wordpress.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/flutter_wordpress.dart" afterDir="false" />
@@ -103,10 +103,12 @@
       <file leaf-file-name="display_posts.dart" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/example/lib/display_posts.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="103" column="25" lean-forward="true" selection-start-line="103" selection-start-column="25" selection-end-line="103" selection-end-column="25" />
+            <state relative-caret-position="171">
+              <caret line="119" column="22" lean-forward="true" selection-start-line="119" selection-start-column="22" selection-end-line="119" selection-end-column="22" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#2531#2598#0" />
+                <element signature="e#2811#3023#0" />
               </folding>
             </state>
           </provider>
@@ -115,8 +117,12 @@
       <file leaf-file-name="flutter_wordpress.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/flutter_wordpress.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1311">
-              <caret line="695" column="13" lean-forward="true" selection-start-line="695" selection-start-column="13" selection-end-line="695" selection-end-column="13" />
+            <state relative-caret-position="77">
+              <caret line="690" column="58" lean-forward="true" selection-start-line="690" selection-start-column="58" selection-end-line="690" selection-end-column="58" />
+              <folding>
+                <element signature="e#22597#23705#0" />
+                <element signature="e#24826#25834#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -132,7 +138,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Content</find>
       <find>Guid</find>
       <find>Title</find>
       <find>Descript</find>
@@ -162,6 +167,7 @@
       <find>updatePost</find>
       <find>fetchPosts</find>
       <find>_onValidUser</find>
+      <find>comment</find>
     </findStrings>
     <replaceStrings>
       <replace>import</replace>
@@ -181,6 +187,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="ymakarim &lt;ymakarim@gmail.com&gt;" />
         <option value="Yahya Makarim &lt;ymakarim@gmail.com&gt;" />
       </list>
     </option>
@@ -339,7 +346,21 @@
       <option name="project" value="LOCAL" />
       <updated>1586516766033</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="PostDelete Added!">
+      <created>1587208860611</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1587208860611</updated>
+    </task>
+    <task id="LOCAL-00003" summary="CommentDelete Added!">
+      <created>1587209299445</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1587209299445</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -416,7 +437,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="PostUpdate Added!" />
-    <option name="LAST_COMMIT_MESSAGE" value="PostUpdate Added!" />
+    <MESSAGE value="PostDelete Added!" />
+    <MESSAGE value="CommentDelete Added!" />
+    <option name="LAST_COMMIT_MESSAGE" value="CommentDelete Added!" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/lib/schemas/category.dart" />
@@ -602,17 +625,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/flutter_wordpress.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1311">
-          <caret line="695" column="13" lean-forward="true" selection-start-line="695" selection-start-column="13" selection-end-line="695" selection-end-column="13" />
+        <state relative-caret-position="77">
+          <caret line="690" column="58" lean-forward="true" selection-start-line="690" selection-start-column="58" selection-end-line="690" selection-end-column="58" />
+          <folding>
+            <element signature="e#22597#23705#0" />
+            <element signature="e#24826#25834#0" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/example/lib/display_posts.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="103" column="25" lean-forward="true" selection-start-line="103" selection-start-column="25" selection-end-line="103" selection-end-column="25" />
+        <state relative-caret-position="171">
+          <caret line="119" column="22" lean-forward="true" selection-start-line="119" selection-start-column="22" selection-end-line="119" selection-end-column="22" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#2531#2598#0" />
+            <element signature="e#2811#3023#0" />
           </folding>
         </state>
       </provider>
