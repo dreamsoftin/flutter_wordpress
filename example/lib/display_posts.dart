@@ -49,7 +49,7 @@ class PostsBuilderState extends State<PostsBuilder> {
     fetchPosts();
   }
 
-  void createPost(wp.User user) {
+  void createPost({@required wp.User user}) {
     final post = widget.wordPress.createPost(
       post: new wp.Post(
         title: 'First post as a Chief Editor',
@@ -66,7 +66,6 @@ class PostsBuilderState extends State<PostsBuilder> {
 
     post.then((p) {
       print('Post created successfully with ID: ${p.id}');
-      postComment(user, p);
     }).catchError((err) {
       print('Failed to create post: $err');
     });
@@ -78,13 +77,13 @@ class PostsBuilderState extends State<PostsBuilder> {
 //  UPDATE START
 //  =====================
 
-  void updatePost({@required int id, @required wp.User user}) {
-    final post = widget.wordPress.updatePost(
+  Future<void> updatePost({@required int id, @required int userId}) async {
+    await widget.wordPress.updatePost(
       post: new wp.Post(
         title: 'First post as a Chief Editor',
         content: 'Blah! blah! blah!',
         excerpt: 'Discussion about blah!',
-        authorID: user.id,
+        authorID: userId,
         commentStatus: wp.PostCommentStatus.open,
         pingStatus: wp.PostPingStatus.closed,
         status: wp.PostPageStatus.publish,
@@ -92,42 +91,39 @@ class PostsBuilderState extends State<PostsBuilder> {
         sticky: true,
       ),
       id: id, //
-    );
-
-    post.then((p) {
-      print('Post updated successfully with ID ${p.id}');
+    ).then((p) {
+      print('Post updated successfully with ID ${p}');
     }).catchError((err) {
       print('Failed to update post: $err');
     });
   }
 
-  void updateComment({@required int id, @required int postId, @required wp.User user}) {
-    final comment = widget.wordPress.updateComment(
+  Future<void> updateComment({@required int id, @required int postId, @required wp.User user}) async {
+    await widget.wordPress.updateComment(
       comment: new wp.Comment(
-        content: "Comment Updated!",
+        content: "Comment Updated2!",
         author: user.id,
         post: postId,
       ),
       id: id,
-    );
-
-    comment.then((c) {
-      print('Comment updated successfully with ID ${c.id}');
+    ).then((c) {
+      print('Comment updated successfully "$c"');
     }).catchError((err) {
       print('Failed to update Comment: $err');
     });
   }
 
-  void updateUser({@required int id}) {
-    final user = widget.wordPress.updateUser(
+  Future<void> updateUser({@required int id, @required String username, @required String email}) async {
+    await widget.wordPress.updateUser(
       user: new wp.User(
         description: "This is description for this user",
+        username: username,
+        id: id,
+        email: email
       ),
       id: id,
-    );
-
-    user.then((u) {
-      print('User updated successfully with ID ${u.id}');
+    ).then((u) {
+      print('User updated successfully $u');
     }).catchError((err) {
       print('Failed to update User: $err');
     });
@@ -141,28 +137,25 @@ class PostsBuilderState extends State<PostsBuilder> {
 //  DELETE START
 //  =====================
 
-  void deletePost({@required int id}) {
-    final post = widget.wordPress.deletePost(id: id);
-    post.then((p) {
-      print('Post Deleted successfully with ID: ${p.id}');
+  Future<void> deletePost({@required int id}) async {
+    await widget.wordPress.deletePost(id: id).then((p) {
+      print('Post Deleted successfully: $p');
     }).catchError((err) {
       print('Failed to Delete post: $err');
     });
   }
 
-  void deleteComment({@required int id}) {
-    final comment = widget.wordPress.deleteComment(id: id);
-    comment.then((c) {
-      print('Comment Deleted successfully with ID: ${c.id}');
+  Future<void> deleteComment({@required int id}) async {
+    await widget.wordPress.deleteComment(id: id).then((c) {
+      print('Comment Deleted successfully: $c');
     }).catchError((err) {
       print('Failed to Delete comment: $err');
     });
   }
 
-  void deleteUser({@required int id}) {
-    final comment = widget.wordPress.deleteUser(id: id);
-    comment.then((u) {
-      print('User Deleted successfully with ID: ${u.id}');
+  Future<void> deleteUser({@required int id, @required int reassign}) async {
+    await widget.wordPress.deleteUser(id: id, reassign: reassign).then((u) {
+      print('User Deleted successfully: $u');
     }).catchError((err) {
       print('Failed to Delete user: $err');
     });
@@ -174,11 +167,11 @@ class PostsBuilderState extends State<PostsBuilder> {
 
 //  end yahya
 
-  void postComment(wp.User user, wp.Post post) {
+  void createComment({@required int userId, @required int postId}) {
     final comment = widget.wordPress.createComment(
       comment: new wp.Comment(
-        author: user.id,
-        post: post.id,
+        author: userId,
+        post: postId,
         content: "First!",
         parent: 0,
       ),
@@ -280,10 +273,10 @@ class PostsBuilderState extends State<PostsBuilder> {
                 ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
                 Text(
                   author,
                   style: TextStyle(
@@ -292,22 +285,87 @@ class PostsBuilderState extends State<PostsBuilder> {
                 ),
                 RaisedButton.icon(
                   onPressed: () {
-                    updatePost(user: widget.user, id: id);
+                    createComment(postId: 1, userId: 1);
                   },
                   icon: Icon(Icons.settings),
                   label: Text(
-                    "Update",
+                    "Create New Comment",
                   ),
                 ),
                 RaisedButton.icon(
                   onPressed: () {
-                    deletePost(id: id);
+                    updateComment(user: widget.user, id: 1, postId: 1);
                   },
                   icon: Icon(Icons.settings),
                   label: Text(
-                    "Delete",
+                    "Update Comment with ID #1",
                   ),
                 ),
+                RaisedButton.icon(
+                  onPressed: () {
+                    deleteComment(id: 1);
+                  },
+                  icon: Icon(Icons.settings),
+                  label: Text(
+                    "Delete Comment with ID #1",
+                  ),
+                ),
+                RaisedButton.icon(
+                  color: Colors.redAccent,
+                  onPressed: () {
+                    updatePost(userId: widget.user.id, id: 1);
+                  },
+                  icon: Icon(Icons.settings, color: Colors.white),
+                  label: Text(
+                    "Update Post with ID #1",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                RaisedButton.icon(
+                  color: Colors.redAccent,
+                  onPressed: () {
+                    deletePost(id: 1);
+                  },
+                  icon: Icon(Icons.delete, color: Colors.white),
+                  label: Text(
+                    "Delete Post with ID #1",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                RaisedButton.icon(
+                  color: Colors.redAccent,
+                  onPressed: () {
+                    createPost(user: widget.user);
+                  },
+                  icon: Icon(Icons.add_circle, color: Colors.white,),
+                  label: Text(
+                    "Create New Post",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+
+                RaisedButton.icon(
+                  color: Colors.blueAccent,
+                  onPressed: () {
+                    updateUser(id: 1, email: "newuser@gmaill.com", username: "newuser");
+                  },
+                  icon: Icon(Icons.settings, color: Colors.white,),
+                  label: Text(
+                    "Update User with ID #1",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                RaisedButton.icon(
+                  color: Colors.blueAccent,
+                  onPressed: () {
+                    deleteUser(id: 1, reassign: 1);
+                  },
+                  icon: Icon(Icons.delete, color: Colors.white,),
+                  label: Text(
+                    "Delete User with ID #1",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
               ],
             ),
           ),

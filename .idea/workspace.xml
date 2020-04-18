@@ -6,9 +6,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73f4dbd7-3b98-4a12-b0ae-5e3c44fac77c" name="Default Changelist" comment="updateComment Added!">
+    <list default="true" id="73f4dbd7-3b98-4a12-b0ae-5e3c44fac77c" name="Default Changelist" comment="updateUser Added!">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/display_posts.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/display_posts.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/flutter_wordpress.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/flutter_wordpress.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/schemas/user.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schemas/user.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -90,7 +92,7 @@
       <file leaf-file-name="login.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example/lib/login.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
+            <state relative-caret-position="3850">
               <caret line="156" column="20" selection-start-line="156" selection-start-column="20" selection-end-line="156" selection-end-column="20" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
@@ -102,25 +104,19 @@
       <file leaf-file-name="display_posts.dart" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/example/lib/display_posts.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="124" column="8" lean-forward="true" selection-start-line="124" selection-start-column="8" selection-end-line="124" selection-end-column="8" />
+            <state relative-caret-position="175">
+              <caret line="324" column="42" selection-start-line="324" selection-start-column="42" selection-end-line="324" selection-end-column="42" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
-                <element signature="e#1997#2619#0" />
-                <element signature="e#2676#3039#0" />
-                <element signature="e#2531#2598#0" />
-                <element signature="e#2811#3023#0" />
-                <element signature="e#3094#3325#0" />
+                <element signature="e#1127#1174#0" />
+                <element signature="e#2477#3099#0" />
+                <element signature="e#3196#3562#0" />
+                <element signature="e#3128#3518#0" />
+                <element signature="e#4101#4317#0" />
+                <element signature="e#4360#4591#0" />
+                <element signature="e#4221#4432#0" />
+                <element signature="e#5372#5585#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="post_page.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/lib/post_page.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -128,14 +124,24 @@
       <file leaf-file-name="flutter_wordpress.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/flutter_wordpress.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-403">
-              <caret line="711" column="79" lean-forward="true" selection-start-line="711" selection-start-column="79" selection-end-line="711" selection-end-column="79" />
+            <state relative-caret-position="131">
+              <caret line="652" column="22" lean-forward="true" selection-start-line="652" selection-start-column="22" selection-end-line="652" selection-end-column="22" />
               <folding>
-                <element signature="e#23860#24968#0" />
-                <element signature="e#23784#24892#0" />
-                <element signature="e#24826#25834#0" />
-                <element signature="e#25905#26919#0" />
+                <element signature="e#23807#24768#0" />
+                <element signature="e#24958#26032#0" />
+                <element signature="e#26106#27170#0" />
+                <element signature="e#27362#28370#0" />
+                <element signature="e#28430#29444#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/schemas/user.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="157">
+              <caret line="85" column="27" lean-forward="true" selection-start-line="85" selection-start-column="27" selection-end-line="85" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -151,18 +157,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Descript</find>
-      <find>Excerpt</find>
-      <find>export</find>
-      <find>Labels</find>
-      <find>String</find>
-      <find>;</find>
-      <find>: '',</find>
-      <find>,</find>
-      <find>:</find>
-      <find>///</find>
-      <find>PostOrderBy</find>
-      <find>data\[\'\w*\'\] = this.\w*;</find>
       <find>localhost</find>
       <find>final</find>
       <find>fetch</find>
@@ -178,9 +172,21 @@
       <find>updatePost</find>
       <find>fetchPosts</find>
       <find>_onValidUser</find>
-      <find>comment</find>
       <find>me</find>
       <find>updateUser</find>
+      <find>then</find>
+      <find>comment</find>
+      <find>createComment</find>
+      <find>updatepost</find>
+      <find>userid</find>
+      <find>user.id</find>
+      <find>user</find>
+      <find>&gt;= 200 &amp;&amp; response.statusCode &lt; 300</find>
+      <find>deletePst</find>
+      <find>create</find>
+      <find>update user with</find>
+      <find>deleteUser</find>
+      <find>createUser</find>
     </findStrings>
     <replaceStrings>
       <replace>import</replace>
@@ -257,8 +263,8 @@
         <option value="$PROJECT_DIR$/pubspec.yaml" />
         <option value="$PROJECT_DIR$/example/android/app/build.gradle" />
         <option value="$PROJECT_DIR$/example/lib/main.dart" />
-        <option value="$PROJECT_DIR$/lib/schemas/user.dart" />
         <option value="$PROJECT_DIR$/example/lib/login.dart" />
+        <option value="$PROJECT_DIR$/lib/schemas/user.dart" />
         <option value="$PROJECT_DIR$/lib/flutter_wordpress.dart" />
         <option value="$PROJECT_DIR$/example/lib/display_posts.dart" />
       </list>
@@ -275,6 +281,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -298,6 +305,12 @@
               <item name="flutter_wordpress" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="flutter_wordpress" type="b2602c69:ProjectViewProjectNode" />
+              <item name="flutter_wordpress" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="schemas" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -314,7 +327,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -387,7 +399,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587210411959</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="updateUser Added!">
+      <created>1587210912739</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1587210912739</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -410,11 +429,11 @@
       <window_info id="Image Layers" order="0" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Flutter Performance" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="0" visible="true" weight="0.40112993" />
+      <window_info active="true" anchor="bottom" id="Run" order="0" visible="true" weight="0.46751413" />
       <window_info anchor="bottom" id="Version Control" order="6" />
       <window_info anchor="bottom" id="Terminal" order="3" weight="0.32909605" />
       <window_info id="Captures" order="7" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.24161074" />
+      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.24161074" />
       <window_info anchor="right" id="Android WiFi ADB" order="6" />
       <window_info anchor="right" id="Theme Preview" order="0" />
       <window_info id="Favorites" order="1" side_tool="true" />
@@ -433,15 +452,15 @@
       <window_info anchor="bottom" id="Dart Analysis" order="9" weight="0.32907802" />
       <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" weight="0.3295302" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.24161074" />
       <window_info active="true" anchor="bottom" id="Run" order="0" visible="true" weight="0.32907802" />
       <window_info anchor="right" id="Theme Preview" order="0" />
       <window_info anchor="right" id="Flutter Inspector" order="6" weight="0.3295302" />
       <window_info id="Captures" order="7" side_tool="true" />
       <window_info anchor="right" id="Flutter Outline" order="1" weight="0.3295302" />
       <window_info id="Structure" order="4" side_tool="true" />
-      <window_info anchor="bottom" id="Android Profiler" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="TODO" order="1" />
-      <window_info anchor="bottom" id="Version Control" order="6" />
+      <window_info id="Favorites" order="1" side_tool="true" />
       <window_info id="Build Variants" order="6" side_tool="true" />
       <window_info id="Image Layers" order="0" />
       <window_info id="Designer" order="2" />
@@ -451,12 +470,12 @@
       <window_info anchor="bottom" id="Terminal" order="3" />
       <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Flutter Performance" order="5" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.24161074" />
+      <window_info anchor="bottom" id="Version Control" order="6" />
       <window_info id="Capture Tool" order="3" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.32907802" />
       <window_info anchor="bottom" id="Messages" order="8" weight="0.32907802" />
       <window_info anchor="bottom" id="Logcat" order="10" />
-      <window_info id="Favorites" order="1" side_tool="true" />
+      <window_info anchor="bottom" id="Android Profiler" order="11" show_stripe_button="false" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -468,7 +487,8 @@
     <MESSAGE value="CommentDelete Added!" />
     <MESSAGE value="UserDelete Added!" />
     <MESSAGE value="updateComment Added!" />
-    <option name="LAST_COMMIT_MESSAGE" value="updateComment Added!" />
+    <MESSAGE value="updateUser Added!" />
+    <option name="LAST_COMMIT_MESSAGE" value="updateUser Added!" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/lib/schemas/category.dart" />
@@ -597,13 +617,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/schemas/post.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="22" lean-forward="true" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="25">
@@ -611,13 +624,6 @@
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/schemas/user.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="72" column="35" lean-forward="true" selection-start-line="72" selection-start-column="35" selection-end-line="72" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -630,7 +636,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/example/lib/login.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
+        <state relative-caret-position="3850">
           <caret line="156" column="20" selection-start-line="156" selection-start-column="20" selection-end-line="156" selection-end-column="20" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
@@ -652,30 +658,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/schemas/post.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/schemas/user.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="85" column="27" lean-forward="true" selection-start-line="85" selection-start-column="27" selection-end-line="85" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/flutter_wordpress.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-403">
-          <caret line="711" column="79" lean-forward="true" selection-start-line="711" selection-start-column="79" selection-end-line="711" selection-end-column="79" />
+        <state relative-caret-position="131">
+          <caret line="652" column="22" lean-forward="true" selection-start-line="652" selection-start-column="22" selection-end-line="652" selection-end-column="22" />
           <folding>
-            <element signature="e#23860#24968#0" />
-            <element signature="e#23784#24892#0" />
-            <element signature="e#24826#25834#0" />
-            <element signature="e#25905#26919#0" />
+            <element signature="e#23807#24768#0" />
+            <element signature="e#24958#26032#0" />
+            <element signature="e#26106#27170#0" />
+            <element signature="e#27362#28370#0" />
+            <element signature="e#28430#29444#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/example/lib/display_posts.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="124" column="8" lean-forward="true" selection-start-line="124" selection-start-column="8" selection-end-line="124" selection-end-column="8" />
+        <state relative-caret-position="175">
+          <caret line="324" column="42" selection-start-line="324" selection-start-column="42" selection-end-line="324" selection-end-column="42" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
-            <element signature="e#1997#2619#0" />
-            <element signature="e#2676#3039#0" />
-            <element signature="e#2531#2598#0" />
-            <element signature="e#2811#3023#0" />
-            <element signature="e#3094#3325#0" />
+            <element signature="e#1127#1174#0" />
+            <element signature="e#2477#3099#0" />
+            <element signature="e#3196#3562#0" />
+            <element signature="e#3128#3518#0" />
+            <element signature="e#4101#4317#0" />
+            <element signature="e#4360#4591#0" />
+            <element signature="e#4221#4432#0" />
+            <element signature="e#5372#5585#0" />
           </folding>
         </state>
       </provider>
