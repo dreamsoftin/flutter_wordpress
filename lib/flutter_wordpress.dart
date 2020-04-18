@@ -675,6 +675,34 @@ class WordPress {
         });
       }
   }
+
+  async.Future<Post> deletePost({@required int id}) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS + '/$id');
+
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.deleteUrl(Uri.parse(url.toString()));
+    request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+    request.headers.set(HttpHeaders.acceptHeader, "application/json");
+    request.headers.set('Authorization', "${_urlHeader['Authorization']}");
+
+    HttpClientResponse response = await request.close();
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      response.transform(utf8.decoder).listen((contents) {
+        return Post.fromJson(json.decode(contents));
+      });
+    } else {
+      response.transform(utf8.decoder).listen((contents) {
+        try {
+          WordPressError err =
+          WordPressError.fromJson(json.decode(contents));
+          throw err;
+        } catch (e) {
+          throw new WordPressError(message: contents);
+        }
+      });
+    }
+  }
 //  end yahya
 
   /// This is used to create a [Comment] for a [Post]. Before this method can be called,

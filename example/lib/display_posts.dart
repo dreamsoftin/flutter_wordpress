@@ -74,7 +74,7 @@ class PostsBuilderState extends State<PostsBuilder> {
 
 //  yahya
 
-  void updatePost(wp.User user) {
+  void updatePost({@required wp.User user}) {
     final post = widget.wordPress.updatePost(
       post: new wp.Post(
         title: 'First post as a Chief Editor',
@@ -91,9 +91,18 @@ class PostsBuilderState extends State<PostsBuilder> {
     );
 
     post.then((p) {
-      print('Post updated successfully with ID');
+      print('Post updated successfully with ID ${p.id}');
     }).catchError((err) {
       print('Failed to update post: $err');
+    });
+  }
+
+  void deletePost({@required int id}) {
+    final post = widget.wordPress.deletePost(id: id);
+    post.then((p) {
+      print('Post Deleted successfully with ${p.id}');
+    }).catchError((err) {
+      print('Failed to Delete post: $err');
     });
   }
 
@@ -136,6 +145,7 @@ class PostsBuilderState extends State<PostsBuilder> {
           return RefreshIndicator(
             child: ListView.builder(
               itemBuilder: (context, i) {
+                int id = snapshot.data[i].id;
                 String title = snapshot.data[i].title.rendered;
                 String author = snapshot.data[i].author.name;
                 String content = snapshot.data[i].content.rendered;
@@ -152,6 +162,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                       title: title,
                       content: content,
                       featuredMedia: featuredMedia,
+                      id : id,
                     ),
                   ),
                 );
@@ -179,6 +190,7 @@ class PostsBuilderState extends State<PostsBuilder> {
     String title,
     String content,
     wp.Media featuredMedia,
+    int id,
   }) {
     return Card(
       color: Colors.white,
@@ -213,11 +225,23 @@ class PostsBuilderState extends State<PostsBuilder> {
                   ),
                 ),
                 RaisedButton.icon(
-                    onPressed: () {
-                      updatePost(widget.user);
-                    },
-                    icon: Icon(Icons.settings),
-                    label: Text("Update")),
+                  onPressed: () {
+                    updatePost(user: widget.user);
+                  },
+                  icon: Icon(Icons.settings),
+                  label: Text(
+                    "Update",
+                  ),
+                ),
+                RaisedButton.icon(
+                  onPressed: () {
+                    deletePost(id: id);
+                  },
+                  icon: Icon(Icons.settings),
+                  label: Text(
+                    "Delete",
+                  ),
+                ),
               ],
             ),
           ),

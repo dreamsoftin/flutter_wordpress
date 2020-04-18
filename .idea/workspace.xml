@@ -7,17 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="73f4dbd7-3b98-4a12-b0ae-5e3c44fac77c" name="Default Changelist" comment="PostUpdate Added!">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/gradle.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/display_posts.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/display_posts.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/login.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/flutter_wordpress.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/flutter_wordpress.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/schemas/user.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/schemas/user.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -96,29 +88,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="flutter_wordpress.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/flutter_wordpress.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="52">
-              <caret line="660" lean-forward="true" selection-start-line="660" selection-end-line="660" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="user.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/schemas/user.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="72" column="35" lean-forward="true" selection-start-line="72" selection-start-column="35" selection-end-line="72" selection-end-column="35" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="login.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example/lib/login.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="164" column="38" selection-start-line="164" selection-start-column="38" selection-end-line="164" selection-end-column="38" />
+            <state relative-caret-position="175">
+              <caret line="156" column="20" selection-start-line="156" selection-start-column="20" selection-end-line="156" selection-end-column="20" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -126,24 +100,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/example/android/app/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="39" column="38" lean-forward="true" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="display_posts.dart" pinned="false" current-in-tab="false">
+      <file leaf-file-name="display_posts.dart" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/example/lib/display_posts.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="4" column="40" lean-forward="true" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
+            <state relative-caret-position="157">
+              <caret line="103" column="25" lean-forward="true" selection-start-line="103" selection-start-column="25" selection-end-line="103" selection-end-column="25" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
-                <element signature="e#1169#1803#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="flutter_wordpress.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/flutter_wordpress.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1311">
+              <caret line="695" column="13" lean-forward="true" selection-start-line="695" selection-start-column="13" selection-end-line="695" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -187,8 +160,8 @@
       <find>dynamic</find>
       <find>meta</find>
       <find>updatePost</find>
-      <find>_onValidUser</find>
       <find>fetchPosts</find>
+      <find>_onValidUser</find>
     </findStrings>
     <replaceStrings>
       <replace>import</replace>
@@ -206,6 +179,11 @@
     </dirStrings>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Yahya Makarim &lt;ymakarim@gmail.com&gt;" />
+      </list>
+    </option>
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -259,8 +237,8 @@
         <option value="$PROJECT_DIR$/pubspec.yaml" />
         <option value="$PROJECT_DIR$/example/android/app/build.gradle" />
         <option value="$PROJECT_DIR$/example/lib/main.dart" />
-        <option value="$PROJECT_DIR$/example/lib/login.dart" />
         <option value="$PROJECT_DIR$/lib/schemas/user.dart" />
+        <option value="$PROJECT_DIR$/example/lib/login.dart" />
         <option value="$PROJECT_DIR$/lib/flutter_wordpress.dart" />
         <option value="$PROJECT_DIR$/example/lib/display_posts.dart" />
       </list>
@@ -277,7 +255,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -316,6 +293,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -354,6 +332,14 @@
       <option name="presentableId" value="Default" />
       <updated>1549864063234</updated>
     </task>
+    <task id="LOCAL-00001" summary="PostUpdate Added!">
+      <created>1586516766033</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1586516766033</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -372,12 +358,11 @@
       <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" weight="0.3295302" />
       <window_info anchor="bottom" id="Debug" order="2" weight="0.32909605" />
       <window_info anchor="bottom" id="TODO" order="1" />
-      <window_info active="true" anchor="bottom" id="Messages" order="8" visible="true" weight="0.32768363" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="0" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Flutter Performance" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="0" weight="0.42372882" />
+      <window_info active="true" anchor="bottom" id="Run" order="0" visible="true" weight="0.40112993" />
       <window_info anchor="bottom" id="Version Control" order="6" />
       <window_info anchor="bottom" id="Terminal" order="3" weight="0.32909605" />
       <window_info id="Captures" order="7" side_tool="true" />
@@ -392,6 +377,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" auto_hide="true" x="0" y="0" width="337" height="638" id="Documentation" order="2" side_tool="true" type="SLIDING" weight="0.3295302" />
+      <window_info active="true" anchor="bottom" id="Messages" order="8" visible="true" weight="0.32768363" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
     </layout>
@@ -433,7 +419,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="PostUpdate Added!" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lib/schemas/page.dart" />
     <entry file="file://$PROJECT_DIR$/lib/schemas/category.dart" />
     <entry file="file://$PROJECT_DIR$/lib/requests/request.dart" />
     <entry file="file://$PROJECT_DIR$/.metadata">
@@ -564,9 +549,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="334" column="24" selection-start-line="334" selection-start-column="24" selection-end-line="334" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#13385#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -587,16 +569,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/lib/login.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="164" column="38" selection-start-line="164" selection-start-column="38" selection-end-line="164" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/schemas/user.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="106">
@@ -604,28 +576,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/example/android/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="39" column="30" selection-start-line="39" selection-start-column="30" selection-end-line="39" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/lib/login.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="156" column="20" selection-start-line="156" selection-start-column="20" selection-end-line="156" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/flutter/bin/cache/pkg/sky_engine/lib/_http/http.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="1967" column="15" selection-start-line="1967" selection-start-column="15" selection-end-line="1967" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/flutter_wordpress.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="52">
-          <caret line="660" lean-forward="true" selection-start-line="660" selection-end-line="660" />
+        <state relative-caret-position="1311">
+          <caret line="695" column="13" lean-forward="true" selection-start-line="695" selection-start-column="13" selection-end-line="695" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/example/lib/display_posts.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="40" lean-forward="true" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
+        <state relative-caret-position="157">
+          <caret line="103" column="25" lean-forward="true" selection-start-line="103" selection-start-column="25" selection-end-line="103" selection-end-column="25" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
-            <element signature="e#1169#1803#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/android/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="39" column="38" lean-forward="true" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
         </state>
       </provider>
     </entry>
