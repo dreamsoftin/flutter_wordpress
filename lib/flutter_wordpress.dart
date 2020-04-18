@@ -12,6 +12,7 @@ library flutter_wordpress;
 
 import 'dart:async' as async;
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
@@ -121,7 +122,7 @@ class WordPress {
     return fetchUser(username: username);
   }
 
-  async.Future<User> _authenticateViaJWT(username, password) async {
+  async.Future<User> _authenticateViaJWT(String username, String password) async {
     final body = {
       'username': username,
       'password': password,
@@ -192,6 +193,7 @@ class WordPress {
       if (jsonStr.length == 0)
         throw new WordPressError(
             code: 'wp_empty_list', message: "No users found");
+
       return User.fromJson(jsonStr[0]);
     } else {
       try {
@@ -443,7 +445,7 @@ class WordPress {
       list.forEach((user) {
         users.add(User.fromJson(user));
       });
-      return FetchUsersResult(users, totalUsers, params.pageNum);
+      return FetchUsersResult(users, totalUsers);
     } else {
       try {
         WordPressError err =
@@ -643,6 +645,37 @@ class WordPress {
       }
     }
   }
+
+  //  yahya
+  async.Future<Post> updatePost({@required int id, @required Post post}) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS + '/$id');
+
+      HttpClient httpClient = new HttpClient();
+      HttpClientRequest request = await httpClient.postUrl(Uri.parse(url.toString()));
+      request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+      request.headers.set(HttpHeaders.acceptHeader, "application/json");
+      request.headers.set('Authorization', "${_urlHeader['Authorization']}");
+
+      request.add(utf8.encode(json.encode(post.toJson())));
+      HttpClientResponse response = await request.close();
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        response.transform(utf8.decoder).listen((contents) {
+          return Post.fromJson(json.decode(contents));
+        });
+      } else {
+        response.transform(utf8.decoder).listen((contents) {
+          try {
+            WordPressError err =
+            WordPressError.fromJson(json.decode(contents));
+            throw err;
+          } catch (e) {
+            throw new WordPressError(message: contents);
+          }
+        });
+      }
+  }
+//  end yahya
 
   /// This is used to create a [Comment] for a [Post]. Before this method can be called,
   /// [User] writing the comment needs to be authenticated first by calling

@@ -68,7 +68,7 @@ class User {
         ? new AvatarUrls.fromJson(json['avatar_urls'])
         : null;
 
-    if (json['meta'] != null) {
+    if (json['meta'] != null && json['meta'].length > 0) {
       meta = new Map<String, dynamic>();
       json['meta'].forEach((k, v) {
         meta[k] = v;
