@@ -106,51 +106,152 @@ Future<List<wp.Comment>> comments = wordPress.fetchComments(
 ### 7. Create Post
 
 ```dart
-void createPost(wp.User user) {
-  final post = wordPress.createPost(
-    post: new wp.Post(
-      title: 'First post as a Chief Editor',
-      content: 'Blah! blah! blah!',
-      excerpt: 'Discussion about blah!',
-      author: user.id,
-      commentStatus: wp.PostCommentStatus.open,
-      pingStatus: wp.PostPingStatus.closed,
-      status: wp.PostPageStatus.publish,
-      format: wp.PostFormat.standard,
-      sticky: true,
-    ),
-  );
+  void createPost({@required wp.User user}) {
+    final post = widget.wordPress.createPost(
+      post: new wp.Post(
+        title: 'First post as a Chief Editor',
+        content: 'Blah! blah! blah!',
+        excerpt: 'Discussion about blah!',
+        authorID: user.id,
+        commentStatus: wp.PostCommentStatus.open,
+        pingStatus: wp.PostPingStatus.closed,
+        status: wp.PostPageStatus.publish,
+        format: wp.PostFormat.standard,
+        sticky: true,
+      ),
+    );
 
-  post.then((p) {
-    print('Post created successfully with ID: ${p.id}');
-    postComment(user, p);
-  }).catchError((err) {
-    print('Failed to create post: $err');
-  });
-}
+    post.then((p) {
+      print('Post created successfully with ID: ${p.id}');
+    }).catchError((err) {
+      print('Failed to create post: $err');
+    });
+  }
 ```
 
-### 8. Post Comment
+### 8. create Comment
 
 ```dart
-void postComment(wp.User user, wp.Post post) {
-  final comment = wordPress.createComment(
-    comment: new wp.Comment(
-      author: user.id,
-      post: post.id,
-      content: "First!",
-      parent: 0,
-    ),
-  );
+  void createComment({@required int userId, @required int postId}) {
+    final comment = widget.wordPress.createComment(
+      comment: new wp.Comment(
+        author: userId,
+        post: postId,
+        content: "First!",
+        parent: 0,
+      ),
+    );
 
-  comment.then((c) {
-    print('Comment successfully posted with ID: ${c.id}');
-  }).catchError((err) {
-    print('Failed to comment: $err');
-  });
-}
+    comment.then((c) {
+      print('Comment successfully posted with ID: ${c.id}');
+    }).catchError((err) {
+      print('Failed to comment: $err');
+    });
+  }
+```
+
+### 9. Update Comment
+
+```dart
+Future<void> updateComment({@required int id, @required int postId, @required wp.User user}) async {
+    await widget.wordPress.updateComment(
+      comment: new wp.Comment(
+        content: "Comment Updated2!",
+        author: user.id,
+        post: postId,
+      ),
+      id: id,
+    ).then((c) {
+      print('Comment updated successfully "$c"');
+    }).catchError((err) {
+      print('Failed to update Comment: $err');
+    });
+  }
+```
+
+### 10. Update Post
+
+```dart
+Future<void> updatePost({@required int id, @required int userId}) async {
+    await widget.wordPress.updatePost(
+      post: new wp.Post(
+        title: 'First post as a Chief Editor',
+        content: 'Blah! blah! blah!',
+        excerpt: 'Discussion about blah!',
+        authorID: userId,
+        commentStatus: wp.PostCommentStatus.open,
+        pingStatus: wp.PostPingStatus.closed,
+        status: wp.PostPageStatus.publish,
+        format: wp.PostFormat.standard,
+        sticky: true,
+      ),
+      id: id, //
+    ).then((p) {
+      print('Post updated successfully with ID ${p}');
+    }).catchError((err) {
+      print('Failed to update post: $err');
+    });
+  }
+```
+
+### 11. Update User
+
+```dart
+Future<void> updateUser({@required int id, @required String username, @required String email}) async {
+    await widget.wordPress.updateUser(
+      user: new wp.User(
+        description: "This is description for this user",
+        username: username,
+        id: id,
+        email: email
+      ),
+      id: id,
+    ).then((u) {
+      print('User updated successfully $u');
+    }).catchError((err) {
+      print('Failed to update User: $err');
+    });
+  }
+```
+
+
+### 12. Delete Comment
+
+```dart
+Future<void> deleteComment({@required int id}) async {
+    await widget.wordPress.deleteComment(id: id).then((c) {
+      print('Comment Deleted successfully: $c');
+    }).catchError((err) {
+      print('Failed to Delete comment: $err');
+    });
+  }
+```
+
+### 13. Delete Post
+
+```dart
+  Future<void> deletePost({@required int id}) async {
+    await widget.wordPress.deletePost(id: id).then((p) {
+      print('Post Deleted successfully: $p');
+    }).catchError((err) {
+      print('Failed to Delete post: $err');
+    });
+  }
+```
+
+### 14. Delete User
+
+```dart
+  Future<void> deleteUser({@required int id, @required int reassign}) async {
+    await widget.wordPress.deleteUser(id: id, reassign: reassign).then((u) {
+      print('User Deleted successfully: $u');
+    }).catchError((err) {
+      print('Failed to Delete user: $err');
+    });
+  }
 ```
 
 ## Future Work
 
 1. Implementing OAuth 2.0 authentication.
+2. Create New User
