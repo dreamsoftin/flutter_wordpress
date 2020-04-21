@@ -40,8 +40,8 @@ class LoginFieldsState extends State<LoginFields> {
   @override
   void initState() {
     super.initState();
-    _username = 'yahya';
-    _password = '123';
+    _username = 'YOUR_USERNAME';
+    _password = 'YOUR_PASSWORD';
   }
 
   @override
@@ -148,9 +148,9 @@ class LoginFieldsState extends State<LoginFields> {
     });
 
     wp.WordPress wordPress = new wp.WordPress(
-      baseUrl: 'http://newschin.com/en',
+      baseUrl: 'YOUR WEBSITE URL',
       authenticator: wp.WordPressAuthenticator.JWT,
-      adminName: 'yahya',
+      adminName: '',
       adminKey: '',
     );
 

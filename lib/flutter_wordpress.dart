@@ -624,6 +624,10 @@ class WordPress {
   /// post information.
   ///
   /// In case of an error, a [WordPressError] object is thrown.
+  ///
+  ///
+
+
   async.Future<Post> createPost({@required Post post}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS);
 
@@ -646,36 +650,185 @@ class WordPress {
     }
   }
 
-  //  yahya
-  async.Future<Post> updatePost({@required int id, @required Post post}) async {
+//  yahya - @mymakarim
+
+//  =====================
+//  UPDATE START
+//  =====================
+
+  async.Future<bool> updatePost({@required int id, @required Post post}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS + '/$id');
 
-      HttpClient httpClient = new HttpClient();
-      HttpClientRequest request = await httpClient.postUrl(Uri.parse(url.toString()));
-      request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
-      request.headers.set(HttpHeaders.acceptHeader, "application/json");
-      request.headers.set('Authorization', "${_urlHeader['Authorization']}");
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url.toString()));
+    request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+    request.headers.set(HttpHeaders.acceptHeader, "application/json");
+    request.headers.set('Authorization', "${_urlHeader['Authorization']}");
 
-      request.add(utf8.encode(json.encode(post.toJson())));
-      HttpClientResponse response = await request.close();
+    request.add(utf8.encode(json.encode(post.toJson())));
+    HttpClientResponse response = await request.close();
 
-      if (response.statusCode >= 200 && response.statusCode < 300) {
-        response.transform(utf8.decoder).listen((contents) {
-          return Post.fromJson(json.decode(contents));
-        });
-      } else {
-        response.transform(utf8.decoder).listen((contents) {
-          try {
-            WordPressError err =
-            WordPressError.fromJson(json.decode(contents));
-            throw err;
-          } catch (e) {
-            throw new WordPressError(message: contents);
-          }
-        });
-      }
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return true;
+    } else {
+      response.transform(utf8.decoder).listen((contents) {
+        try {
+          WordPressError err =
+          WordPressError.fromJson(json.decode(contents));
+          throw err;
+        } catch (e) {
+          throw new WordPressError(message: contents);
+        }
+      });
+    }
   }
-//  end yahya
+
+  async.Future<bool> updateComment({@required int id, @required Comment comment}) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_COMMENTS + '/$id');
+
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url.toString()));
+    request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+    request.headers.set(HttpHeaders.acceptHeader, "application/json");
+    request.headers.set('Authorization', "${_urlHeader['Authorization']}");
+
+    request.add(utf8.encode(json.encode(comment.toJson())));
+    HttpClientResponse response = await request.close();
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return true;
+    } else {
+      response.transform(utf8.decoder).listen((contents) {
+        try {
+          WordPressError err =
+          WordPressError.fromJson(json.decode(contents));
+          throw err;
+        } catch (e) {
+          throw new WordPressError(message: contents);
+        }
+      });
+    }
+  }
+
+  async.Future<bool> updateUser({@required int id, @required User user}) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_USERS + '/$id');
+
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url.toString()));
+    request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+    request.headers.set(HttpHeaders.acceptHeader, "application/json");
+    request.headers.set('Authorization', "${_urlHeader['Authorization']}");
+
+    request.add(utf8.encode(json.encode(user.toJson())));
+    HttpClientResponse response = await request.close();
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return true;
+    } else {
+      response.transform(utf8.decoder).listen((contents) {
+        try {
+          WordPressError err =
+          WordPressError.fromJson(json.decode(contents));
+          throw err;
+        } catch (e) {
+          throw new WordPressError(message: contents);
+        }
+      });
+    }
+  }
+
+//  =====================
+//  UPDATE END
+//  =====================
+
+//  =====================
+//  DELETE START
+//  =====================
+
+  async.Future<bool> deletePost({@required int id}) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS + '/$id');
+
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.deleteUrl(Uri.parse(url.toString()));
+    request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+    request.headers.set(HttpHeaders.acceptHeader, "application/json");
+    request.headers.set('Authorization', "${_urlHeader['Authorization']}");
+
+    HttpClientResponse response = await request.close();
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return true;
+    } else {
+      response.transform(utf8.decoder).listen((contents) {
+        try {
+          WordPressError err =
+          WordPressError.fromJson(json.decode(contents));
+          throw err;
+        } catch (e) {
+          throw new WordPressError(message: contents);
+        }
+      });
+    }
+  }
+
+  async.Future<bool> deleteComment({@required int id}) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_COMMENTS + '/$id');
+
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.deleteUrl(Uri.parse(url.toString()));
+    request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+    request.headers.set(HttpHeaders.acceptHeader, "application/json");
+    request.headers.set('Authorization', "${_urlHeader['Authorization']}");
+
+    HttpClientResponse response = await request.close();
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return true;
+    } else {
+      response.transform(utf8.decoder).listen((contents) {
+        try {
+          WordPressError err =
+          WordPressError.fromJson(json.decode(contents));
+          throw err;
+        } catch (e) {
+          throw new WordPressError(message: contents);
+        }
+      });
+    }
+  }
+
+  async.Future<bool> deleteUser({@required int id, @required int reassign,}) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_USERS + '/$id');
+
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.deleteUrl(Uri.parse(url.toString()));
+    request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+    request.headers.set(HttpHeaders.acceptHeader, "application/json");
+    request.headers.set('Authorization', "${_urlHeader['Authorization']}");
+
+    request.add(utf8.encode(json.encode({"reassign": reassign, "force": true})));
+    HttpClientResponse response = await request.close();
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return true;
+    } else {
+      response.transform(utf8.decoder).listen((contents) {
+        try {
+          WordPressError err =
+          WordPressError.fromJson(json.decode(contents));
+          throw err;
+        } catch (e) {
+          throw new WordPressError(message: contents);
+        }
+      });
+    }
+  }
+
+//  =====================
+//  UPDATE END
+//  =====================
+
+//  end yahya - @mymakarim
 
   /// This is used to create a [Comment] for a [Post]. Before this method can be called,
   /// [User] writing the comment needs to be authenticated first by calling
