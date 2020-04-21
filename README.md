@@ -1,5 +1,7 @@
 # Flutter Wordpress
 
+[pub.dev](https://pub.dev/packages/flutter_wordpress)
+
 This library uses [WordPress REST API V2](https://developer.wordpress.org/rest-api/) to provide a way for your application to interact with your WordPress website.
 
 [Tutorial - by Ritesh Sharma](https://medium.com/flutter-community/building-flutter-apps-with-wordpress-backend-part-1-e56414a4a79b)
@@ -255,3 +257,9 @@ Future<void> deleteComment({@required int id}) async {
 
 1. Implementing OAuth 2.0 authentication.
 2. Create New User
+
+## Contributors
+- [Suraj Shettigar](https://github.com/SurajShettigar)
+- [Sachin Ganesh](https://github.com/SachinGanesh)
+- [Harm-Jan Roskam](https://github.com/harmjanr)
+- [Yahya Makarim](https://github.com/ymakarim)
