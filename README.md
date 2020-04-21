@@ -23,7 +23,7 @@ For authentication and usage of administrator level REST APIs, you need to use e
 
 #### First:
 
-Find your pubspec.yaml in the root of your project and add flutter_wordpress: ^0.1.4 under dependencies:
+Find your pubspec.yaml in the root of your project and add flutter_wordpress: ^0.2.0 under dependencies:
 
 #### Second:
 
