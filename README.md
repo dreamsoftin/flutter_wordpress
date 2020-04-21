@@ -282,4 +282,3 @@ Future<void> deleteComment({@required int id}) async {
 - [Yahya Makarim](https://github.com/ymakarim)
 - [Suraj Shettigar](https://github.com/SurajShettigar)
 - [Harm-Jan Roskam](https://github.com/harmjanr)
->>>>>>> master
