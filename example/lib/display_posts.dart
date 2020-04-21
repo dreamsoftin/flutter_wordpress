@@ -73,6 +73,21 @@ class PostsBuilderState extends State<PostsBuilder> {
 
 //  yahya
 
+  Future<void> createUser({@required String email, @required String username, @required String password, @required List<String> roles}) async {
+    await widget.wordPress.createUser(
+      user: wp.User(
+        email: email,
+        password: password,
+        username: username,
+        roles: roles
+      )
+    ).then((p) {
+      print('User created successfully ${p}');
+    }).catchError((err) {
+      print('Failed to create user: $err');
+    });
+  }
+
 //  =====================
 //  UPDATE START
 //  =====================
@@ -343,7 +358,17 @@ class PostsBuilderState extends State<PostsBuilder> {
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
-
+                RaisedButton.icon(
+                  color: Colors.blueAccent,
+                  onPressed: () {
+                    createUser(roles: ["subscriber"], username: "myUserName", password: "123", email: "myEmail@domain.com");
+                  },
+                  icon: Icon(Icons.add_circle, color: Colors.white,),
+                  label: Text(
+                    "Create New User",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
                 RaisedButton.icon(
                   color: Colors.blueAccent,
                   onPressed: () {
