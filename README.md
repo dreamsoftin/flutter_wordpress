@@ -105,7 +105,26 @@ Future<List<wp.Comment>> comments = wordPress.fetchComments(
 );
 ```
 
-### 7. Create Post
+### 7. Create User
+
+```dart
+Future<void> createUser({@required String email, @required String username, @required String password, @required List<String> roles}) async {
+    await widget.wordPress.createUser(
+      user: wp.User(
+        email: email,
+        password: password,
+        username: username,
+        roles: roles
+      )
+    ).then((p) {
+      print('User created successfully ${p}');
+    }).catchError((err) {
+      print('Failed to create user: $err');
+    });
+  }
+```
+
+### 8. Create Post
 
 ```dart
   void createPost({@required wp.User user}) {
@@ -131,7 +150,7 @@ Future<List<wp.Comment>> comments = wordPress.fetchComments(
   }
 ```
 
-### 8. create Comment
+### 9. create Comment
 
 ```dart
   void createComment({@required int userId, @required int postId}) {
@@ -152,7 +171,7 @@ Future<List<wp.Comment>> comments = wordPress.fetchComments(
   }
 ```
 
-### 9. Update Comment
+### 10. Update Comment
 
 ```dart
 Future<void> updateComment({@required int id, @required int postId, @required wp.User user}) async {
@@ -171,7 +190,7 @@ Future<void> updateComment({@required int id, @required int postId, @required wp
   }
 ```
 
-### 10. Update Post
+### 11. Update Post
 
 ```dart
 Future<void> updatePost({@required int id, @required int userId}) async {
@@ -196,7 +215,7 @@ Future<void> updatePost({@required int id, @required int userId}) async {
   }
 ```
 
-### 11. Update User
+### 12. Update User
 
 ```dart
 Future<void> updateUser({@required int id, @required String username, @required String email}) async {
@@ -217,7 +236,7 @@ Future<void> updateUser({@required int id, @required String username, @required 
 ```
 
 
-### 12. Delete Comment
+### 13. Delete Comment
 
 ```dart
 Future<void> deleteComment({@required int id}) async {
@@ -229,7 +248,7 @@ Future<void> deleteComment({@required int id}) async {
   }
 ```
 
-### 13. Delete Post
+### 14. Delete Post
 
 ```dart
   Future<void> deletePost({@required int id}) async {
@@ -241,7 +260,7 @@ Future<void> deleteComment({@required int id}) async {
   }
 ```
 
-### 14. Delete User
+### 15. Delete User
 
 ```dart
   Future<void> deleteUser({@required int id, @required int reassign}) async {
@@ -256,7 +275,6 @@ Future<void> deleteComment({@required int id}) async {
 ## Future Work
 
 1. Implementing OAuth 2.0 authentication.
-2. Create New User
 
 ## Contributors
 - [Suraj Shettigar](https://github.com/SurajShettigar)
