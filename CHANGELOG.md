@@ -1,3 +1,8 @@
+## [0.2.0] - 21/04/2020
+* Create, Update and Delete Comments
+* Create, Update and Delete Posts
+* Update and Delete Users
+
 ## [0.1.4] - 27/02/2019
 * Updated homepage URL
 

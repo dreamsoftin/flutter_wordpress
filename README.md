@@ -277,8 +277,7 @@ Future<void> deleteComment({@required int id}) async {
 1. Implementing OAuth 2.0 authentication.
 
 ## Contributors
-
-- [Sachin Ganesh](https://github.com/SachinGanesh)
-- [Yahya Makarim](https://github.com/ymakarim)
 - [Suraj Shettigar](https://github.com/SurajShettigar)
+- [Sachin Ganesh](https://github.com/SachinGanesh)
 - [Harm-Jan Roskam](https://github.com/harmjanr)
+- [Yahya Makarim](https://github.com/ymakarim)
