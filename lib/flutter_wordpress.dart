@@ -255,15 +255,9 @@ class WordPress {
     bool fetchTags = false,
     bool fetchFeaturedMedia = false,
     bool fetchAttachments = false,
-    String postType,
+    String postType = "posts",
   }) async {
-    StringBuffer url;
-
-    if (postType != null) {
-      url = new StringBuffer(_baseUrl + URL_WP_BASE + "/" + postType);
-    } else {
-      url = new StringBuffer(_baseUrl + URL_POSTS);
-    }
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_WP_BASE + "/" + postType);
 
     url.write(postParams.toString());
 
