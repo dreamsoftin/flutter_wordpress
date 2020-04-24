@@ -122,7 +122,8 @@ class WordPress {
     return fetchUser(username: username);
   }
 
-  async.Future<User> _authenticateViaJWT(String username, String password) async {
+  async.Future<User> _authenticateViaJWT(
+      String username, String password) async {
     final body = {
       'username': username,
       'password': password,
@@ -254,8 +255,9 @@ class WordPress {
     bool fetchTags = false,
     bool fetchFeaturedMedia = false,
     bool fetchAttachments = false,
+    String postType = "posts",
   }) async {
-    final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS);
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_WP_BASE + "/" + postType);
 
     url.write(postParams.toString());
 
@@ -627,7 +629,6 @@ class WordPress {
   ///
   ///
 
-
   async.Future<Post> createPost({@required Post post}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS);
 
@@ -656,8 +657,10 @@ class WordPress {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_USERS);
 
     HttpClient httpClient = new HttpClient();
-    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url.toString()));
-    request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+    HttpClientRequest request =
+        await httpClient.postUrl(Uri.parse(url.toString()));
+    request.headers
+        .set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
     request.headers.set(HttpHeaders.acceptHeader, "application/json");
     request.headers.set('Authorization', "${_urlHeader['Authorization']}");
 
@@ -669,8 +672,7 @@ class WordPress {
     } else {
       response.transform(utf8.decoder).listen((contents) {
         try {
-          WordPressError err =
-          WordPressError.fromJson(json.decode(contents));
+          WordPressError err = WordPressError.fromJson(json.decode(contents));
           throw err;
         } catch (e) {
           throw new WordPressError(message: contents);
@@ -687,8 +689,10 @@ class WordPress {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS + '/$id');
 
     HttpClient httpClient = new HttpClient();
-    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url.toString()));
-    request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+    HttpClientRequest request =
+        await httpClient.postUrl(Uri.parse(url.toString()));
+    request.headers
+        .set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
     request.headers.set(HttpHeaders.acceptHeader, "application/json");
     request.headers.set('Authorization', "${_urlHeader['Authorization']}");
 
@@ -700,8 +704,7 @@ class WordPress {
     } else {
       response.transform(utf8.decoder).listen((contents) {
         try {
-          WordPressError err =
-          WordPressError.fromJson(json.decode(contents));
+          WordPressError err = WordPressError.fromJson(json.decode(contents));
           throw err;
         } catch (e) {
           throw new WordPressError(message: contents);
@@ -710,12 +713,15 @@ class WordPress {
     }
   }
 
-  async.Future<bool> updateComment({@required int id, @required Comment comment}) async {
+  async.Future<bool> updateComment(
+      {@required int id, @required Comment comment}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_COMMENTS + '/$id');
 
     HttpClient httpClient = new HttpClient();
-    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url.toString()));
-    request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+    HttpClientRequest request =
+        await httpClient.postUrl(Uri.parse(url.toString()));
+    request.headers
+        .set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
     request.headers.set(HttpHeaders.acceptHeader, "application/json");
     request.headers.set('Authorization', "${_urlHeader['Authorization']}");
 
@@ -727,8 +733,7 @@ class WordPress {
     } else {
       response.transform(utf8.decoder).listen((contents) {
         try {
-          WordPressError err =
-          WordPressError.fromJson(json.decode(contents));
+          WordPressError err = WordPressError.fromJson(json.decode(contents));
           throw err;
         } catch (e) {
           throw new WordPressError(message: contents);
@@ -741,8 +746,10 @@ class WordPress {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_USERS + '/$id');
 
     HttpClient httpClient = new HttpClient();
-    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url.toString()));
-    request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+    HttpClientRequest request =
+        await httpClient.postUrl(Uri.parse(url.toString()));
+    request.headers
+        .set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
     request.headers.set(HttpHeaders.acceptHeader, "application/json");
     request.headers.set('Authorization', "${_urlHeader['Authorization']}");
 
@@ -754,8 +761,7 @@ class WordPress {
     } else {
       response.transform(utf8.decoder).listen((contents) {
         try {
-          WordPressError err =
-          WordPressError.fromJson(json.decode(contents));
+          WordPressError err = WordPressError.fromJson(json.decode(contents));
           throw err;
         } catch (e) {
           throw new WordPressError(message: contents);
@@ -776,8 +782,10 @@ class WordPress {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS + '/$id');
 
     HttpClient httpClient = new HttpClient();
-    HttpClientRequest request = await httpClient.deleteUrl(Uri.parse(url.toString()));
-    request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+    HttpClientRequest request =
+        await httpClient.deleteUrl(Uri.parse(url.toString()));
+    request.headers
+        .set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
     request.headers.set(HttpHeaders.acceptHeader, "application/json");
     request.headers.set('Authorization', "${_urlHeader['Authorization']}");
 
@@ -788,8 +796,7 @@ class WordPress {
     } else {
       response.transform(utf8.decoder).listen((contents) {
         try {
-          WordPressError err =
-          WordPressError.fromJson(json.decode(contents));
+          WordPressError err = WordPressError.fromJson(json.decode(contents));
           throw err;
         } catch (e) {
           throw new WordPressError(message: contents);
@@ -802,8 +809,10 @@ class WordPress {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_COMMENTS + '/$id');
 
     HttpClient httpClient = new HttpClient();
-    HttpClientRequest request = await httpClient.deleteUrl(Uri.parse(url.toString()));
-    request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+    HttpClientRequest request =
+        await httpClient.deleteUrl(Uri.parse(url.toString()));
+    request.headers
+        .set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
     request.headers.set(HttpHeaders.acceptHeader, "application/json");
     request.headers.set('Authorization', "${_urlHeader['Authorization']}");
 
@@ -814,8 +823,7 @@ class WordPress {
     } else {
       response.transform(utf8.decoder).listen((contents) {
         try {
-          WordPressError err =
-          WordPressError.fromJson(json.decode(contents));
+          WordPressError err = WordPressError.fromJson(json.decode(contents));
           throw err;
         } catch (e) {
           throw new WordPressError(message: contents);
@@ -824,16 +832,22 @@ class WordPress {
     }
   }
 
-  async.Future<bool> deleteUser({@required int id, @required int reassign,}) async {
+  async.Future<bool> deleteUser({
+    @required int id,
+    @required int reassign,
+  }) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_USERS + '/$id');
 
     HttpClient httpClient = new HttpClient();
-    HttpClientRequest request = await httpClient.deleteUrl(Uri.parse(url.toString()));
-    request.headers.set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
+    HttpClientRequest request =
+        await httpClient.deleteUrl(Uri.parse(url.toString()));
+    request.headers
+        .set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
     request.headers.set(HttpHeaders.acceptHeader, "application/json");
     request.headers.set('Authorization', "${_urlHeader['Authorization']}");
 
-    request.add(utf8.encode(json.encode({"reassign": reassign, "force": true})));
+    request
+        .add(utf8.encode(json.encode({"reassign": reassign, "force": true})));
     HttpClientResponse response = await request.close();
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
@@ -841,8 +855,7 @@ class WordPress {
     } else {
       response.transform(utf8.decoder).listen((contents) {
         try {
-          WordPressError err =
-          WordPressError.fromJson(json.decode(contents));
+          WordPressError err = WordPressError.fromJson(json.decode(contents));
           throw err;
         } catch (e) {
           throw new WordPressError(message: contents);
