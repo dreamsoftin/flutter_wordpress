@@ -110,6 +110,7 @@ class Post {
     @required String content,
     @required String excerpt,
     @required this.authorID,
+    String featuredMedia,
     this.featuredMediaID,
     this.commentStatus = PostCommentStatus.open,
     this.pingStatus = PostPingStatus.open,
@@ -119,6 +120,7 @@ class Post {
     this.categoryIDs,
     this.tagIDs,
   })  : this.title = new Title(rendered: title),
+        this.featuredMedia = new Media(sourceUrl: featuredMedia),
         this.content = new Content(rendered: content),
         this.excerpt = new Excerpt(rendered: excerpt);
 
