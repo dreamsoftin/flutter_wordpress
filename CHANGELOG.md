@@ -1,3 +1,6 @@
+## [0.2.1] - 26/04/2020
+* Custom post types
+
 ## [0.2.0] - 21/04/2020
 * Create, Update and Delete Comments
 * Create, Update and Delete Posts
