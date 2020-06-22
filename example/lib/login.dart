@@ -148,7 +148,7 @@ class LoginFieldsState extends State<LoginFields> {
     });
 
     wp.WordPress wordPress = new wp.WordPress(
-      baseUrl: 'https://bmf.marketplaced.my/map/',
+      baseUrl: '',
       authenticator: wp.WordPressAuthenticator.JWT,
       adminName: '',
       adminKey: '',

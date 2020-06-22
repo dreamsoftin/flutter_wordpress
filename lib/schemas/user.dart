@@ -84,20 +84,27 @@ class User {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['username'] = this.username;
-    data['name'] = this.name;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['email'] = this.email;
-    data['url'] = this.url;
-    data['description'] = this.description;
-    data['link'] = this.link;
-    data['locale'] = this.locale;
-    data['nickname'] = this.nickname;
-    data['slug'] = this.slug;
-    data['roles'] = this.roles;
-    data['registered_date'] = this.registeredDate;
+
+    // afiq @afiqnymous
+    if (this.id != null) data['id'] = this.id;
+    if (this.username != null) data['username'] = this.username;
+    if (this.password != null) data['password'] = this.password;
+    if (this.name != null) data['name'] = this.name;
+    if (this.firstName != null) data['first_name'] = this.firstName;
+    if (this.lastName != null) data['last_name'] = this.lastName;
+    if (this.email != null) data['email'] = this.email;
+    if (this.url != null) data['url'] = this.url;
+    if (this.description != null) data['description'] = this.description;
+    if (this.link != null) data['link'] = this.link;
+    if (this.locale != null) data['locale'] = this.locale;
+    if (this.nickname != null) data['nickname'] = this.nickname;
+    if (this.link != null) data['link'] = this.link;
+    if (this.slug != null) data['slug'] = this.slug;
+    // if (this.roles != null) data['roles'] = this.roles;
+    // if (json['roles'] != null) roles = json['roles'].cast<String>();
+
+    if (this.registeredDate != null) data['registered_date'] = this.registeredDate;
+  
     if (this.capabilities != null) {
       data['capabilities'] = this.capabilities.toJson();
     }
@@ -113,13 +120,18 @@ class User {
     if (this.lLinks != null) {
       data['_links'] = this.lLinks.toJson();
     }
-//    yahya - @mymakarim
-    if (this.password != null) {
-      data['password'] = this.password;
-    }
-//    end yahya - @mymakarim
+
     return data;
   }
+
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = new Map<String, dynamic>();
+  //   if (this.username != null) data['username'] = this.username;
+  //   if (this.password != null) data['password'] = this.password;
+  //   if (this.email != null) data['email'] = this.email;
+
+  //   return data;
+  // }
 
   @override
   String toString() {
