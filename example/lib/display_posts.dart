@@ -73,19 +73,33 @@ class PostsBuilderState extends State<PostsBuilder> {
 
 //  yahya
 
-  Future<void> createUser({@required String email, @required String username, @required String password, @required List<String> roles}) async {
+  Future<void> createUser({@required String email, @required String username, @required String password, List<String> roles}) async {
+    
     await widget.wordPress.createUser(
       user: wp.User(
         email: email,
         password: password,
         username: username,
-        roles: roles
+        // roles: roles
       )
     ).then((p) {
       print('User created successfully ${p}');
     }).catchError((err) {
       print('Failed to create user: $err');
     });
+    
+    // await widget.wordPress.createUser2(
+    //   user: wp.User(
+    //     email: email,
+    //     password: password,
+    //     username: username,
+    //     roles: roles
+    //   )
+    // ).then((p) {
+    //   print('User created successfully ${p}');
+    // }).catchError((err) {
+    //   print('Failed to create user: $err');
+    // });
   }
 
 //  =====================
@@ -93,6 +107,7 @@ class PostsBuilderState extends State<PostsBuilder> {
 //  =====================
 
   Future<void> updatePost({@required int id, @required int userId}) async {
+    
     await widget.wordPress.updatePost(
       post: new wp.Post(
         title: 'First post as a Chief Editor',
@@ -361,7 +376,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                 RaisedButton.icon(
                   color: Colors.blueAccent,
                   onPressed: () {
-                    createUser(roles: ["subscriber"], username: "myUserName", password: "123", email: "myEmail@domain.com");
+                    createUser(username: "myUserName", password: "123", email: "myEmail@domain.com");
                   },
                   icon: Icon(Icons.add_circle, color: Colors.white,),
                   label: Text(
