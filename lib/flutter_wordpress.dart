@@ -652,6 +652,34 @@ class WordPress {
   }
 
 //  yahya - @mymakarim
+  
+  async.Future<dynamic> uploadMedia(File image) async {
+    final StringBuffer url = new StringBuffer(_baseUrl + URL_MEDIA);
+    var file = image.readAsBytesSync();
+    final response = await http.post(
+      url.toString(),
+      headers: {
+        "Content-Type": "image/png",
+        "Content-Disposition": "form-data; filename=firstIg.png",
+        "Authorization": "${_urlHeader['Authorization']}"
+      },
+      body: file,
+    );
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return json.decode(response.body);
+    } else {
+      try {
+        WordPressError err =
+            WordPressError.fromJson(json.decode(response.body));
+        throw err;
+      } catch (e) {
+        throw new WordPressError(message: response.body);
+      }
+    }
+  }
+  
+// uploadMedia function added by: @GarvMaggu
 
   async.Future<bool> createUser({@required User user}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_USERS);
