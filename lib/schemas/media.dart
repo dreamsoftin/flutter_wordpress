@@ -487,7 +487,7 @@ class ImageMeta {
     iso = json['iso'];
     shutterSpeed = json['shutter_speed'];
     title = json['title'];
-    orientation = json['orientation'];
+    orientation = json['orientation'].toString();
 //    keywords = json['keywords'];
   }
 
