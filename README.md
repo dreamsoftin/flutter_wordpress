@@ -272,6 +272,19 @@ Future<void> deleteComment({@required int id}) async {
   }
 ```
 
+### 15. Upload Media
+
+```dart
+  uploadMedia(File image) async {
+  var media = await wordPress.uploadMedia(image).then((m) {
+    print('Media uploaded successfully: $m');
+  }).catchError((err) {
+    print('Failed to upload Media: $err');
+  });
+  int mediaID = media['id'];  
+}
+```
+
 ## Future Work
 
 1. Implementing OAuth 2.0 authentication.
@@ -281,3 +294,4 @@ Future<void> deleteComment({@required int id}) async {
 - [Sachin Ganesh](https://github.com/SachinGanesh)
 - [Harm-Jan Roskam](https://github.com/harmjanr)
 - [Yahya Makarim](https://github.com/ymakarim)
+- [Garv Maggu](https://github.com/GarvMaggu)
