@@ -272,7 +272,7 @@ Future<void> deleteComment({@required int id}) async {
   }
 ```
 
-### 15. Upload Media
+### 16. Upload Media
 
 ```dart
   uploadMedia(File image) async {
