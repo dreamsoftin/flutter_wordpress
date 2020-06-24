@@ -148,7 +148,7 @@ class LoginFieldsState extends State<LoginFields> {
     });
 
     wp.WordPress wordPress = new wp.WordPress(
-      baseUrl: 'YOUR WEBSITE URL',
+      baseUrl: '',
       authenticator: wp.WordPressAuthenticator.JWT,
       adminName: '',
       adminKey: '',
