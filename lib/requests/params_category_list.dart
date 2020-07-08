@@ -50,6 +50,26 @@ class ParamsCategoryList {
     };
   }
 
+  ParamsCategoryList copyWith({
+    int pageNum,
+    int perPage
+  }) {
+    return ParamsCategoryList(
+      context: context,
+      order: order,
+      orderBy: orderBy,
+      pageNum: pageNum ?? this.pageNum,
+      perPage: perPage ?? this.perPage,
+      searchQuery: searchQuery,
+      slug: slug,
+      excludeCategoryIDs: excludeCategoryIDs,
+      hideEmpty: hideEmpty,
+      includeCategoryIDs: includeCategoryIDs,
+      parent: parent,
+      post: post
+    );
+  }
+
   @override
   String toString() {
     return constructUrlParams(toMap());

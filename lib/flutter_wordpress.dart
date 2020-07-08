@@ -243,6 +243,9 @@ class WordPress {
   ///
   /// (**Note:** *Set only those fetch boolean parameters which you need because
   /// the more information to fetch, the longer it will take to return all Posts*)
+  /// 
+  /// [fetchAll] will make as many API requests as is needed to get all posts.
+  /// This may take a while.
   ///
   /// In case of an error, a [WordPressError] object is thrown.
   async.Future<List<Post>> fetchPosts({
@@ -256,8 +259,14 @@ class WordPress {
     bool fetchFeaturedMedia = false,
     bool fetchAttachments = false,
     String postType = "posts",
+    bool fetchAll = false
   }) async {
-    final StringBuffer url = new StringBuffer(_baseUrl + URL_WP_BASE + "/" + postType);
+    if (fetchAll) {
+      postParams = postParams.copyWith(perPage: 100);
+    }
+
+    final StringBuffer url =
+        new StringBuffer(_baseUrl + URL_WP_BASE + "/" + postType);
 
     url.write(postParams.toString());
 
@@ -280,6 +289,25 @@ class WordPress {
           setAttachments: fetchAttachments,
         ));
       }
+
+      if (fetchAll && response.headers["X-WP-TotalPages"] != null) {
+        final totalPages = int.parse(response.headers["X-WP-TotalPages"]);
+
+        for (int i = postParams.pageNum + 1; i <= totalPages; ++i) {
+            posts.addAll(await fetchPosts(
+              postParams: postParams.copyWith(pageNum: i),
+              fetchAuthor: fetchAuthor,
+              fetchComments: fetchComments,
+              orderComments: orderComments,
+              orderCommentsBy: orderCommentsBy,
+              fetchCategories: fetchCategories,
+              fetchTags: fetchTags,
+              fetchFeaturedMedia: fetchFeaturedMedia,
+              fetchAttachments: fetchAttachments,
+            ));
+          }
+        }
+
       return posts;
     } else {
       try {
@@ -534,7 +562,11 @@ class WordPress {
   ///
   /// In case of an error, a [WordPressError] object is thrown.
   async.Future<List<Category>> fetchCategories(
-      {@required ParamsCategoryList params}) async {
+      {@required ParamsCategoryList params, bool fetchAll = false}) async {
+    if (fetchAll) {
+      params = params.copyWith(perPage: 100);
+    }
+
     final StringBuffer url = new StringBuffer(_baseUrl + URL_CATEGORIES);
 
     url.write(params.toString());
@@ -547,6 +579,16 @@ class WordPress {
       list.forEach((category) {
         categories.add(Category.fromJson(category));
       });
+
+      if (fetchAll && response.headers["X-WP-TotalPages"] != null) {
+        final totalPages = int.tryParse(response.headers["X-WP-TotalPages"]) ?? 1;
+
+        for (int i = params.pageNum + 1; i <= totalPages; ++i) {
+          categories.addAll(await fetchCategories(
+            params: params.copyWith(pageNum: i)));
+        }
+      }
+
       return categories;
     } else {
       try {
@@ -652,7 +694,7 @@ class WordPress {
   }
 
 //  yahya - @mymakarim
-  
+
   async.Future<dynamic> uploadMedia(File image) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_MEDIA);
     var file = image.readAsBytesSync();
@@ -678,7 +720,7 @@ class WordPress {
       }
     }
   }
-  
+
 // uploadMedia function added by: @GarvMaggu
 
   async.Future<bool> createUser({@required User user}) async {
