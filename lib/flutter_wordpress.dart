@@ -290,8 +290,8 @@ class WordPress {
         ));
       }
 
-      if (fetchAll && response.headers["X-WP-TotalPages"] != null) {
-        final totalPages = int.parse(response.headers["X-WP-TotalPages"]);
+      if (fetchAll && response.headers["x-wp-totalpages"] != null) {
+        final totalPages = int.parse(response.headers["x-wp-totalpages"]);
 
         for (int i = postParams.pageNum + 1; i <= totalPages; ++i) {
             posts.addAll(await fetchPosts(
@@ -579,9 +579,9 @@ class WordPress {
       list.forEach((category) {
         categories.add(Category.fromJson(category));
       });
-
-      if (fetchAll && response.headers["X-WP-TotalPages"] != null) {
-        final totalPages = int.tryParse(response.headers["X-WP-TotalPages"]) ?? 1;
+      
+      if (fetchAll && response.headers["x-wp-totalpages"] != null) {
+        final totalPages = int.parse(response.headers["x-wp-totalpages"]);
 
         for (int i = params.pageNum + 1; i <= totalPages; ++i) {
           categories.addAll(await fetchCategories(
