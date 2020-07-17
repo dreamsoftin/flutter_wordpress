@@ -74,6 +74,34 @@ class ParamsPostList {
     };
   }
 
+ParamsPostList copyWith({
+  int pageNum ,
+  int perPage,
+}) {
+  return ParamsPostList(
+    afterDate: afterDate,
+    beforeDate: beforeDate,
+    context: context,
+    excludeAuthorIDs: excludeAuthorIDs,
+    excludeCategories: excludeCategories,
+    excludePostIDs: excludePostIDs,
+    excludeTags: excludeTags,
+    includeAuthorIDs: includeAuthorIDs,
+    includeCategories: includeCategories,
+    includePostIDs: includePostIDs,
+    includeTags: includeTags,
+    offset: offset,
+    order: order,
+    orderBy: orderBy,
+    pageNum: pageNum ?? this.pageNum,
+    perPage: perPage ?? this.perPage,
+    postStatus: postStatus,
+    searchQuery: searchQuery,
+    slug: slug,
+    sticky: sticky
+  );
+}
+
   @override
   String toString() {
     return constructUrlParams(toMap());

@@ -9,6 +9,7 @@
 .buildlog/
 .history
 .svn/
+*flutter_export_environment*
 
 # IntelliJ related
 *.iml
