@@ -74,6 +74,7 @@ Future<List<wp.Post>> posts = wordPress.fetchPosts(
   fetchAuthor: true,
   fetchFeaturedMedia: true,
   fetchComments: true,
+  postType: 'post'
 );
 ```
 
