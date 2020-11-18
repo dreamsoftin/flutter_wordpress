@@ -294,10 +294,10 @@ class WordPress {
         commentsForPostIDs[post.id] = [];
       }
       if (setCategories) {
-        post.categoryIDs.forEach((id) => categoriesByID[id] = null);
+        post.categoryIDs.forEach((id) => categoriesByID[id] = Category(id: id));
       }
       if (setTags) {
-        post.tagIDs.forEach((id) => tagsByID[id] = null);
+        post.tagIDs.forEach((id) => tagsByID[id] = Tag(id: id));
       }
       if (setFeaturedMedia) {
         featuredMediaIDForPostIDs[post.id] = post.featuredMediaID;
@@ -393,9 +393,10 @@ class WordPress {
       //handler to fetch categories
       var handleGettingCategories = ({bool setCategories = false}) async {
         if (setCategories) {
+          var cids = categoriesByID.keys.toList();
           List<Category> categories = await this.fetchCategories(
               params: ParamsCategoryList(
-            includeCategoryIDs: categoriesByID.keys.toList(),
+            includeCategoryIDs: cids,
             perPage: bulkBatchNum,
             pageNum: 1,
           ));
@@ -407,7 +408,7 @@ class WordPress {
             while (categories.length == bulkBatchNum) {
               categories = await this.fetchCategories(
                   params: ParamsCategoryList(
-                includeCategoryIDs: categoriesByID.keys.toList(),
+                includeCategoryIDs: cids,
                 perPage: bulkBatchNum,
                 pageNum: i,
               ));
@@ -422,10 +423,11 @@ class WordPress {
 
       //handler to fetch tags
       var handleGettingTags = ({bool setTags = false}) async {
+        var tids = tagsByID.keys.toList();
         if (setTags) {
           List<Tag> tags = await this.fetchTags(
               params: ParamsTagList(
-            includeTagIDs: tagsByID.keys.toList(),
+            includeTagIDs: tids,
             perPage: bulkBatchNum,
             pageNum: 1,
           ));
@@ -437,7 +439,7 @@ class WordPress {
             while (tags.length == bulkBatchNum) {
               tags = await this.fetchTags(
                   params: ParamsTagList(
-                includeTagIDs: tagsByID.keys.toList(),
+                includeTagIDs: tids,
                 perPage: bulkBatchNum,
                 pageNum: i,
               ));
@@ -453,11 +455,10 @@ class WordPress {
       //handler to fetch featured media
       var handleGettingFeaturedMedia = ({bool setFeaturedMedia = false}) async {
         if (setFeaturedMedia) {
+          var fids = featuredMediaIDForPostIDs.values.toList();
           List<Media> media = await this.fetchMediaList(
             params: ParamsMediaList(
-                includeMediaIDs: featuredMediaIDForPostIDs.values.toList(),
-                perPage: bulkBatchNum,
-                pageNum: 1),
+                includeMediaIDs: fids, perPage: bulkBatchNum, pageNum: 1),
           );
           if (media != null && media.length != 0) {
             media.forEach((fm) {
@@ -467,7 +468,7 @@ class WordPress {
             while (media.length == bulkBatchNum) {
               media = await this.fetchMediaList(
                 params: ParamsMediaList(
-                  includeMediaIDs: featuredMediaIDForPostIDs.values.toList(),
+                  includeMediaIDs: fids,
                   perPage: bulkBatchNum,
                   pageNum: i,
                 ),
