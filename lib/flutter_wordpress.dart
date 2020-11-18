@@ -359,7 +359,7 @@ class WordPress {
       //handler to fetch comments
       var handleGettingComments = ({bool setComments = false}) async {
         if (setComments) {
-          List<Comment> comments = await fetchComments(
+          List<Comment> comments = await this.fetchComments(
               params: ParamsCommentList(
             includePostIDs: pids,
             order: orderComments,
@@ -373,7 +373,7 @@ class WordPress {
             });
             var i = 2;
             while (comments.length == bulkBatchNum) {
-              comments = await fetchComments(
+              comments = await this.fetchComments(
                   params: ParamsCommentList(
                 includePostIDs: pids,
                 order: orderComments,
@@ -393,7 +393,7 @@ class WordPress {
       //handler to fetch categories
       var handleGettingCategories = ({bool setCategories = false}) async {
         if (setCategories) {
-          List<Category> categories = await fetchCategories(
+          List<Category> categories = await this.fetchCategories(
               params: ParamsCategoryList(
             includeCategoryIDs: categoriesByID.keys.toList(),
             perPage: bulkBatchNum,
@@ -405,7 +405,7 @@ class WordPress {
             });
             var i = 2;
             while (categories.length == bulkBatchNum) {
-              categories = await fetchCategories(
+              categories = await this.fetchCategories(
                   params: ParamsCategoryList(
                 includeCategoryIDs: categoriesByID.keys.toList(),
                 perPage: bulkBatchNum,
@@ -423,7 +423,7 @@ class WordPress {
       //handler to fetch tags
       var handleGettingTags = ({bool setTags = false}) async {
         if (setTags) {
-          List<Tag> tags = await fetchTags(
+          List<Tag> tags = await this.fetchTags(
               params: ParamsTagList(
             includeTagIDs: tagsByID.keys.toList(),
             perPage: bulkBatchNum,
@@ -435,7 +435,7 @@ class WordPress {
             });
             var i = 2;
             while (tags.length == bulkBatchNum) {
-              tags = await fetchTags(
+              tags = await this.fetchTags(
                   params: ParamsTagList(
                 includeTagIDs: tagsByID.keys.toList(),
                 perPage: bulkBatchNum,
@@ -453,7 +453,7 @@ class WordPress {
       //handler to fetch featured media
       var handleGettingFeaturedMedia = ({bool setFeaturedMedia = false}) async {
         if (setFeaturedMedia) {
-          List<Media> media = await fetchMediaList(
+          List<Media> media = await this.fetchMediaList(
             params: ParamsMediaList(
                 includeMediaIDs: featuredMediaIDForPostIDs.values.toList(),
                 perPage: bulkBatchNum,
@@ -465,7 +465,7 @@ class WordPress {
             });
             var i = 2;
             while (media.length == bulkBatchNum) {
-              media = await fetchMediaList(
+              media = await this.fetchMediaList(
                 params: ParamsMediaList(
                   includeMediaIDs: featuredMediaIDForPostIDs.values.toList(),
                   perPage: bulkBatchNum,
@@ -484,7 +484,7 @@ class WordPress {
       //handler to fetch attachments
       var handleGettingAttachments = ({bool setAttachments = false}) async {
         if (setAttachments) {
-          List<Media> attachments = await fetchMediaList(
+          List<Media> attachments = await this.fetchMediaList(
             params: ParamsMediaList(
               includeParentIDs: pids,
               perPage: bulkBatchNum,
@@ -497,7 +497,7 @@ class WordPress {
             });
             var i = 2;
             while (attachments.length == bulkBatchNum) {
-              attachments = await fetchMediaList(
+              attachments = await this.fetchMediaList(
                 params: ParamsMediaList(
                   includeParentIDs: pids,
                   perPage: bulkBatchNum,
@@ -581,7 +581,7 @@ class WordPress {
         }
       }
 
-      return postsByID.values;
+      return postsByID.values.toList();
     } else {
       try {
         WordPressError err =
