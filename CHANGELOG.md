@@ -1,3 +1,7 @@
+## [0.3.0-nullsafety.0] - Type Safety
+
+* Added type safety
+
 ## [0.2.1] - 26/04/2020
 * Custom post types
 
