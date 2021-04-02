@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
+
 import 'post_page.dart';
 
 class PostListPage extends StatelessWidget {
@@ -298,7 +301,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                     fontWeight: FontWeight.w200,
                   ),
                 ),
-                RaisedButton.icon(
+                ElevatedButton.icon(
                   onPressed: () {
                     createComment(postId: 1, userId: 1);
                   },
@@ -307,7 +310,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                     "Create New Comment",
                   ),
                 ),
-                RaisedButton.icon(
+                ElevatedButton.icon(
                   onPressed: () {
                     updateComment(user: widget.user, id: 1, postId: 1);
                   },
@@ -316,7 +319,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                     "Update Comment with ID #1",
                   ),
                 ),
-                RaisedButton.icon(
+                ElevatedButton.icon(
                   onPressed: () {
                     deleteComment(id: 1);
                   },
@@ -325,8 +328,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                     "Delete Comment with ID #1",
                   ),
                 ),
-                RaisedButton.icon(
-                  color: Colors.redAccent,
+                ElevatedButton.icon(
                   onPressed: () {
                     updatePost(userId: widget.user.id, id: 1);
                   },
@@ -336,8 +338,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
-                RaisedButton.icon(
-                  color: Colors.redAccent,
+                ElevatedButton.icon(
                   onPressed: () {
                     deletePost(id: 1);
                   },
@@ -347,8 +348,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
-                RaisedButton.icon(
-                  color: Colors.redAccent,
+                ElevatedButton.icon(
                   onPressed: () {
                     createPost(user: widget.user);
                   },
@@ -358,8 +358,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
-                RaisedButton.icon(
-                  color: Colors.blueAccent,
+                ElevatedButton.icon(
                   onPressed: () {
                     createUser(roles: ["subscriber"], username: "myUserName", password: "123", email: "myEmail@domain.com");
                   },
@@ -369,8 +368,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
-                RaisedButton.icon(
-                  color: Colors.blueAccent,
+                ElevatedButton.icon(
                   onPressed: () {
                     updateUser(id: 1, email: "newuser@gmaill.com", username: "newuser");
                   },
@@ -380,8 +378,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
-                RaisedButton.icon(
-                  color: Colors.blueAccent,
+                ElevatedButton.icon(
                   onPressed: () {
                     deleteUser(id: 1, reassign: 1);
                   },
