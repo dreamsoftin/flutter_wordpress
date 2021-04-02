@@ -1,8 +1,8 @@
 import 'package:flutter_wordpress/constants.dart';
-import 'package:meta/meta.dart';
-import 'links.dart';
+
 import 'avatar_urls.dart';
 import 'content.dart';
+import 'links.dart';
 
 /// A [WordPress Comment](https://developer.wordpress.org/rest-api/reference/comments/)
 ///
@@ -10,46 +10,45 @@ import 'content.dart';
 /// context modes ([WordPressContext]).
 class Comment {
   /// ID of the comment.
-  int id;
+  int? id;
 
   /// ID of the post on which to comment.
-  int post;
+  int? post;
 
   /// ID of the parent comment in case of reply.
   /// This should be 0 in case of a new comment.
-  int parent;
+  int? parent;
 
   /// ID of the author who is going to comment.
-  int author;
-  String authorName;
-  String authorEmail;
-  String authorUrl;
-  String authorIp;
-  String authorUserAgent;
+  int? author;
+  String? authorName;
+  String? authorEmail;
+  String? authorUrl;
+  String? authorIp;
+  String? authorUserAgent;
 
   /// The date the comment was written, in the site's timezone.
-  String date;
+  String? date;
 
   /// The date the comment was written, in GMT.
-  String dateGmt;
+  String? dateGmt;
 
   /// Content of the comment.
-  Content content;
-  String link;
+  Content? content;
+  String? link;
 
   /// This can only be set by an editor/administrator.
-  CommentStatus status;
+  CommentStatus? status;
 
   /// This can only be set by an editor/administrator.
-  CommentType type;
-  AvatarUrls authorAvatarUrls;
-//  List<Null> meta;
-  Links lLinks;
+  CommentType? type;
+  AvatarUrls? authorAvatarUrls;
+  Links? lLinks;
 
   Comment({
-    @required this.author,
-    @required this.post,
-    @required String content,
+    required this.author,
+    required this.post,
+    required String content,
     this.authorEmail,
     this.authorIp,
     this.authorName,
@@ -73,8 +72,9 @@ class Comment {
     authorUserAgent = json['author_user_agent'];
     date = json['date'];
     dateGmt = json['date_gmt'];
-    content =
-        json['content'] != null ? new Content.fromJson(json['content']) : null;
+    content = (json['content'] != null
+        ? new Content.fromJson(json['content']!)
+        : null)!;
     link = json['link'];
     if (json['status'] != null) {
       CommentStatus.values.forEach((val) {
@@ -101,42 +101,19 @@ class Comment {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
 
-    if (this.post != null) {
-      data['post'] = this.post.toString();
-    }
-    if (this.parent != null) {
-      data['parent'] = this.parent.toString();
-    }
-    if (this.author != null) {
-      data['author'] = this.author.toString();
-    }
-    if (this.authorName != null) {
-      data['author_name'] = this.authorName;
-    }
-    if (this.authorEmail != null) {
-      data['author_email'] = this.authorEmail;
-    }
-    if (this.authorUrl != null) {
-      data['author_url'] = this.authorUrl;
-    }
-    if (this.authorIp != null) {
-      data['author_ip'] = this.authorIp;
-    }
-    if (this.authorUserAgent != null) {
-      data['author_user_agent'] = this.authorUserAgent;
-    }
-    if (this.date != null) {
-      data['date'] = this.date;
-    }
-    if (this.dateGmt != null) {
-      data['date_gmt'] = this.dateGmt;
-    }
-    if (this.content != null) {
-      data['content'] = this.content.rendered;
-    }
-    if (this.status != null) {
-      data['status'] = enumStringToName(this.status.toString());
-    }
+    data['post'] = this.post;
+    data['parent'] = this.parent;
+    data['author'] = this.author;
+    data['author_name'] = this.authorName;
+    data['author_email'] = this.authorEmail;
+    data['author_url'] = this.authorUrl;
+    data['author_ip'] = this.authorIp;
+    data['author_user_agent'] = this.authorUserAgent;
+    data['date'] = this.date;
+    data['date_gmt'] = this.dateGmt;
+    data['content'] = this.content?.toJson();
+    data['status'] = enumStringToName(this.status.toString());
+
     return data;
   }
 

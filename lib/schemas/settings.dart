@@ -1,36 +1,37 @@
 class Settings {
-  String title;
-  String description;
-  String url;
-  String email;
-  String timezone;
-  String dateFormat;
-  String timeFormat;
-  int startOfWeek;
-  String language;
-  bool useSmilies;
-  int defaultCategory;
-  String defaultPostFormat;
-  int postsPerPage;
-  String defaultPingStatus;
-  String defaultCommentStatus;
+  String? title;
+  String? description;
+  String? url;
+  String? email;
+  String? timezone;
+  String? dateFormat;
+  String? timeFormat;
+  int? startOfWeek;
+  String? language;
+  bool? useSmilies;
+  int? defaultCategory;
+  String? defaultPostFormat;
+  int? postsPerPage;
+  String? defaultPingStatus;
+  String? defaultCommentStatus;
 
-  Settings(
-      {this.title,
-      this.description,
-      this.url,
-      this.email,
-      this.timezone,
-      this.dateFormat,
-      this.timeFormat,
-      this.startOfWeek,
-      this.language,
-      this.useSmilies,
-      this.defaultCategory,
-      this.defaultPostFormat,
-      this.postsPerPage,
-      this.defaultPingStatus,
-      this.defaultCommentStatus});
+  Settings({
+    this.title,
+    this.description,
+    this.url,
+    this.email,
+    this.timezone,
+    this.dateFormat,
+    this.timeFormat,
+    this.startOfWeek,
+    this.language,
+    this.useSmilies,
+    this.defaultCategory,
+    this.defaultPostFormat,
+    this.postsPerPage,
+    this.defaultPingStatus,
+    this.defaultCommentStatus,
+  });
 
   Settings.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -52,6 +53,7 @@ class Settings {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['title'] = this.title;
     data['description'] = this.description;
     data['url'] = this.url;
@@ -67,6 +69,7 @@ class Settings {
     data['posts_per_page'] = this.postsPerPage;
     data['default_ping_status'] = this.defaultPingStatus;
     data['default_comment_status'] = this.defaultCommentStatus;
+
     return data;
   }
 }

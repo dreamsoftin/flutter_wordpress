@@ -1,6 +1,6 @@
 class Title {
-  String raw;
-  String rendered;
+  String? raw;
+  String? rendered;
 
   Title({this.rendered});
 
@@ -11,8 +11,10 @@ class Title {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.raw != null) data['raw'] = this.raw;
-    if (this.rendered != null) data['rendered'] = this.rendered;
+
+    data['raw'] = this.raw;
+    data['rendered'] = this.rendered;
+
     return data;
   }
 }

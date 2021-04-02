@@ -15,14 +15,14 @@ class ParamsMediaList {
   final String beforeDate;
   final List<int> excludeMediaIDs;
   final List<int> includeMediaIDs;
-  final int offset;
+  final int? offset;
   final Order order;
   final MediaOrderBy orderBy;
   final List<int> includeParentIDs;
   final List<int> excludeParentIDs;
   final String slug;
   final MediaStatus mediaStatus;
-  final MediaType mediaType;
+  final MediaType? mediaType;
   final String mimeType;
 
   ParamsMediaList({
@@ -31,16 +31,16 @@ class ParamsMediaList {
     this.perPage = 10,
     this.searchQuery = '',
     this.afterDate = '',
-    this.includeAuthorIDs,
-    this.excludeAuthorIDs,
+    this.includeAuthorIDs = const [],
+    this.excludeAuthorIDs = const [],
     this.beforeDate = '',
-    this.excludeMediaIDs,
-    this.includeMediaIDs,
+    this.excludeMediaIDs = const [],
+    this.includeMediaIDs = const [],
     this.offset,
     this.order = Order.desc,
     this.orderBy = MediaOrderBy.date,
-    this.excludeParentIDs,
-    this.includeParentIDs,
+    this.excludeParentIDs = const [],
+    this.includeParentIDs = const [],
     this.slug = '',
     this.mediaStatus = MediaStatus.inherit,
     this.mediaType,

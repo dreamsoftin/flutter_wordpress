@@ -1,11 +1,15 @@
 class JWTResponse {
-  String token;
-  String userEmail;
-  String userNicename;
-  String userDisplayName;
+  String? token;
+  String? userEmail;
+  String? userNicename;
+  String? userDisplayName;
 
-  JWTResponse(
-      {this.token, this.userEmail, this.userNicename, this.userDisplayName});
+  JWTResponse({
+    this.token,
+    this.userEmail,
+    this.userNicename,
+    this.userDisplayName,
+  });
 
   JWTResponse.fromJson(Map<String, dynamic> json) {
     token = json['token'];
@@ -16,10 +20,12 @@ class JWTResponse {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    
     data['token'] = this.token;
     data['user_email'] = this.userEmail;
     data['user_nicename'] = this.userNicename;
     data['user_display_name'] = this.userDisplayName;
+
     return data;
   }
 }

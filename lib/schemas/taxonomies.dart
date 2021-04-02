@@ -1,12 +1,15 @@
-import 'links.dart';
-import 'labels.dart';
 import 'capabilities.dart';
+import 'labels.dart';
+import 'links.dart';
 
 class Taxonomies {
-  TaxonomyCategory category;
-  TaxonomyPostTag postTag;
+  TaxonomyCategory? category;
+  TaxonomyPostTag? postTag;
 
-  Taxonomies({this.category, this.postTag});
+  Taxonomies({
+    this.category,
+    this.postTag,
+  });
 
   Taxonomies.fromJson(Map<String, dynamic> json) {
     category = json['category'] != null
@@ -19,41 +22,40 @@ class Taxonomies {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.category != null) {
-      data['category'] = this.category.toJson();
-    }
-    if (this.postTag != null) {
-      data['post_tag'] = this.postTag.toJson();
-    }
+
+    data['category'] = this.category?.toJson();
+    data['post_tag'] = this.postTag?.toJson();
+
     return data;
   }
 }
 
 class TaxonomyCategory {
-  String name;
-  String slug;
-  Capabilities capabilities;
-  String description;
-  Labels labels;
-  List<String> types;
-  bool showCloud;
-  bool hierarchical;
-  String restBase;
-  Visibility visibility;
-  Links lLinks;
+  String? name;
+  String? slug;
+  Capabilities? capabilities;
+  String? description;
+  Labels? labels;
+  List<String>? types;
+  bool? showCloud;
+  bool? hierarchical;
+  String? restBase;
+  Visibility? visibility;
+  Links? lLinks;
 
-  TaxonomyCategory(
-      {this.name,
-      this.slug,
-      this.capabilities,
-      this.description,
-      this.labels,
-      this.types,
-      this.showCloud,
-      this.hierarchical,
-      this.restBase,
-      this.visibility,
-      this.lLinks});
+  TaxonomyCategory({
+    this.name,
+    this.slug,
+    this.capabilities,
+    this.description,
+    this.labels,
+    this.types,
+    this.showCloud,
+    this.hierarchical,
+    this.restBase,
+    this.visibility,
+    this.lLinks,
+  });
 
   TaxonomyCategory.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -76,44 +78,39 @@ class TaxonomyCategory {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['name'] = this.name;
     data['slug'] = this.slug;
-    if (this.capabilities != null) {
-      data['capabilities'] = this.capabilities.toJson();
-    }
+    data['capabilities'] = this.capabilities?.toJson();
     data['description'] = this.description;
-    if (this.labels != null) {
-      data['labels'] = this.labels.toJson();
-    }
+    data['labels'] = this.labels?.toJson();
     data['types'] = this.types;
     data['show_cloud'] = this.showCloud;
     data['hierarchical'] = this.hierarchical;
     data['rest_base'] = this.restBase;
-    if (this.visibility != null) {
-      data['visibility'] = this.visibility.toJson();
-    }
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
+    data['visibility'] = this.visibility?.toJson();
+    data['_links'] = this.lLinks?.toJson();
+
     return data;
   }
 }
 
 class Visibility {
-  bool public;
-  bool publiclyQueryable;
-  bool showAdminColumn;
-  bool showInNavMenus;
-  bool showInQuickEdit;
-  bool showUi;
+  bool? public;
+  bool? publiclyQueryable;
+  bool? showAdminColumn;
+  bool? showInNavMenus;
+  bool? showInQuickEdit;
+  bool? showUi;
 
-  Visibility(
-      {this.public,
-      this.publiclyQueryable,
-      this.showAdminColumn,
-      this.showInNavMenus,
-      this.showInQuickEdit,
-      this.showUi});
+  Visibility({
+    this.public,
+    this.publiclyQueryable,
+    this.showAdminColumn,
+    this.showInNavMenus,
+    this.showInQuickEdit,
+    this.showUi,
+  });
 
   Visibility.fromJson(Map<String, dynamic> json) {
     public = json['public'];
@@ -126,41 +123,44 @@ class Visibility {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['public'] = this.public;
     data['publicly_queryable'] = this.publiclyQueryable;
     data['show_admin_column'] = this.showAdminColumn;
     data['show_in_nav_menus'] = this.showInNavMenus;
     data['show_in_quick_edit'] = this.showInQuickEdit;
     data['show_ui'] = this.showUi;
+
     return data;
   }
 }
 
 class TaxonomyPostTag {
-  String name;
-  String slug;
-  Capabilities capabilities;
-  String description;
-  Labels labels;
-  List<String> types;
-  bool showCloud;
-  bool hierarchical;
-  String restBase;
-  Visibility visibility;
-  Links lLinks;
+  String? name;
+  String? slug;
+  Capabilities? capabilities;
+  String? description;
+  Labels? labels;
+  List<String>? types;
+  bool? showCloud;
+  bool? hierarchical;
+  String? restBase;
+  Visibility? visibility;
+  Links? lLinks;
 
-  TaxonomyPostTag(
-      {this.name,
-      this.slug,
-      this.capabilities,
-      this.description,
-      this.labels,
-      this.types,
-      this.showCloud,
-      this.hierarchical,
-      this.restBase,
-      this.visibility,
-      this.lLinks});
+  TaxonomyPostTag({
+    this.name,
+    this.slug,
+    this.capabilities,
+    this.description,
+    this.labels,
+    this.types,
+    this.showCloud,
+    this.hierarchical,
+    this.restBase,
+    this.visibility,
+    this.lLinks,
+  });
 
   TaxonomyPostTag.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -183,25 +183,19 @@ class TaxonomyPostTag {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['name'] = this.name;
     data['slug'] = this.slug;
-    if (this.capabilities != null) {
-      data['capabilities'] = this.capabilities.toJson();
-    }
+    data['capabilities'] = this.capabilities?.toJson();
+    data['labels'] = this.labels?.toJson();
     data['description'] = this.description;
-    if (this.labels != null) {
-      data['labels'] = this.labels.toJson();
-    }
     data['types'] = this.types;
     data['show_cloud'] = this.showCloud;
     data['hierarchical'] = this.hierarchical;
     data['rest_base'] = this.restBase;
-    if (this.visibility != null) {
-      data['visibility'] = this.visibility.toJson();
-    }
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
+    data['visibility'] = this.visibility?.toJson();
+    data['_links'] = this.lLinks?.toJson();
+
     return data;
   }
 }

@@ -1,17 +1,16 @@
 import 'package:flutter_wordpress/constants.dart';
-import 'package:meta/meta.dart';
-import 'links.dart';
-import 'content.dart';
-import 'guid.dart';
-import 'title.dart';
-import 'excerpt.dart';
 
-import 'user.dart';
+import 'category.dart';
 import 'comment.dart';
 import 'comment_hierarchy.dart';
-import 'category.dart';
-import 'tag.dart';
+import 'content.dart';
+import 'excerpt.dart';
+import 'guid.dart';
+import 'links.dart';
 import 'media.dart';
+import 'tag.dart';
+import 'title.dart';
+import 'user.dart';
 
 /// A [WordPress Post](https://developer.wordpress.org/rest-api/reference/posts/)
 ///
@@ -19,86 +18,86 @@ import 'media.dart';
 /// ([WordPressContext]).
 class Post {
   /// ID of the post
-  int id;
+  int? id;
 
   /// The date the post was published, in the site's Timezone.
-  String date;
+  String? date;
 
   /// The date the post was published, in GMT.
-  String dateGmt;
-  Guid guid;
-  String modified;
-  String modifiedGmt;
+  String? dateGmt;
+  Guid? guid;
+  String? modified;
+  String? modifiedGmt;
 
   /// Password for the post in case it needs to be password protected.
-  String password;
+  String? password;
 
   /// An alphanumeric identifier unique to each post.
-  String slug;
+  String? slug;
 
   /// The state in which the post should be created (draft, publish etc.)
-  PostPageStatus status;
-  String type;
-  String link;
+  PostPageStatus? status;
+  String? type;
+  String? link;
 
   /// Post title
-  Title title;
+  Title? title;
 
   /// Post content
-  Content content;
+  Content? content;
 
   /// Post excerpt
-  Excerpt excerpt;
+  Excerpt? excerpt;
 
   /// ID of the post author. Refer [User].
-  int authorID;
+  int? authorID;
 
-  int featuredMediaID;
+  int? featuredMediaID;
 
   /// Whether the post allows commenting.
-  PostCommentStatus commentStatus;
+  PostCommentStatus? commentStatus;
 
   /// Whether the post can be pinged.
-  PostPingStatus pingStatus;
+  PostPingStatus? pingStatus;
 
   /// Whether the post needs to sticky i.e. a Featured post.
-  bool sticky;
-  String template;
+  bool? sticky;
+  String? template;
 
   /// The format of the post.
-  PostFormat format;
+  PostFormat? format;
 
   /// List of IDs of categories this post belongs to.
-  List<int> categoryIDs;
+  List<int>? categoryIDs;
 
   /// List of IDs of tags this post should have.
-  List<int> tagIDs;
-  String permalinkTemplate;
-  String generatedSlug;
-  Links lLinks;
+  List<int>? tagIDs;
+  String? permalinkTemplate;
+  String? generatedSlug;
+  Links? lLinks;
 
   /// The [User] object denoting the author of the post.
-  User author;
+  User? author;
 
   /// A list of comments for the post.
-  List<Comment> comments;
+  List<Comment>? comments;
 
   /// A list of comments for the post, where each
   /// [CommentHierarchy] object is a direct comment to the post, with
   /// [CommentHierarchy.children] containing replies to that comment.
-  List<CommentHierarchy> commentsHierarchy;
+  List<CommentHierarchy>? commentsHierarchy;
 
   /// A list of categories assigned to the post.
-  List<Category> categories;
+  List<Category>? categories;
 
   /// A list of tags assigned to the post.
-  List<Tag> tags;
+  List<Tag>? tags;
 
   /// A list of attachments contained in the post.
-  List<Media> attachments;
+  List<Media>? attachments;
 
   /// The featured Media of the post.
-  Media featuredMedia;
+  Media? featuredMedia;
 
   Post({
     this.date,
@@ -106,11 +105,11 @@ class Post {
     this.password,
     this.slug,
     this.status = PostPageStatus.publish,
-    @required String title,
-    @required String content,
-    @required String excerpt,
-    @required this.authorID,
-    String featuredMedia,
+    required String title,
+    required String content,
+    required String excerpt,
+    required this.authorID,
+    String? featuredMedia,
     this.featuredMediaID,
     this.commentStatus = PostCommentStatus.open,
     this.pingStatus = PostPingStatus.open,
@@ -176,7 +175,8 @@ class Post {
         }
       });
     }
-    categoryIDs = json['categories'] != null ? json['categories'].cast<int>() : null;
+    categoryIDs =
+        json['categories'] != null ? json['categories'].cast<int>() : null;
     tagIDs = json['tags'] != null ? json['tags'].cast<int>() : null;
     permalinkTemplate = json['permalink_template'];
     generatedSlug = json['generated_slug'];
@@ -185,35 +185,31 @@ class Post {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.date != null) data['date'] = this.date;
-    if (this.dateGmt != null) data['date_gmt'] = this.dateGmt;
-    if (this.password != null) data['password'] = this.password;
-    if (this.slug != null) data['slug'] = this.slug;
-    if (this.status != null)
-      data['status'] = enumStringToName(this.status.toString());
-    if (this.title != null) data['title'] = this.title.rendered;
-    if (this.content != null) data['content'] = this.content.rendered;
-    if (this.excerpt != null) data['excerpt'] = this.excerpt.rendered;
-    if (this.authorID != null) data['author'] = this.authorID.toString();
-    if (this.featuredMediaID != null)
-      data['featured_media'] = this.featuredMediaID.toString();
-    if (this.commentStatus != null)
-      data['comment_status'] = enumStringToName(this.commentStatus.toString());
-    if (this.pingStatus != null)
-      data['ping_status'] = enumStringToName(this.pingStatus.toString());
-    if (this.sticky != null) data['sticky'] = this.sticky.toString();
-    if (this.template != null) data['template'] = this.template;
-    if (this.format != null)
-      data['format'] = enumStringToName(this.format.toString());
-    if (this.categoryIDs != null)
-      data['categories'] = listToUrlString(this.categoryIDs);
-    if (this.tagIDs != null) data['tags'] = listToUrlString(this.tagIDs);
+
+    data['date'] = this.date;
+    data['date_gmt'] = this.dateGmt;
+    data['password'] = this.password;
+    data['slug'] = this.slug;
+    data['status'] = enumStringToName(this.status.toString());
+    data['title'] = this.title?.toJson();
+    data['content'] = this.content?.toJson();
+    data['excerpt'] = this.excerpt?.toJson();
+    data['author'] = this.authorID;
+    data['featured_media'] = this.featuredMediaID;
+    data['comment_status'] = enumStringToName(this.commentStatus.toString());
+    data['ping_status'] = enumStringToName(this.pingStatus.toString());
+    data['sticky'] = this.sticky;
+    data['template'] = this.template;
+    data['format'] = enumStringToName(this.format.toString());
+    data['categories'] = listToUrlString(this.categoryIDs ?? []);
+    data['tags'] = listToUrlString(this.tagIDs ?? []);
+
     return data;
   }
 
   @override
   String toString() {
-    return 'Post: { id: $id, title: ${title.rendered}, '
-        'author: {id: $authorID, name: ${author.name}}}';
+    return 'Post: { id: $id, title: ${title?.rendered}, '
+        'author: {id: $authorID, name: ${author?.name}}}';
   }
 }

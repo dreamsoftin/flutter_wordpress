@@ -1,45 +1,45 @@
 class Labels {
-  String name;
-  String singularName;
-  String searchItems;
-  String popularItems;
-  String allItems;
-  String parentItem;
-  String parentItemColon;
-  String addNew;
-  String addNewItem;
-  String editItem;
-  String newItem;
-  String viewItem;
-  String viewItems;
-  String notFound;
-  String notFoundInTrash;
-  String archives;
-  String attributes;
-  String insertIntoItem;
-  String uploadedToThisItem;
-  String featuredImage;
-  String setFeaturedImage;
-  String removeFeaturedImage;
-  String useFeaturedImage;
-  String filterItemsList;
-  String itemsListNavigation;
-  String itemsList;
-  String itemPublished;
-  String itemPublishedPrivately;
-  String itemRevertedToDraft;
-  String itemScheduled;
-  String itemUpdated;
-  String menuName;
-  String nameAdminBar;
-  String updateItem;
-  String newItemName;
-  String separateItemsWithCommas;
-  String addOrRemoveItems;
-  String chooseFromMostUsed;
-  String noTerms;
-  String mostUsed;
-  String backToItems;
+  String? name;
+  String? singularName;
+  String? searchItems;
+  String? popularItems;
+  String? allItems;
+  String? parentItem;
+  String? parentItemColon;
+  String? addNew;
+  String? addNewItem;
+  String? editItem;
+  String? newItem;
+  String? viewItem;
+  String? viewItems;
+  String? notFound;
+  String? notFoundInTrash;
+  String? archives;
+  String? attributes;
+  String? insertIntoItem;
+  String? uploadedToThisItem;
+  String? featuredImage;
+  String? setFeaturedImage;
+  String? removeFeaturedImage;
+  String? useFeaturedImage;
+  String? filterItemsList;
+  String? itemsListNavigation;
+  String? itemsList;
+  String? itemPublished;
+  String? itemPublishedPrivately;
+  String? itemRevertedToDraft;
+  String? itemScheduled;
+  String? itemUpdated;
+  String? menuName;
+  String? nameAdminBar;
+  String? updateItem;
+  String? newItemName;
+  String? separateItemsWithCommas;
+  String? addOrRemoveItems;
+  String? chooseFromMostUsed;
+  String? noTerms;
+  String? mostUsed;
+  String? backToItems;
 
   Labels({
     this.name,
@@ -131,6 +131,7 @@ class Labels {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    
     data['name'] = this.name;
     data['singular_name'] = this.singularName;
     data['search_items'] = this.searchItems;
