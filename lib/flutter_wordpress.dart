@@ -10,12 +10,10 @@
 /// 2. [JWT Authentication for WP REST API](https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/)
 library flutter_wordpress;
 
-import 'dart:async' as async;
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 
 import 'constants.dart';
 import 'requests/params_category_list.dart';
@@ -67,8 +65,8 @@ export 'schemas/wordpress_error.dart';
 
 /// All WordPress related functionality are defined under this class.
 class WordPress {
-  String _baseUrl;
-  WordPressAuthenticator _authenticator;
+  late String _baseUrl;
+  late WordPressAuthenticator _authenticator;
 
   String _token = "";
   Map<String, String> _urlHeader = {
@@ -78,18 +76,19 @@ class WordPress {
   /// If [WordPressAuthenticator.ApplicationPasswords] is used as an authenticator,
   /// [adminName] and [adminKey] is necessary for authentication.
   /// https://wordpress.org/plugins/application-passwords/
-  WordPress(
-      {@required String baseUrl,
-      WordPressAuthenticator authenticator,
-      String adminName,
-      String adminKey}) {
+  WordPress({
+    required String baseUrl,
+    required WordPressAuthenticator authenticator,
+    String? adminName,
+    String? adminKey,
+  }) {
     this._baseUrl = baseUrl.endsWith('/')
         ? baseUrl.substring(0, baseUrl.length - 1)
         : baseUrl;
 
     this._authenticator = authenticator;
 
-    if (adminName != null && adminKey != null && this._authenticator != null) {
+    if (adminName != null && adminKey != null) {
       switch (this._authenticator) {
         case WordPressAuthenticator.ApplicationPasswords:
           String str = '$adminName:$adminKey';
@@ -107,8 +106,10 @@ class WordPress {
   /// has been successfully authenticated.
   ///
   /// In case of an error, a [WordPressError] object is thrown.
-  async.Future<User> authenticateUser(
-      {@required username, @required password}) async {
+  Future<User> authenticateUser({
+    required username,
+    required password,
+  }) async {
     if (_authenticator == WordPressAuthenticator.ApplicationPasswords) {
       return _authenticateViaAP(username, password);
     } else if (_authenticator == WordPressAuthenticator.JWT) {
@@ -117,28 +118,26 @@ class WordPress {
       return fetchUser(username: username);
   }
 
-  async.Future<User> _authenticateViaAP(username, password) async {
-    //TODO: Implement Application Passwords User Authentication
+  Future<User> _authenticateViaAP(username, password) async {
     return fetchUser(username: username);
   }
 
-  async.Future<User> _authenticateViaJWT(
-      String username, String password) async {
+  Future<User> _authenticateViaJWT(String username, String password) async {
     final body = {
       'username': username,
       'password': password,
     };
 
     final response = await http.post(
-      _baseUrl + URL_JWT_TOKEN,
+      Uri.parse(_baseUrl + URL_JWT_TOKEN),
       body: body,
     );
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      JWTResponse authResponse =
-          JWTResponse.fromJson(json.decode(response.body));
-      _token = authResponse.token;
-
+      JWTResponse authResponse = JWTResponse.fromJson(
+        json.decode(response.body),
+      );
+      _token = authResponse.token!;
       _urlHeader['Authorization'] = 'Bearer ${authResponse.token}';
 
       return fetchUser(email: authResponse.userEmail);
@@ -155,11 +154,13 @@ class WordPress {
     return _token;
   }
 
-  async.Future<User> authenticateViaToken(String token) async {
+  Future<User> authenticateViaToken(String token) async {
     _urlHeader['Authorization'] = 'Bearer ${token}';
 
-    final response =
-        await http.post(_baseUrl + URL_JWT_TOKEN_VALIDATE, headers: _urlHeader);
+    final response = await http.post(
+      Uri.parse(_baseUrl + URL_JWT_TOKEN_VALIDATE),
+      headers: _urlHeader,
+    );
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return fetchMeUser();
@@ -174,7 +175,11 @@ class WordPress {
   /// Only one parameter is enough to search for the user.
   ///
   /// In case of an error, a [WordPressError] object is thrown.
-  async.Future<User> fetchUser({int id, String email, String username}) async {
+  Future<User> fetchUser({
+    int? id,
+    String? email,
+    String? username,
+  }) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_USERS);
     final Map<String, String> params = {
       'search': '',
@@ -187,7 +192,10 @@ class WordPress {
 
     url.write(constructUrlParams(params));
 
-    final response = await http.get(url.toString(), headers: _urlHeader);
+    final response = await http.get(
+      Uri.parse(url.toString()),
+      headers: _urlHeader,
+    );
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       final jsonStr = json.decode(response.body);
@@ -198,8 +206,9 @@ class WordPress {
       return User.fromJson(jsonStr[0]);
     } else {
       try {
-        WordPressError err =
-            WordPressError.fromJson(json.decode(response.body));
+        WordPressError err = WordPressError.fromJson(
+          json.decode(response.body),
+        );
         throw err;
       } catch (e) {
         throw new WordPressError(message: response.body);
@@ -210,9 +219,11 @@ class WordPress {
   /// This returns the me [User] object with the current token. Otherwise throws [WordPressError].
   ///
   /// In case of an error, a [WordPressError] object is thrown.
-  async.Future<User> fetchMeUser() async {
-    final response =
-        await http.get(_baseUrl + URL_USER_ME, headers: _urlHeader);
+  Future<User> fetchMeUser() async {
+    final response = await http.get(
+      Uri.parse(_baseUrl + URL_USER_ME),
+      headers: _urlHeader,
+    );
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       final jsonStr = json.decode(response.body);
@@ -243,13 +254,13 @@ class WordPress {
   ///
   /// (**Note:** *Set only those fetch boolean parameters which you need because
   /// the more information to fetch, the longer it will take to return all Posts*)
-  /// 
+  ///
   /// [fetchAll] will make as many API requests as is needed to get all posts.
   /// This may take a while.
   ///
   /// In case of an error, a [WordPressError] object is thrown.
-  async.Future<List<Post>> fetchPosts({
-    @required ParamsPostList postParams,
+  Future<List<Post>> fetchPosts({
+    required ParamsPostList postParams,
     bool fetchAuthor = false,
     bool fetchComments = false,
     Order orderComments = Order.desc,
@@ -259,7 +270,7 @@ class WordPress {
     bool fetchFeaturedMedia = false,
     bool fetchAttachments = false,
     String postType = "posts",
-    bool fetchAll = false
+    bool fetchAll = false,
   }) async {
     if (fetchAll) {
       postParams = postParams.copyWith(perPage: 100);
@@ -270,10 +281,11 @@ class WordPress {
 
     url.write(postParams.toString());
 
-    final response = await http.get(url.toString(), headers: _urlHeader);
+    final response =
+        await http.get(Uri.parse(url.toString()), headers: _urlHeader);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      List<Post> posts = new List();
+      List<Post> posts = [];
       final list = json.decode(response.body);
 
       for (final post in list) {
@@ -291,22 +303,22 @@ class WordPress {
       }
 
       if (fetchAll && response.headers["x-wp-totalpages"] != null) {
-        final totalPages = int.parse(response.headers["x-wp-totalpages"]);
+        final totalPages = int.parse(response.headers["x-wp-totalpages"]!);
 
         for (int i = postParams.pageNum + 1; i <= totalPages; ++i) {
-            posts.addAll(await fetchPosts(
-              postParams: postParams.copyWith(pageNum: i),
-              fetchAuthor: fetchAuthor,
-              fetchComments: fetchComments,
-              orderComments: orderComments,
-              orderCommentsBy: orderCommentsBy,
-              fetchCategories: fetchCategories,
-              fetchTags: fetchTags,
-              fetchFeaturedMedia: fetchFeaturedMedia,
-              fetchAttachments: fetchAttachments,
-            ));
-          }
+          posts.addAll(await fetchPosts(
+            postParams: postParams.copyWith(pageNum: i),
+            fetchAuthor: fetchAuthor,
+            fetchComments: fetchComments,
+            orderComments: orderComments,
+            orderCommentsBy: orderCommentsBy,
+            fetchCategories: fetchCategories,
+            fetchTags: fetchTags,
+            fetchFeaturedMedia: fetchFeaturedMedia,
+            fetchAttachments: fetchAttachments,
+          ));
         }
+      }
 
       return posts;
     } else {
@@ -323,7 +335,7 @@ class WordPress {
   /// This function fetches post information such as author, comments, categories,
   /// tags, featuredMedia and attachments.
   Future<Post> _postBuilder({
-    Post post,
+    required Post post,
     bool setAuthor = false,
     bool setComments = false,
     Order orderComments = Order.desc,
@@ -335,51 +347,50 @@ class WordPress {
   }) async {
     if (setAuthor) {
       User author = await fetchUser(id: post.authorID);
-      if (author != null) post.author = author;
+      post.author = author;
     }
     if (setComments) {
       List<Comment> comments = await fetchComments(
           params: ParamsCommentList(
-        includePostIDs: [post.id],
+        includePostIDs: [post.id!],
         order: orderComments,
         orderBy: orderCommentsBy,
       ));
-      if (comments != null && comments.length != 0) {
+      if (comments.length != 0) {
         post.comments = comments;
 
-        post.commentsHierarchy = new List();
-        post.comments.forEach((comment) {
+        post.commentsHierarchy = [];
+        post.comments?.forEach((comment) {
           if (comment.parent == 0)
             post.commentsHierarchy
-                .add(_commentHierarchyBuilder(post.comments, comment));
+                ?.add(_commentHierarchyBuilder(post.comments!, comment));
         });
       }
     }
     if (setCategories) {
       List<Category> categories =
           await fetchCategories(params: ParamsCategoryList(post: post.id));
-      if (categories != null && categories.length != 0)
-        post.categories = categories;
+      if (categories.length != 0) post.categories = categories;
     }
     if (setTags) {
       List<Tag> tags = await fetchTags(params: ParamsTagList(post: post.id));
-      if (tags != null && tags.length != 0) post.tags = tags;
+      if (tags.length != 0) post.tags = tags;
     }
     if (setFeaturedMedia) {
       List<Media> media = await fetchMediaList(
         params: ParamsMediaList(
-          includeMediaIDs: [post.featuredMediaID],
+          includeMediaIDs: [post.featuredMediaID!],
         ),
       );
-      if (media != null && media.length != 0) post.featuredMedia = media[0];
+      if (media.length != 0) post.featuredMedia = media[0];
     }
     if (setAttachments) {
       List<Media> media = await fetchMediaList(
         params: ParamsMediaList(
-          includeParentIDs: [post.id],
+          includeParentIDs: [post.id!],
         ),
       );
-      if (media != null && media.length != 0) post.attachments = media;
+      if (media.length != 0) post.attachments = media;
     }
     return post;
   }
@@ -388,14 +399,16 @@ class WordPress {
   ///and comment. Only parent comments (direct comments to post) need to be
   ///supplied.
   CommentHierarchy _commentHierarchyBuilder(
-      List<Comment> commentList, Comment comment) {
+    List<Comment> commentList,
+    Comment comment,
+  ) {
     final childComments = commentList.where((ele) =>
         ele.id != comment.id && ele.parent != 0 && ele.parent == comment.id);
 
-    if (childComments == null || childComments.length == 0) {
-      return new CommentHierarchy(comment: comment, children: null);
+    if (childComments.length == 0) {
+      return new CommentHierarchy(comment: comment);
     } else {
-      List<CommentHierarchy> children = new List();
+      List<CommentHierarchy> children = [];
       childComments.forEach((c) {
         children.add(_commentHierarchyBuilder(commentList, c));
       });
@@ -411,15 +424,16 @@ class WordPress {
   /// [ParamsPageList.perPage] number of pages in page [ParamsPageList.pageNum].
   ///
   /// In case of an error, a [WordPressError] object is thrown.
-  async.Future<List<Page>> fetchPages({@required ParamsPageList params}) async {
+  Future<List<Page>> fetchPages({required ParamsPageList params}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_PAGES);
 
     url.write(params.toString());
 
-    final response = await http.get(url.toString(), headers: _urlHeader);
+    final response =
+        await http.get(Uri.parse(url.toString()), headers: _urlHeader);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      List<Page> pages = new List<Page>();
+      List<Page> pages = [];
       final list = json.decode(response.body);
       list.forEach((page) {
         pages.add(Page.fromJson(page));
@@ -441,8 +455,7 @@ class WordPress {
   /// [ParamsUserList.perPage] number of users in page [ParamsUserList.pageNum].
   ///
   /// In case of an error, a [WordPressError] object is thrown.
-  async.Future<FetchUsersResult> fetchUsers(
-      {@required ParamsUserList params}) async {
+  Future<FetchUsersResult> fetchUsers({required ParamsUserList params}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_USERS);
 
     url.write(params.toString());
@@ -455,22 +468,26 @@ class WordPress {
   /// [ParamsUserList.perPage] number of users in page [ParamsUserList.pageNum].
   ///
   /// In case of an error, a [WordPressError] object is thrown.
-  async.Future<FetchUsersResult> fetchCustomUsers(
-      {@required String path, @required ParamsUserList params}) async {
+  Future<FetchUsersResult> fetchCustomUsers({
+    required String path,
+    required ParamsUserList params,
+  }) async {
     final StringBuffer url = new StringBuffer(_baseUrl + path);
-
     url.write(params.toString());
 
     return _doUsersFetch(url);
   }
 
-  async.Future<FetchUsersResult> _doUsersFetch(StringBuffer url) async {
-    final response = await http.get(url.toString(), headers: _urlHeader);
+  Future<FetchUsersResult> _doUsersFetch(StringBuffer url) async {
+    final response = await http.get(
+      Uri.parse(url.toString()),
+      headers: _urlHeader,
+    );
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      List<User> users = new List<User>();
+      List<User> users = [];
       final list = json.decode(response.body);
-      int totalUsers = int.parse(response.headers['x-wp-total']);
+      int totalUsers = int.parse(response.headers['x-wp-total']!);
 
       list.forEach((user) {
         users.add(User.fromJson(user));
@@ -492,16 +509,20 @@ class WordPress {
   /// [ParamsCommentList.perPage] number of comments in page [ParamsCommentList.pageNum].
   ///
   /// In case of an error, a [WordPressError] object is thrown.
-  async.Future<List<Comment>> fetchComments(
-      {@required ParamsCommentList params}) async {
+  Future<List<Comment>> fetchComments({
+    required ParamsCommentList params,
+  }) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_COMMENTS);
 
     url.write(params.toString());
 
-    final response = await http.get(url.toString(), headers: _urlHeader);
+    final response = await http.get(
+      Uri.parse(url.toString()),
+      headers: _urlHeader,
+    );
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      List<Comment> comments = new List<Comment>();
+      List<Comment> comments = [];
       final list = json.decode(response.body);
       list.forEach((comment) {
         comments.add(Comment.fromJson(comment));
@@ -524,17 +545,21 @@ class WordPress {
   /// [CommentHierarchy.children] containing the replies to that comment.
   ///
   /// In case of an error, a [WordPressError] object is thrown.
-  async.Future<List<CommentHierarchy>> fetchCommentsAsHierarchy(
-      {@required ParamsCommentList params}) async {
+  Future<List<CommentHierarchy>> fetchCommentsAsHierarchy({
+    required ParamsCommentList params,
+  }) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_COMMENTS);
 
     url.write(params.toString());
 
-    final response = await http.get(url.toString(), headers: _urlHeader);
+    final response = await http.get(
+      Uri.parse(url.toString()),
+      headers: _urlHeader,
+    );
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      List<Comment> comments = new List<Comment>();
-      List<CommentHierarchy> commentsHierarchy = new List<CommentHierarchy>();
+      List<Comment> comments = [];
+      List<CommentHierarchy> commentsHierarchy = [];
       final list = json.decode(response.body);
       list.forEach((comment) {
         comments.add(Comment.fromJson(comment));
@@ -561,8 +586,10 @@ class WordPress {
   /// [ParamsCategoryList.perPage] number of categories in page [ParamsCategoryList.pageNum].
   ///
   /// In case of an error, a [WordPressError] object is thrown.
-  async.Future<List<Category>> fetchCategories(
-      {@required ParamsCategoryList params, bool fetchAll = false}) async {
+  Future<List<Category>> fetchCategories({
+    required ParamsCategoryList params,
+    bool fetchAll = false,
+  }) async {
     if (fetchAll) {
       params = params.copyWith(perPage: 100);
     }
@@ -571,21 +598,24 @@ class WordPress {
 
     url.write(params.toString());
 
-    final response = await http.get(url.toString(), headers: _urlHeader);
+    final response = await http.get(
+      Uri.parse(url.toString()),
+      headers: _urlHeader,
+    );
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      List<Category> categories = new List<Category>();
+      List<Category> categories = [];
       final list = json.decode(response.body);
       list.forEach((category) {
         categories.add(Category.fromJson(category));
       });
-      
+
       if (fetchAll && response.headers["x-wp-totalpages"] != null) {
-        final totalPages = int.parse(response.headers["x-wp-totalpages"]);
+        final totalPages = int.parse(response.headers["x-wp-totalpages"]!);
 
         for (int i = params.pageNum + 1; i <= totalPages; ++i) {
-          categories.addAll(await fetchCategories(
-            params: params.copyWith(pageNum: i)));
+          categories.addAll(
+              await fetchCategories(params: params.copyWith(pageNum: i)));
         }
       }
 
@@ -606,15 +636,18 @@ class WordPress {
   /// [ParamsTagList.perPage] number of tags in page [ParamsTagList.pageNum].
   ///
   /// In case of an error, a [WordPressError] object is thrown.
-  async.Future<List<Tag>> fetchTags({@required ParamsTagList params}) async {
+  Future<List<Tag>> fetchTags({required ParamsTagList params}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_TAGS);
 
     url.write(params.toString());
 
-    final response = await http.get(url.toString(), headers: _urlHeader);
+    final response = await http.get(
+      Uri.parse(url.toString()),
+      headers: _urlHeader,
+    );
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      List<Tag> tags = new List<Tag>();
+      List<Tag> tags = [];
       final list = json.decode(response.body);
       list.forEach((tag) {
         tags.add(Tag.fromJson(tag));
@@ -636,16 +669,18 @@ class WordPress {
   /// [ParamsMediaList.perPage] number of tags in page [ParamsMediaList.pageNum].
   ///
   /// In case of an error, a [WordPressError] object is thrown.
-  async.Future<List<Media>> fetchMediaList(
-      {@required ParamsMediaList params}) async {
+  Future<List<Media>> fetchMediaList({required ParamsMediaList params}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_MEDIA);
 
     url.write(params.toString());
 
-    final response = await http.get(url.toString(), headers: _urlHeader);
+    final response = await http.get(
+      Uri.parse(url.toString()),
+      headers: _urlHeader,
+    );
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      List<Media> media = new List<Media>();
+      List<Media> media = [];
       final list = json.decode(response.body);
       list.forEach((m) {
         media.add(Media.fromJson(m));
@@ -671,11 +706,11 @@ class WordPress {
   ///
   ///
 
-  async.Future<Post> createPost({@required Post post}) async {
+  Future<Post> createPost({required Post post}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS);
 
     final response = await http.post(
-      url.toString(),
+      Uri.parse(url.toString()),
       headers: _urlHeader,
       body: post.toJson(),
     );
@@ -695,11 +730,11 @@ class WordPress {
 
 //  yahya - @mymakarim
 
-  async.Future<dynamic> uploadMedia(File image) async {
+  Future<dynamic> uploadMedia(File image) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_MEDIA);
     var file = image.readAsBytesSync();
     final response = await http.post(
-      url.toString(),
+      Uri.parse(url.toString()),
       headers: {
         "Content-Type": "image/png",
         "Content-Disposition": "form-data; filename=firstIg.png",
@@ -723,7 +758,7 @@ class WordPress {
 
 // uploadMedia function added by: @GarvMaggu
 
-  async.Future<bool> createUser({@required User user}) async {
+  Future<bool> createUser({required User user}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_USERS);
 
     HttpClient httpClient = new HttpClient();
@@ -749,13 +784,15 @@ class WordPress {
         }
       });
     }
+
+    return false;
   }
 
 //  =====================
 //  UPDATE START
 //  =====================
 
-  async.Future<bool> updatePost({@required int id, @required Post post}) async {
+  Future<bool> updatePost({required int id, required Post post}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS + '/$id');
 
     HttpClient httpClient = new HttpClient();
@@ -781,10 +818,11 @@ class WordPress {
         }
       });
     }
+    return false;
   }
 
-  async.Future<bool> updateComment(
-      {@required int id, @required Comment comment}) async {
+  Future<bool> updateComment(
+      {required int id, required Comment comment}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_COMMENTS + '/$id');
 
     HttpClient httpClient = new HttpClient();
@@ -810,9 +848,10 @@ class WordPress {
         }
       });
     }
+    return false;
   }
 
-  async.Future<bool> updateUser({@required int id, @required User user}) async {
+  Future<bool> updateUser({required int id, required User user}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_USERS + '/$id');
 
     HttpClient httpClient = new HttpClient();
@@ -838,6 +877,7 @@ class WordPress {
         }
       });
     }
+    return false;
   }
 
 //  =====================
@@ -848,7 +888,7 @@ class WordPress {
 //  DELETE START
 //  =====================
 
-  async.Future<bool> deletePost({@required int id}) async {
+  Future<bool> deletePost({required int id}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_POSTS + '/$id');
 
     HttpClient httpClient = new HttpClient();
@@ -873,9 +913,10 @@ class WordPress {
         }
       });
     }
+    return false;
   }
 
-  async.Future<bool> deleteComment({@required int id}) async {
+  Future<bool> deleteComment({required int id}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_COMMENTS + '/$id');
 
     HttpClient httpClient = new HttpClient();
@@ -900,11 +941,12 @@ class WordPress {
         }
       });
     }
+    return false;
   }
 
-  async.Future<bool> deleteUser({
-    @required int id,
-    @required int reassign,
+  Future<bool> deleteUser({
+    required int id,
+    required int reassign,
   }) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_USERS + '/$id');
 
@@ -932,6 +974,7 @@ class WordPress {
         }
       });
     }
+    return false;
   }
 
 //  =====================
@@ -946,11 +989,11 @@ class WordPress {
   /// comment information.
   ///
   /// In case of an error, a [WordPressError] object is thrown.
-  async.Future<Comment> createComment({@required Comment comment}) async {
+  Future<Comment> createComment({required Comment comment}) async {
     final StringBuffer url = new StringBuffer(_baseUrl + URL_COMMENTS);
 
     final response = await http.post(
-      url.toString(),
+      Uri.parse(url.toString()),
       headers: _urlHeader,
       body: comment.toJson(),
     );

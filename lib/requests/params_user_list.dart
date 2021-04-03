@@ -11,7 +11,7 @@ class ParamsUserList {
   final String searchQuery;
   final List<int> includeUserIDs;
   final List<int> excludeUserIDs;
-  final int offset;
+  final int? offset;
   final Order order;
   final UserOrderBy orderBy;
   final String slug;
@@ -22,13 +22,13 @@ class ParamsUserList {
     this.pageNum = 1,
     this.perPage = 10,
     this.searchQuery = '',
-    this.includeUserIDs,
-    this.excludeUserIDs,
+    this.includeUserIDs = const [],
+    this.excludeUserIDs = const [],
     this.offset,
     this.order = Order.asc,
     this.orderBy = UserOrderBy.name,
     this.slug = '',
-    this.roles,
+    this.roles = const [],
   });
 
   Map<String, String> toMap() {

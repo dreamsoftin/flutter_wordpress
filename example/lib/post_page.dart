@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
 
 class SinglePostPage extends StatelessWidget {
   final wp.WordPress wordPress;
@@ -58,7 +58,6 @@ class PostWithCommentsState extends State<PostWithComments> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return CustomScrollView(
       slivers: <Widget>[
         SliverList(

@@ -16,7 +16,7 @@ class ParamsCommentList {
   final String beforeDate;
   final List<int> excludeCommentIDs;
   final List<int> includeCommentIDs;
-  final int offset;
+  final int? offset;
   final Order order;
   final CommentOrderBy orderBy;
   final List<int> includeParentIDs;
@@ -32,18 +32,18 @@ class ParamsCommentList {
     this.perPage = 10,
     this.searchQuery = '',
     this.afterDate = '',
-    this.includeAuthorIDs,
-    this.excludeAuthorIDs,
+    this.includeAuthorIDs = const [],
+    this.excludeAuthorIDs = const [],
     this.authorEmail = '',
     this.beforeDate = '',
-    this.excludeCommentIDs,
-    this.includeCommentIDs,
+    this.excludeCommentIDs = const [],
+    this.includeCommentIDs = const [],
     this.offset,
     this.order = Order.desc,
     this.orderBy = CommentOrderBy.date_gmt,
-    this.includeParentIDs,
-    this.excludeParentIDs,
-    this.includePostIDs,
+    this.includeParentIDs = const [],
+    this.excludeParentIDs = const [],
+    this.includePostIDs = const [],
     this.commentStatus = CommentStatus.approve,
     this.commentType = CommentType.comment,
     this.postPassword = '',

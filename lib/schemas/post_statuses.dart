@@ -1,20 +1,21 @@
 import 'links.dart';
 
 class PostStatuses {
-  Publish publish;
-  Future future;
-  Draft draft;
-  Pending pending;
-  Private private;
-  Trash trash;
+  Publish? publish;
+  Future? future;
+  Draft? draft;
+  Pending? pending;
+  Private? private;
+  Trash? trash;
 
-  PostStatuses(
-      {this.publish,
-      this.future,
-      this.draft,
-      this.pending,
-      this.private,
-      this.trash});
+  PostStatuses({
+    this.publish,
+    this.future,
+    this.draft,
+    this.pending,
+    this.private,
+    this.trash,
+  });
 
   PostStatuses.fromJson(Map<String, dynamic> json) {
     publish =
@@ -31,47 +32,38 @@ class PostStatuses {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.publish != null) {
-      data['publish'] = this.publish.toJson();
-    }
-    if (this.future != null) {
-      data['future'] = this.future.toJson();
-    }
-    if (this.draft != null) {
-      data['draft'] = this.draft.toJson();
-    }
-    if (this.pending != null) {
-      data['pending'] = this.pending.toJson();
-    }
-    if (this.private != null) {
-      data['private'] = this.private.toJson();
-    }
-    if (this.trash != null) {
-      data['trash'] = this.trash.toJson();
-    }
+
+    data['publish'] = this.publish?.toJson();
+    data['future'] = this.future?.toJson();
+    data['draft'] = this.draft?.toJson();
+    data['pending'] = this.pending?.toJson();
+    data['private'] = this.private?.toJson();
+    data['trash'] = this.trash?.toJson();
+
     return data;
   }
 }
 
 class Publish {
-  String name;
-  bool private;
-  bool protected;
-  bool public;
-  bool queryable;
-  bool showInList;
-  String slug;
-  Links lLinks;
+  String? name;
+  bool? private;
+  bool? protected;
+  bool? public;
+  bool? queryable;
+  bool? showInList;
+  String? slug;
+  Links? lLinks;
 
-  Publish(
-      {this.name,
-      this.private,
-      this.protected,
-      this.public,
-      this.queryable,
-      this.showInList,
-      this.slug,
-      this.lLinks});
+  Publish({
+    this.name,
+    this.private,
+    this.protected,
+    this.public,
+    this.queryable,
+    this.showInList,
+    this.slug,
+    this.lLinks,
+  });
 
   Publish.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -86,6 +78,7 @@ class Publish {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['name'] = this.name;
     data['private'] = this.private;
     data['protected'] = this.protected;
@@ -93,32 +86,32 @@ class Publish {
     data['queryable'] = this.queryable;
     data['show_in_list'] = this.showInList;
     data['slug'] = this.slug;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
+    data['_links'] = this.lLinks?.toJson();
+
     return data;
   }
 }
 
 class Future {
-  String name;
-  bool private;
-  bool protected;
-  bool public;
-  bool queryable;
-  bool showInList;
-  String slug;
-  Links lLinks;
+  String? name;
+  bool? private;
+  bool? protected;
+  bool? public;
+  bool? queryable;
+  bool? showInList;
+  String? slug;
+  Links? lLinks;
 
-  Future(
-      {this.name,
-      this.private,
-      this.protected,
-      this.public,
-      this.queryable,
-      this.showInList,
-      this.slug,
-      this.lLinks});
+  Future({
+    this.name,
+    this.private,
+    this.protected,
+    this.public,
+    this.queryable,
+    this.showInList,
+    this.slug,
+    this.lLinks,
+  });
 
   Future.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -133,6 +126,7 @@ class Future {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['name'] = this.name;
     data['private'] = this.private;
     data['protected'] = this.protected;
@@ -140,32 +134,32 @@ class Future {
     data['queryable'] = this.queryable;
     data['show_in_list'] = this.showInList;
     data['slug'] = this.slug;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
+    data['_links'] = this.lLinks?.toJson();
+
     return data;
   }
 }
 
 class Draft {
-  String name;
-  bool private;
-  bool protected;
-  bool public;
-  bool queryable;
-  bool showInList;
-  String slug;
-  Links lLinks;
+  String? name;
+  bool? private;
+  bool? protected;
+  bool? public;
+  bool? queryable;
+  bool? showInList;
+  String? slug;
+  Links? lLinks;
 
-  Draft(
-      {this.name,
-      this.private,
-      this.protected,
-      this.public,
-      this.queryable,
-      this.showInList,
-      this.slug,
-      this.lLinks});
+  Draft({
+    this.name,
+    this.private,
+    this.protected,
+    this.public,
+    this.queryable,
+    this.showInList,
+    this.slug,
+    this.lLinks,
+  });
 
   Draft.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -180,6 +174,7 @@ class Draft {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['name'] = this.name;
     data['private'] = this.private;
     data['protected'] = this.protected;
@@ -187,32 +182,32 @@ class Draft {
     data['queryable'] = this.queryable;
     data['show_in_list'] = this.showInList;
     data['slug'] = this.slug;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
+    data['_links'] = this.lLinks?.toJson();
+
     return data;
   }
 }
 
 class Pending {
-  String name;
-  bool private;
-  bool protected;
-  bool public;
-  bool queryable;
-  bool showInList;
-  String slug;
-  Links lLinks;
+  String? name;
+  bool? private;
+  bool? protected;
+  bool? public;
+  bool? queryable;
+  bool? showInList;
+  String? slug;
+  Links? lLinks;
 
-  Pending(
-      {this.name,
-      this.private,
-      this.protected,
-      this.public,
-      this.queryable,
-      this.showInList,
-      this.slug,
-      this.lLinks});
+  Pending({
+    this.name,
+    this.private,
+    this.protected,
+    this.public,
+    this.queryable,
+    this.showInList,
+    this.slug,
+    this.lLinks,
+  });
 
   Pending.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -227,6 +222,7 @@ class Pending {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['name'] = this.name;
     data['private'] = this.private;
     data['protected'] = this.protected;
@@ -234,32 +230,32 @@ class Pending {
     data['queryable'] = this.queryable;
     data['show_in_list'] = this.showInList;
     data['slug'] = this.slug;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
+    data['_links'] = this.lLinks?.toJson();
+
     return data;
   }
 }
 
 class Private {
-  String name;
-  bool private;
-  bool protected;
-  bool public;
-  bool queryable;
-  bool showInList;
-  String slug;
-  Links lLinks;
+  String? name;
+  bool? private;
+  bool? protected;
+  bool? public;
+  bool? queryable;
+  bool? showInList;
+  String? slug;
+  Links? lLinks;
 
-  Private(
-      {this.name,
-      this.private,
-      this.protected,
-      this.public,
-      this.queryable,
-      this.showInList,
-      this.slug,
-      this.lLinks});
+  Private({
+    this.name,
+    this.private,
+    this.protected,
+    this.public,
+    this.queryable,
+    this.showInList,
+    this.slug,
+    this.lLinks,
+  });
 
   Private.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -274,6 +270,7 @@ class Private {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['name'] = this.name;
     data['private'] = this.private;
     data['protected'] = this.protected;
@@ -281,32 +278,32 @@ class Private {
     data['queryable'] = this.queryable;
     data['show_in_list'] = this.showInList;
     data['slug'] = this.slug;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
+    data['_links'] = this.lLinks?.toJson();
+
     return data;
   }
 }
 
 class Trash {
-  String name;
-  bool private;
-  bool protected;
-  bool public;
-  bool queryable;
-  bool showInList;
-  String slug;
-  Links lLinks;
+  String? name;
+  bool? private;
+  bool? protected;
+  bool? public;
+  bool? queryable;
+  bool? showInList;
+  String? slug;
+  Links? lLinks;
 
-  Trash(
-      {this.name,
-      this.private,
-      this.protected,
-      this.public,
-      this.queryable,
-      this.showInList,
-      this.slug,
-      this.lLinks});
+  Trash({
+    this.name,
+    this.private,
+    this.protected,
+    this.public,
+    this.queryable,
+    this.showInList,
+    this.slug,
+    this.lLinks,
+  });
 
   Trash.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -321,6 +318,7 @@ class Trash {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['name'] = this.name;
     data['private'] = this.private;
     data['protected'] = this.protected;
@@ -328,9 +326,8 @@ class Trash {
     data['queryable'] = this.queryable;
     data['show_in_list'] = this.showInList;
     data['slug'] = this.slug;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
+    data['_links'] = this.lLinks?.toJson();
+
     return data;
   }
 }

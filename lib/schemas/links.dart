@@ -1,277 +1,229 @@
 class Links {
-  List<Self> self;
-  List<Collection> collection;
-  List<About> about;
-  List<Author> author;
-  List<Replies> replies;
-  List<Archives> archives;
-  List<VersionHistory> versionHistory;
-  List<WpPostType> wpPostType;
-  List<PredecessorVersion> predecessorVersion;
-  List<WpFeaturedmedia> wpFeaturedmedia;
-  List<WpAttachment> wpAttachment;
-  List<WpTerm> wpTerm;
-  List<WpActionPublish> wpActionPublish;
-  List<WpActionUnfilteredHtml> wpActionUnfilteredHtml;
-  List<WpActionSticky> wpActionSticky;
-  List<WpActionAssignAuthor> wpActionAssignAuthor;
-  List<WpActionCreateCategories> wpActionCreateCategories;
-  List<WpActionAssignCategories> wpActionAssignCategories;
-  List<WpActionCreateTags> wpActionCreateTags;
-  List<WpActionAssignTags> wpActionAssignTags;
-  List<WpItems> wpItems;
-  List<Up> up;
-  List<InReplyTo> inReplyTo;
-  List<Children> children;
-  List<Curies> curies;
+  List<Self>? self;
+  List<Collection>? collection;
+  List<About>? about;
+  List<Author>? author;
+  List<Replies>? replies;
+  List<Archives>? archives;
+  List<VersionHistory>? versionHistory;
+  List<WpPostType>? wpPostType;
+  List<PredecessorVersion>? predecessorVersion;
+  List<WpFeaturedmedia>? wpFeaturedmedia;
+  List<WpAttachment>? wpAttachment;
+  List<WpTerm>? wpTerm;
+  List<WpActionPublish>? wpActionPublish;
+  List<WpActionUnfilteredHtml>? wpActionUnfilteredHtml;
+  List<WpActionSticky>? wpActionSticky;
+  List<WpActionAssignAuthor>? wpActionAssignAuthor;
+  List<WpActionCreateCategories>? wpActionCreateCategories;
+  List<WpActionAssignCategories>? wpActionAssignCategories;
+  List<WpActionCreateTags>? wpActionCreateTags;
+  List<WpActionAssignTags>? wpActionAssignTags;
+  List<WpItems>? wpItems;
+  List<Up>? up;
+  List<InReplyTo>? inReplyTo;
+  List<Children>? children;
+  List<Curies>? curies;
 
   Links.fromJson(Map<String, dynamic> json) {
     if (json['self'] != null) {
-      self = new List<Self>();
+      self = [];
       json['self'].forEach((v) {
-        self.add(new Self.fromJson(v));
+        self?.add(new Self.fromJson(v));
       });
     }
     if (json['collection'] != null) {
-      collection = new List<Collection>();
+      collection = [];
       json['collection'].forEach((v) {
-        collection.add(new Collection.fromJson(v));
+        collection?.add(new Collection.fromJson(v));
       });
     }
     if (json['about'] != null) {
-      about = new List<About>();
+      about = [];
       json['about'].forEach((v) {
-        about.add(new About.fromJson(v));
+        about?.add(new About.fromJson(v));
       });
     }
     if (json['author'] != null) {
-      author = new List<Author>();
+      author = [];
       json['author'].forEach((v) {
-        author.add(new Author.fromJson(v));
+        author?.add(new Author.fromJson(v));
       });
     }
     if (json['replies'] != null) {
-      replies = new List<Replies>();
+      replies = [];
       json['replies'].forEach((v) {
-        replies.add(new Replies.fromJson(v));
+        replies?.add(new Replies.fromJson(v));
       });
     }
     if (json['archives'] != null) {
-      archives = new List<Archives>();
+      archives = [];
       json['archives'].forEach((v) {
-        archives.add(new Archives.fromJson(v));
+        archives?.add(new Archives.fromJson(v));
       });
     }
     if (json['version-history'] != null) {
-      versionHistory = new List<VersionHistory>();
+      versionHistory = [];
       json['version-history'].forEach((v) {
-        versionHistory.add(new VersionHistory.fromJson(v));
+        versionHistory?.add(new VersionHistory.fromJson(v));
       });
     }
     if (json['wp:post_type'] != null) {
-      wpPostType = new List<WpPostType>();
+      wpPostType = [];
       json['wp:post_type'].forEach((v) {
-        wpPostType.add(new WpPostType.fromJson(v));
+        wpPostType?.add(new WpPostType.fromJson(v));
       });
     }
     if (json['predecessor-version'] != null) {
-      predecessorVersion = new List<PredecessorVersion>();
+      predecessorVersion = [];
       json['predecessor-version'].forEach((v) {
-        predecessorVersion.add(new PredecessorVersion.fromJson(v));
+        predecessorVersion?.add(new PredecessorVersion.fromJson(v));
       });
     }
     if (json['wp:featuredmedia'] != null) {
-      wpFeaturedmedia = new List<WpFeaturedmedia>();
+      wpFeaturedmedia = [];
       json['wp:featuredmedia'].forEach((v) {
-        wpFeaturedmedia.add(new WpFeaturedmedia.fromJson(v));
+        wpFeaturedmedia?.add(new WpFeaturedmedia.fromJson(v));
       });
     }
     if (json['wp:attachment'] != null) {
-      wpAttachment = new List<WpAttachment>();
+      wpAttachment = [];
       json['wp:attachment'].forEach((v) {
-        wpAttachment.add(new WpAttachment.fromJson(v));
+        wpAttachment?.add(new WpAttachment.fromJson(v));
       });
     }
     if (json['wp:term'] != null) {
-      wpTerm = new List<WpTerm>();
+      wpTerm = [];
       json['wp:term'].forEach((v) {
-        wpTerm.add(new WpTerm.fromJson(v));
+        wpTerm?.add(new WpTerm.fromJson(v));
       });
     }
     if (json['wp:action-publish'] != null) {
-      wpActionPublish = new List<WpActionPublish>();
+      wpActionPublish = [];
       json['wp:action-publish'].forEach((v) {
-        wpActionPublish.add(new WpActionPublish.fromJson(v));
+        wpActionPublish?.add(new WpActionPublish.fromJson(v));
       });
     }
     if (json['wp:action-unfiltered-html'] != null) {
-      wpActionUnfilteredHtml = new List<WpActionUnfilteredHtml>();
+      wpActionUnfilteredHtml = [];
       json['wp:action-unfiltered-html'].forEach((v) {
-        wpActionUnfilteredHtml.add(new WpActionUnfilteredHtml.fromJson(v));
+        wpActionUnfilteredHtml?.add(new WpActionUnfilteredHtml.fromJson(v));
       });
     }
     if (json['wp:action-sticky'] != null) {
-      wpActionSticky = new List<WpActionSticky>();
+      wpActionSticky = [];
       json['wp:action-sticky'].forEach((v) {
-        wpActionSticky.add(new WpActionSticky.fromJson(v));
+        wpActionSticky?.add(new WpActionSticky.fromJson(v));
       });
     }
     if (json['wp:action-assign-author'] != null) {
-      wpActionAssignAuthor = new List<WpActionAssignAuthor>();
+      wpActionAssignAuthor = [];
       json['wp:action-assign-author'].forEach((v) {
-        wpActionAssignAuthor.add(new WpActionAssignAuthor.fromJson(v));
+        wpActionAssignAuthor?.add(new WpActionAssignAuthor.fromJson(v));
       });
     }
     if (json['wp:action-create-categories'] != null) {
-      wpActionCreateCategories = new List<WpActionCreateCategories>();
+      wpActionCreateCategories = [];
       json['wp:action-create-categories'].forEach((v) {
-        wpActionCreateCategories.add(new WpActionCreateCategories.fromJson(v));
+        wpActionCreateCategories?.add(new WpActionCreateCategories.fromJson(v));
       });
     }
     if (json['wp:action-assign-categories'] != null) {
-      wpActionAssignCategories = new List<WpActionAssignCategories>();
+      wpActionAssignCategories = [];
       json['wp:action-assign-categories'].forEach((v) {
-        wpActionAssignCategories.add(new WpActionAssignCategories.fromJson(v));
+        wpActionAssignCategories?.add(new WpActionAssignCategories.fromJson(v));
       });
     }
     if (json['wp:action-create-tags'] != null) {
-      wpActionCreateTags = new List<WpActionCreateTags>();
+      wpActionCreateTags = [];
       json['wp:action-create-tags'].forEach((v) {
-        wpActionCreateTags.add(new WpActionCreateTags.fromJson(v));
+        wpActionCreateTags?.add(new WpActionCreateTags.fromJson(v));
       });
     }
     if (json['wp:action-assign-tags'] != null) {
-      wpActionAssignTags = new List<WpActionAssignTags>();
+      wpActionAssignTags = [];
       json['wp:action-assign-tags'].forEach((v) {
-        wpActionAssignTags.add(new WpActionAssignTags.fromJson(v));
+        wpActionAssignTags?.add(new WpActionAssignTags.fromJson(v));
       });
     }
     if (json['wp:items'] != null) {
-      wpItems = new List<WpItems>();
+      wpItems = [];
       json['wp:items'].forEach((v) {
-        wpItems.add(new WpItems.fromJson(v));
+        wpItems?.add(new WpItems.fromJson(v));
       });
     }
     if (json['up'] != null) {
-      up = new List<Up>();
+      up = [];
       json['up'].forEach((v) {
-        up.add(new Up.fromJson(v));
+        up?.add(new Up.fromJson(v));
       });
     }
     if (json['in-reply-to'] != null) {
-      inReplyTo = new List<InReplyTo>();
+      inReplyTo = [];
       json['in-reply-to'].forEach((v) {
-        inReplyTo.add(new InReplyTo.fromJson(v));
+        inReplyTo?.add(new InReplyTo.fromJson(v));
       });
     }
     if (json['children'] != null) {
-      children = new List<Children>();
+      children = [];
       json['children'].forEach((v) {
-        children.add(new Children.fromJson(v));
+        children?.add(new Children.fromJson(v));
       });
     }
     if (json['curies'] != null) {
-      curies = new List<Curies>();
+      curies = [];
       json['curies'].forEach((v) {
-        curies.add(new Curies.fromJson(v));
+        curies?.add(new Curies.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.self != null) {
-      data['self'] = this.self.map((v) => v.toJson()).toList();
-    }
-    if (this.collection != null) {
-      data['collection'] = this.collection.map((v) => v.toJson()).toList();
-    }
-    if (this.about != null) {
-      data['about'] = this.about.map((v) => v.toJson()).toList();
-    }
-    if (this.author != null) {
-      data['author'] = this.author.map((v) => v.toJson()).toList();
-    }
-    if (this.replies != null) {
-      data['replies'] = this.replies.map((v) => v.toJson()).toList();
-    }
-    if (this.archives != null) {
-      data['archives'] = this.archives.map((v) => v.toJson()).toList();
-    }
-    if (this.versionHistory != null) {
-      data['version-history'] =
-          this.versionHistory.map((v) => v.toJson()).toList();
-    }
-    if (this.wpPostType != null) {
-      data['wp:post_type'] = this.wpPostType.map((v) => v.toJson()).toList();
-    }
-    if (this.predecessorVersion != null) {
-      data['predecessor-version'] =
-          this.predecessorVersion.map((v) => v.toJson()).toList();
-    }
-    if (this.wpFeaturedmedia != null) {
-      data['wp:featuredmedia'] =
-          this.wpFeaturedmedia.map((v) => v.toJson()).toList();
-    }
-    if (this.wpAttachment != null) {
-      data['wp:attachment'] = this.wpAttachment.map((v) => v.toJson()).toList();
-    }
-    if (this.wpTerm != null) {
-      data['wp:term'] = this.wpTerm.map((v) => v.toJson()).toList();
-    }
-    if (this.wpActionPublish != null) {
-      data['wp:action-publish'] =
-          this.wpActionPublish.map((v) => v.toJson()).toList();
-    }
-    if (this.wpActionUnfilteredHtml != null) {
-      data['wp:action-unfiltered-html'] =
-          this.wpActionUnfilteredHtml.map((v) => v.toJson()).toList();
-    }
-    if (this.wpActionSticky != null) {
-      data['wp:action-sticky'] =
-          this.wpActionSticky.map((v) => v.toJson()).toList();
-    }
-    if (this.wpActionAssignAuthor != null) {
-      data['wp:action-assign-author'] =
-          this.wpActionAssignAuthor.map((v) => v.toJson()).toList();
-    }
-    if (this.wpActionCreateCategories != null) {
-      data['wp:action-create-categories'] =
-          this.wpActionCreateCategories.map((v) => v.toJson()).toList();
-    }
-    if (this.wpActionAssignCategories != null) {
-      data['wp:action-assign-categories'] =
-          this.wpActionAssignCategories.map((v) => v.toJson()).toList();
-    }
-    if (this.wpActionCreateTags != null) {
-      data['wp:action-create-tags'] =
-          this.wpActionCreateTags.map((v) => v.toJson()).toList();
-    }
-    if (this.wpActionAssignTags != null) {
-      data['wp:action-assign-tags'] =
-          this.wpActionAssignTags.map((v) => v.toJson()).toList();
-    }
-    if (this.wpItems != null) {
-      data['wp:items'] = this.wpItems.map((v) => v.toJson()).toList();
-    }
-    if (this.up != null) {
-      data['up'] = this.up.map((v) => v.toJson()).toList();
-    }
-    if (this.inReplyTo != null) {
-      data['in-reply-to'] = this.inReplyTo.map((v) => v.toJson()).toList();
-    }
-    if (this.children != null) {
-      data['children'] = this.children.map((v) => v.toJson()).toList();
-    }
-    if (this.curies != null) {
-      data['curies'] = this.curies.map((v) => v.toJson()).toList();
-    }
+
+    data['self'] = this.self?.map((v) => v.toJson()).toList();
+    data['collection'] = this.collection?.map((v) => v.toJson()).toList();
+    data['about'] = this.about?.map((v) => v.toJson()).toList();
+    data['author'] = this.author?.map((v) => v.toJson()).toList();
+    data['replies'] = this.replies?.map((v) => v.toJson()).toList();
+    data['archives'] = this.archives?.map((v) => v.toJson()).toList();
+    data['version-history'] =
+        this.versionHistory?.map((v) => v.toJson()).toList();
+    data['wp:post_type'] = this.wpPostType?.map((v) => v.toJson()).toList();
+    data['predecessor-version'] =
+        this.predecessorVersion?.map((v) => v.toJson()).toList();
+    data['wp:featuredmedia'] =
+        this.wpFeaturedmedia?.map((v) => v.toJson()).toList();
+    data['wp:attachment'] = this.wpAttachment?.map((v) => v.toJson()).toList();
+    data['wp:term'] = this.wpTerm?.map((v) => v.toJson()).toList();
+    data['wp:action-publish'] =
+        this.wpActionPublish?.map((v) => v.toJson()).toList();
+    data['wp:action-unfiltered-html'] =
+        this.wpActionUnfilteredHtml?.map((v) => v.toJson()).toList();
+    data['wp:action-sticky'] =
+        this.wpActionSticky?.map((v) => v.toJson()).toList();
+    data['wp:action-assign-author'] =
+        this.wpActionAssignAuthor?.map((v) => v.toJson()).toList();
+    data['wp:action-create-categories'] =
+        this.wpActionCreateCategories?.map((v) => v.toJson()).toList();
+    data['wp:action-assign-categories'] =
+        this.wpActionAssignCategories?.map((v) => v.toJson()).toList();
+    data['wp:action-create-tags'] =
+        this.wpActionCreateTags?.map((v) => v.toJson()).toList();
+    data['wp:action-assign-tags'] =
+        this.wpActionAssignTags?.map((v) => v.toJson()).toList();
+    data['wp:items'] = this.wpItems?.map((v) => v.toJson()).toList();
+    data['up'] = this.up?.map((v) => v.toJson()).toList();
+    data['in-reply-to'] = this.inReplyTo?.map((v) => v.toJson()).toList();
+    data['children'] = this.children?.map((v) => v.toJson()).toList();
+    data['curies'] = this.curies?.map((v) => v.toJson()).toList();
+
     return data;
   }
 }
 
 class Self {
-  String href;
+  String? href;
 
   Self({this.href});
 
@@ -289,7 +241,7 @@ class Self {
 }
 
 class Collection {
-  String href;
+  String? href;
 
   Collection({this.href});
 
@@ -307,7 +259,7 @@ class Collection {
 }
 
 class About {
-  String href;
+  String? href;
 
   About({this.href});
 
@@ -325,10 +277,13 @@ class About {
 }
 
 class Author {
-  bool embeddable;
-  String href;
+  bool? embeddable;
+  String? href;
 
-  Author({this.embeddable, this.href});
+  Author({
+    this.embeddable,
+    this.href,
+  });
 
   Author.fromJson(Map<String, dynamic> json) {
     embeddable = json['embeddable'];
@@ -348,10 +303,13 @@ class Author {
 }
 
 class Replies {
-  bool embeddable;
-  String href;
+  bool? embeddable;
+  String? href;
 
-  Replies({this.embeddable, this.href});
+  Replies({
+    this.embeddable,
+    this.href,
+  });
 
   Replies.fromJson(Map<String, dynamic> json) {
     embeddable = json['embeddable'];
@@ -371,7 +329,7 @@ class Replies {
 }
 
 class Archives {
-  String href;
+  String? href;
 
   Archives({this.href});
 
@@ -389,10 +347,13 @@ class Archives {
 }
 
 class VersionHistory {
-  int count;
-  String href;
+  int? count;
+  String? href;
 
-  VersionHistory({this.count, this.href});
+  VersionHistory({
+    this.count,
+    this.href,
+  });
 
   VersionHistory.fromJson(Map<String, dynamic> json) {
     count = json['count'];
@@ -412,7 +373,7 @@ class VersionHistory {
 }
 
 class WpPostType {
-  String href;
+  String? href;
 
   WpPostType({this.href});
 
@@ -430,10 +391,13 @@ class WpPostType {
 }
 
 class PredecessorVersion {
-  int id;
-  String href;
+  int? id;
+  String? href;
 
-  PredecessorVersion({this.id, this.href});
+  PredecessorVersion({
+    this.id,
+    this.href,
+  });
 
   PredecessorVersion.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -454,10 +418,13 @@ class PredecessorVersion {
 }
 
 class WpFeaturedmedia {
-  bool embeddable;
-  String href;
+  bool? embeddable;
+  String? href;
 
-  WpFeaturedmedia({this.embeddable, this.href});
+  WpFeaturedmedia({
+    this.embeddable,
+    this.href,
+  });
 
   WpFeaturedmedia.fromJson(Map<String, dynamic> json) {
     embeddable = json['embeddable'];
@@ -477,7 +444,7 @@ class WpFeaturedmedia {
 }
 
 class WpAttachment {
-  String href;
+  String? href;
 
   WpAttachment({this.href});
 
@@ -495,11 +462,15 @@ class WpAttachment {
 }
 
 class WpTerm {
-  String taxonomy;
-  bool embeddable;
-  String href;
+  String? taxonomy;
+  bool? embeddable;
+  String? href;
 
-  WpTerm({this.taxonomy, this.embeddable, this.href});
+  WpTerm({
+    this.taxonomy,
+    this.embeddable,
+    this.href,
+  });
 
   WpTerm.fromJson(Map<String, dynamic> json) {
     taxonomy = json['taxonomy'];
@@ -523,7 +494,7 @@ class WpTerm {
 }
 
 class WpActionPublish {
-  String href;
+  String? href;
 
   WpActionPublish({this.href});
 
@@ -541,7 +512,7 @@ class WpActionPublish {
 }
 
 class WpActionUnfilteredHtml {
-  String href;
+  String? href;
 
   WpActionUnfilteredHtml({this.href});
 
@@ -559,7 +530,7 @@ class WpActionUnfilteredHtml {
 }
 
 class WpActionSticky {
-  String href;
+  String? href;
 
   WpActionSticky({this.href});
 
@@ -577,7 +548,7 @@ class WpActionSticky {
 }
 
 class WpActionAssignAuthor {
-  String href;
+  String? href;
 
   WpActionAssignAuthor({this.href});
 
@@ -595,7 +566,7 @@ class WpActionAssignAuthor {
 }
 
 class WpActionCreateCategories {
-  String href;
+  String? href;
 
   WpActionCreateCategories({this.href});
 
@@ -613,7 +584,7 @@ class WpActionCreateCategories {
 }
 
 class WpActionAssignCategories {
-  String href;
+  String? href;
 
   WpActionAssignCategories({this.href});
 
@@ -631,7 +602,7 @@ class WpActionAssignCategories {
 }
 
 class WpActionCreateTags {
-  String href;
+  String? href;
 
   WpActionCreateTags({this.href});
 
@@ -649,7 +620,7 @@ class WpActionCreateTags {
 }
 
 class WpActionAssignTags {
-  String href;
+  String? href;
 
   WpActionAssignTags({this.href});
 
@@ -667,7 +638,7 @@ class WpActionAssignTags {
 }
 
 class WpItems {
-  String href;
+  String? href;
 
   WpItems({this.href});
 
@@ -685,11 +656,15 @@ class WpItems {
 }
 
 class Up {
-  bool embeddable;
-  String postType;
-  String href;
+  bool? embeddable;
+  String? postType;
+  String? href;
 
-  Up({this.embeddable, this.postType, this.href});
+  Up({
+    this.embeddable,
+    this.postType,
+    this.href,
+  });
 
   Up.fromJson(Map<String, dynamic> json) {
     embeddable = json['embeddable'];
@@ -713,10 +688,13 @@ class Up {
 }
 
 class InReplyTo {
-  bool embeddable;
-  String href;
+  bool? embeddable;
+  String? href;
 
-  InReplyTo({this.embeddable, this.href});
+  InReplyTo({
+    this.embeddable,
+    this.href,
+  });
 
   InReplyTo.fromJson(Map<String, dynamic> json) {
     embeddable = json['embeddable'];
@@ -736,7 +714,7 @@ class InReplyTo {
 }
 
 class Children {
-  String href;
+  String? href;
 
   Children({this.href});
 
@@ -754,11 +732,15 @@ class Children {
 }
 
 class Curies {
-  String name;
-  String href;
-  bool templated;
+  String? name;
+  String? href;
+  bool? templated;
 
-  Curies({this.name, this.href, this.templated});
+  Curies({
+    this.name,
+    this.href,
+    this.templated,
+  });
 
   Curies.fromJson(Map<String, dynamic> json) {
     name = json['name'];

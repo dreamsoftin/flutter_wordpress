@@ -15,8 +15,8 @@ class ParamsPageList {
   final String beforeDate;
   final List<int> excludePageIDs;
   final List<int> includePageIDs;
-  final int menuOrder;
-  final int offset;
+  final int? menuOrder;
+  final int? offset;
   final Order order;
   final PageOrderBy orderBy;
   final List<int> includeParentIDs;
@@ -30,17 +30,17 @@ class ParamsPageList {
     this.perPage = 10,
     this.searchQuery = '',
     this.afterDate = '',
-    this.includeAuthorIDs,
-    this.excludeAuthorIDs,
+    this.includeAuthorIDs = const [],
+    this.excludeAuthorIDs = const [],
     this.beforeDate = '',
-    this.excludePageIDs,
-    this.includePageIDs,
+    this.excludePageIDs = const [],
+    this.includePageIDs = const [],
     this.menuOrder,
     this.offset,
     this.order = Order.desc,
     this.orderBy = PageOrderBy.date,
-    this.includeParentIDs,
-    this.excludeParentIDs,
+    this.includeParentIDs = const [],
+    this.excludeParentIDs = const [],
     this.slug = '',
     this.pageStatus = PostPageStatus.publish,
   });

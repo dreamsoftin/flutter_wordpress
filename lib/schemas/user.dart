@@ -1,52 +1,52 @@
-import 'links.dart';
 import 'avatar_urls.dart';
+import 'links.dart';
 
 class User {
-  int id;
-  String username;
-  String name;
-  String firstName;
-  String lastName;
-  String email;
-  String url;
-  String description;
-  String link;
-  String locale;
-  String nickname;
-  String slug;
-  List<String> roles;
-  String registeredDate;
-  UserCapabilities capabilities;
-  UserExtraCapabilities extraCapabilities;
-  AvatarUrls avatarUrls;
-  Map<String, dynamic> meta;
-  Links lLinks;
+  int? id;
+  String? username;
+  String? name;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? url;
+  String? description;
+  String? link;
+  String? locale;
+  String? nickname;
+  String? slug;
+  List<String>? roles;
+  String? registeredDate;
+  UserCapabilities? capabilities;
+  UserExtraCapabilities? extraCapabilities;
+  AvatarUrls? avatarUrls;
+  Map<String, dynamic>? meta;
+  Links? lLinks;
 //  yahya - @mymakarim
-  String password;
+  String? password;
 //  end yahya - @mymakarim
 
-  User(
-      {this.id,
-      this.username,
-      this.name,
-      this.firstName,
-      this.lastName,
-      this.email,
-      this.url,
-      this.description,
-      this.link,
-      this.locale,
-      this.nickname,
-      this.slug,
-      this.roles,
-      this.registeredDate,
-      this.capabilities,
-      this.extraCapabilities,
-      this.avatarUrls,
-      this.meta,
-      this.lLinks,
-      this.password
-      });
+  User({
+    this.id,
+    this.username,
+    this.name,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.url,
+    this.description,
+    this.link,
+    this.locale,
+    this.nickname,
+    this.slug,
+    this.roles,
+    this.registeredDate,
+    this.capabilities,
+    this.extraCapabilities,
+    this.avatarUrls,
+    this.meta,
+    this.lLinks,
+    this.password,
+  });
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -76,7 +76,7 @@ class User {
     if (json['meta'] != null && json['meta'].length > 0) {
       meta = new Map<String, dynamic>();
       json['meta'].forEach((k, v) {
-        meta[k] = v;
+        meta![k] = v;
       });
     }
     lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
@@ -84,6 +84,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['id'] = this.id;
     data['username'] = this.username;
     data['name'] = this.name;
@@ -98,26 +99,13 @@ class User {
     data['slug'] = this.slug;
     data['roles'] = this.roles;
     data['registered_date'] = this.registeredDate;
-    if (this.capabilities != null) {
-      data['capabilities'] = this.capabilities.toJson();
-    }
-    if (this.extraCapabilities != null) {
-      data['extra_capabilities'] = this.extraCapabilities.toJson();
-    }
-    if (this.avatarUrls != null) {
-      data['avatar_urls'] = this.avatarUrls.toJson();
-    }
-    if (this.meta != null) {
-      data['meta'] = this.meta;
-    }
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
-//    yahya - @mymakarim
-    if (this.password != null) {
-      data['password'] = this.password;
-    }
-//    end yahya - @mymakarim
+    data['capabilities'] = this.capabilities?.toJson();
+    data['extra_capabilities'] = this.extraCapabilities?.toJson();
+    data['avatar_urls'] = this.avatarUrls?.toJson();
+    data['meta'] = this.meta;
+    data['_links'] = this.lLinks?.toJson();
+    data['password'] = this.password;
+
     return data;
   }
 
@@ -128,132 +116,133 @@ class User {
 }
 
 class UserCapabilities {
-  bool switchThemes;
-  bool editThemes;
-  bool activatePlugins;
-  bool editPlugins;
-  bool editUsers;
-  bool editFiles;
-  bool manageOptions;
-  bool moderateComments;
-  bool manageCategories;
-  bool manageLinks;
-  bool uploadFiles;
-  bool import;
-  bool unfilteredHtml;
-  bool editPosts;
-  bool editOthersPosts;
-  bool editPublishedPosts;
-  bool publishPosts;
-  bool editPages;
-  bool read;
-  bool level10;
-  bool level9;
-  bool level8;
-  bool level7;
-  bool level6;
-  bool level5;
-  bool level4;
-  bool level3;
-  bool level2;
-  bool level1;
-  bool level0;
-  bool editOthersPages;
-  bool editPublishedPages;
-  bool publishPages;
-  bool deletePages;
-  bool deleteOthersPages;
-  bool deletePublishedPages;
-  bool deletePosts;
-  bool deleteOthersPosts;
-  bool deletePublishedPosts;
-  bool deletePrivatePosts;
-  bool editPrivatePosts;
-  bool readPrivatePosts;
-  bool deletePrivatePages;
-  bool editPrivatePages;
-  bool readPrivatePages;
-  bool deleteUsers;
-  bool createUsers;
-  bool unfilteredUpload;
-  bool editDashboard;
-  bool updatePlugins;
-  bool deletePlugins;
-  bool installPlugins;
-  bool updateThemes;
-  bool installThemes;
-  bool updateCore;
-  bool listUsers;
-  bool removeUsers;
-  bool promoteUsers;
-  bool editThemeOptions;
-  bool deleteThemes;
-  bool export;
-  bool administrator;
+  bool? switchThemes;
+  bool? editThemes;
+  bool? activatePlugins;
+  bool? editPlugins;
+  bool? editUsers;
+  bool? editFiles;
+  bool? manageOptions;
+  bool? moderateComments;
+  bool? manageCategories;
+  bool? manageLinks;
+  bool? uploadFiles;
+  bool? import;
+  bool? unfilteredHtml;
+  bool? editPosts;
+  bool? editOthersPosts;
+  bool? editPublishedPosts;
+  bool? publishPosts;
+  bool? editPages;
+  bool? read;
+  bool? level10;
+  bool? level9;
+  bool? level8;
+  bool? level7;
+  bool? level6;
+  bool? level5;
+  bool? level4;
+  bool? level3;
+  bool? level2;
+  bool? level1;
+  bool? level0;
+  bool? editOthersPages;
+  bool? editPublishedPages;
+  bool? publishPages;
+  bool? deletePages;
+  bool? deleteOthersPages;
+  bool? deletePublishedPages;
+  bool? deletePosts;
+  bool? deleteOthersPosts;
+  bool? deletePublishedPosts;
+  bool? deletePrivatePosts;
+  bool? editPrivatePosts;
+  bool? readPrivatePosts;
+  bool? deletePrivatePages;
+  bool? editPrivatePages;
+  bool? readPrivatePages;
+  bool? deleteUsers;
+  bool? createUsers;
+  bool? unfilteredUpload;
+  bool? editDashboard;
+  bool? updatePlugins;
+  bool? deletePlugins;
+  bool? installPlugins;
+  bool? updateThemes;
+  bool? installThemes;
+  bool? updateCore;
+  bool? listUsers;
+  bool? removeUsers;
+  bool? promoteUsers;
+  bool? editThemeOptions;
+  bool? deleteThemes;
+  bool? export;
+  bool? administrator;
 
-  UserCapabilities(
-      {this.switchThemes,
-      this.editThemes,
-      this.activatePlugins,
-      this.editPlugins,
-      this.editUsers,
-      this.editFiles,
-      this.manageOptions,
-      this.moderateComments,
-      this.manageCategories,
-      this.manageLinks,
-      this.uploadFiles,
-      this.import,
-      this.unfilteredHtml,
-      this.editPosts,
-      this.editOthersPosts,
-      this.editPublishedPosts,
-      this.publishPosts,
-      this.editPages,
-      this.read,
-      this.level10,
-      this.level9,
-      this.level8,
-      this.level7,
-      this.level6,
-      this.level5,
-      this.level4,
-      this.level3,
-      this.level2,
-      this.level1,
-      this.level0,
-      this.editOthersPages,
-      this.editPublishedPages,
-      this.publishPages,
-      this.deletePages,
-      this.deleteOthersPages,
-      this.deletePublishedPages,
-      this.deletePosts,
-      this.deleteOthersPosts,
-      this.deletePublishedPosts,
-      this.deletePrivatePosts,
-      this.editPrivatePosts,
-      this.readPrivatePosts,
-      this.deletePrivatePages,
-      this.editPrivatePages,
-      this.readPrivatePages,
-      this.deleteUsers,
-      this.createUsers,
-      this.unfilteredUpload,
-      this.editDashboard,
-      this.updatePlugins,
-      this.deletePlugins,
-      this.installPlugins,
-      this.updateThemes,
-      this.installThemes,
-      this.updateCore,
-      this.listUsers,
-      this.removeUsers,
-      this.promoteUsers,
-      this.editThemeOptions,
-      this.deleteThemes,
-      this.export,
-      this.administrator});
+  UserCapabilities({
+    this.switchThemes,
+    this.editThemes,
+    this.activatePlugins,
+    this.editPlugins,
+    this.editUsers,
+    this.editFiles,
+    this.manageOptions,
+    this.moderateComments,
+    this.manageCategories,
+    this.manageLinks,
+    this.uploadFiles,
+    this.import,
+    this.unfilteredHtml,
+    this.editPosts,
+    this.editOthersPosts,
+    this.editPublishedPosts,
+    this.publishPosts,
+    this.editPages,
+    this.read,
+    this.level10,
+    this.level9,
+    this.level8,
+    this.level7,
+    this.level6,
+    this.level5,
+    this.level4,
+    this.level3,
+    this.level2,
+    this.level1,
+    this.level0,
+    this.editOthersPages,
+    this.editPublishedPages,
+    this.publishPages,
+    this.deletePages,
+    this.deleteOthersPages,
+    this.deletePublishedPages,
+    this.deletePosts,
+    this.deleteOthersPosts,
+    this.deletePublishedPosts,
+    this.deletePrivatePosts,
+    this.editPrivatePosts,
+    this.readPrivatePosts,
+    this.deletePrivatePages,
+    this.editPrivatePages,
+    this.readPrivatePages,
+    this.deleteUsers,
+    this.createUsers,
+    this.unfilteredUpload,
+    this.editDashboard,
+    this.updatePlugins,
+    this.deletePlugins,
+    this.installPlugins,
+    this.updateThemes,
+    this.installThemes,
+    this.updateCore,
+    this.listUsers,
+    this.removeUsers,
+    this.promoteUsers,
+    this.editThemeOptions,
+    this.deleteThemes,
+    this.export,
+    this.administrator,
+  });
 
   UserCapabilities.fromJson(Map<String, dynamic> json) {
     switchThemes = json['switch_themes'];
@@ -322,6 +311,7 @@ class UserCapabilities {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['switch_themes'] = this.switchThemes;
     data['edit_themes'] = this.editThemes;
     data['activate_plugins'] = this.activatePlugins;
@@ -384,12 +374,13 @@ class UserCapabilities {
     data['delete_themes'] = this.deleteThemes;
     data['export'] = this.export;
     data['administrator'] = this.administrator;
+
     return data;
   }
 }
 
 class UserExtraCapabilities {
-  bool administrator;
+  bool? administrator;
 
   UserExtraCapabilities({this.administrator});
 
@@ -399,7 +390,9 @@ class UserExtraCapabilities {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['administrator'] = this.administrator;
+
     return data;
   }
 }

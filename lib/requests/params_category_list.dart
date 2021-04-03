@@ -14,8 +14,8 @@ class ParamsCategoryList {
   final Order order;
   final CategoryTagOrderBy orderBy;
   final bool hideEmpty;
-  final int parent;
-  final int post;
+  final int? parent;
+  final int? post;
   final String slug;
 
   ParamsCategoryList({
@@ -23,11 +23,11 @@ class ParamsCategoryList {
     this.pageNum = 1,
     this.perPage = 10,
     this.searchQuery = '',
-    this.excludeCategoryIDs,
-    this.includeCategoryIDs,
+    this.excludeCategoryIDs = const [],
+    this.includeCategoryIDs = const [],
     this.order = Order.asc,
     this.orderBy = CategoryTagOrderBy.name,
-    this.hideEmpty,
+    this.hideEmpty = false,
     this.parent,
     this.post,
     this.slug = '',
@@ -43,7 +43,7 @@ class ParamsCategoryList {
       'include': '${listToUrlString(this.includeCategoryIDs)}',
       'order': '${enumStringToName(this.order.toString())}',
       'orderby': '${enumStringToName(this.orderBy.toString())}',
-      'hide_empty': '${this.hideEmpty == null ? '' : this.hideEmpty}',
+      'hide_empty': '${this.hideEmpty}',
       'parent': '${this.parent == null ? '' : this.parent}',
       'post': '${this.post == null ? '' : this.post}',
       'slug': '${this.slug}',
@@ -51,8 +51,8 @@ class ParamsCategoryList {
   }
 
   ParamsCategoryList copyWith({
-    int pageNum,
-    int perPage
+    int? pageNum,
+    int? perPage
   }) {
     return ParamsCategoryList(
       context: context,

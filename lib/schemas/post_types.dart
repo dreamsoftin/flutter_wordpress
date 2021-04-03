@@ -1,14 +1,19 @@
-import 'links.dart';
-import 'labels.dart';
 import 'capabilities.dart';
+import 'labels.dart';
+import 'links.dart';
 
 class PostTypes {
-  PostTypePost post;
-  PostTypePage page;
-  Attachment attachment;
-  WpBlock wpBlock;
+  PostTypePost? post;
+  PostTypePage? page;
+  Attachment? attachment;
+  WpBlock? wpBlock;
 
-  PostTypes({this.post, this.page, this.attachment, this.wpBlock});
+  PostTypes({
+    this.post,
+    this.page,
+    this.attachment,
+    this.wpBlock,
+  });
 
   PostTypes.fromJson(Map<String, dynamic> json) {
     post =
@@ -25,47 +30,42 @@ class PostTypes {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.post != null) {
-      data['post'] = this.post.toJson();
-    }
-    if (this.page != null) {
-      data['page'] = this.page.toJson();
-    }
-    if (this.attachment != null) {
-      data['attachment'] = this.attachment.toJson();
-    }
-    if (this.wpBlock != null) {
-      data['wp_block'] = this.wpBlock.toJson();
-    }
+
+    data['post'] = this.post?.toJson();
+    data['page'] = this.page?.toJson();
+    data['attachment'] = this.attachment?.toJson();
+    data['wp_block'] = this.wpBlock?.toJson();
+
     return data;
   }
 }
 
 class PostTypePost {
-  Capabilities capabilities;
-  String description;
-  bool hierarchical;
-  bool viewable;
-  Labels labels;
-  String name;
-  String slug;
-  Supports supports;
-  List<String> taxonomies;
-  String restBase;
-  Links lLinks;
+  Capabilities? capabilities;
+  String? description;
+  bool? hierarchical;
+  bool? viewable;
+  Labels? labels;
+  String? name;
+  String? slug;
+  Supports? supports;
+  List<String>? taxonomies;
+  String? restBase;
+  Links? lLinks;
 
-  PostTypePost(
-      {this.capabilities,
-      this.description,
-      this.hierarchical,
-      this.viewable,
-      this.labels,
-      this.name,
-      this.slug,
-      this.supports,
-      this.taxonomies,
-      this.restBase,
-      this.lLinks});
+  PostTypePost({
+    this.capabilities,
+    this.description,
+    this.hierarchical,
+    this.viewable,
+    this.labels,
+    this.name,
+    this.slug,
+    this.supports,
+    this.taxonomies,
+    this.restBase,
+    this.lLinks,
+  });
 
   PostTypePost.fromJson(Map<String, dynamic> json) {
     capabilities = json['capabilities'] != null
@@ -88,52 +88,47 @@ class PostTypePost {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.capabilities != null) {
-      data['capabilities'] = this.capabilities.toJson();
-    }
+
+    data['capabilities'] = this.capabilities?.toJson();
     data['description'] = this.description;
     data['hierarchical'] = this.hierarchical;
     data['viewable'] = this.viewable;
-    if (this.labels != null) {
-      data['labels'] = this.labels.toJson();
-    }
+    data['labels'] = this.labels?.toJson();
     data['name'] = this.name;
     data['slug'] = this.slug;
-    if (this.supports != null) {
-      data['supports'] = this.supports.toJson();
-    }
+    data['supports'] = this.supports?.toJson();
     data['taxonomies'] = this.taxonomies;
     data['rest_base'] = this.restBase;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
+    data['_links'] = this.lLinks?.toJson();
+
     return data;
   }
 }
 
 class Supports {
-  bool title;
-  bool editor;
-  bool author;
-  bool thumbnail;
-  bool excerpt;
-  bool trackbacks;
-  bool customFields;
-  bool comments;
-  bool revisions;
-  bool postFormats;
+  bool? title;
+  bool? editor;
+  bool? author;
+  bool? thumbnail;
+  bool? excerpt;
+  bool? trackbacks;
+  bool? customFields;
+  bool? comments;
+  bool? revisions;
+  bool? postFormats;
 
-  Supports(
-      {this.title,
-      this.editor,
-      this.author,
-      this.thumbnail,
-      this.excerpt,
-      this.trackbacks,
-      this.customFields,
-      this.comments,
-      this.revisions,
-      this.postFormats});
+  Supports({
+    this.title,
+    this.editor,
+    this.author,
+    this.thumbnail,
+    this.excerpt,
+    this.trackbacks,
+    this.customFields,
+    this.comments,
+    this.revisions,
+    this.postFormats,
+  });
 
   Supports.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -150,6 +145,7 @@ class Supports {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['title'] = this.title;
     data['editor'] = this.editor;
     data['author'] = this.author;
@@ -160,35 +156,37 @@ class Supports {
     data['comments'] = this.comments;
     data['revisions'] = this.revisions;
     data['post-formats'] = this.postFormats;
+
     return data;
   }
 }
 
 class PostTypePage {
-  Capabilities capabilities;
-  String description;
-  bool hierarchical;
-  bool viewable;
-  Labels labels;
-  String name;
-  String slug;
-  Supports supports;
-  List<int> taxonomies;
-  String restBase;
-  Links lLinks;
+  Capabilities? capabilities;
+  String? description;
+  bool? hierarchical;
+  bool? viewable;
+  Labels? labels;
+  String? name;
+  String? slug;
+  Supports? supports;
+  List<int>? taxonomies;
+  String? restBase;
+  Links? lLinks;
 
-  PostTypePage(
-      {this.capabilities,
-      this.description,
-      this.hierarchical,
-      this.viewable,
-      this.labels,
-      this.name,
-      this.slug,
-      this.supports,
-      this.taxonomies,
-      this.restBase,
-      this.lLinks});
+  PostTypePage({
+    this.capabilities,
+    this.description,
+    this.hierarchical,
+    this.viewable,
+    this.labels,
+    this.name,
+    this.slug,
+    this.supports,
+    this.taxonomies,
+    this.restBase,
+    this.lLinks,
+  });
 
   PostTypePage.fromJson(Map<String, dynamic> json) {
     capabilities = json['capabilities'] != null
@@ -211,54 +209,49 @@ class PostTypePage {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.capabilities != null) {
-      data['capabilities'] = this.capabilities.toJson();
-    }
+
+    data['capabilities'] = this.capabilities?.toJson();
     data['description'] = this.description;
     data['hierarchical'] = this.hierarchical;
     data['viewable'] = this.viewable;
-    if (this.labels != null) {
-      data['labels'] = this.labels.toJson();
-    }
+    data['labels'] = this.labels?.toJson();
     data['name'] = this.name;
     data['slug'] = this.slug;
-    if (this.supports != null) {
-      data['supports'] = this.supports.toJson();
-    }
+    data['supports'] = this.supports?.toJson();
     data['taxonomies'] = this.taxonomies;
     data['rest_base'] = this.restBase;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
+    data['_links'] = this.lLinks?.toJson();
+
     return data;
   }
 }
 
 class Attachment {
-  Capabilities capabilities;
-  String description;
-  bool hierarchical;
-  bool viewable;
-  Labels labels;
-  String name;
-  String slug;
-  Supports supports;
-  List<int> taxonomies;
-  String restBase;
-  Links lLinks;
+  Capabilities? capabilities;
+  String? description;
+  bool? hierarchical;
+  bool? viewable;
+  Labels? labels;
+  String? name;
+  String? slug;
+  Supports? supports;
+  List<int>? taxonomies;
+  String? restBase;
+  Links? lLinks;
 
-  Attachment(
-      {this.capabilities,
-      this.description,
-      this.hierarchical,
-      this.viewable,
-      this.labels,
-      this.name,
-      this.slug,
-      this.supports,
-      this.taxonomies,
-      this.restBase,
-      this.lLinks});
+  Attachment({
+    this.capabilities,
+    this.description,
+    this.hierarchical,
+    this.viewable,
+    this.labels,
+    this.name,
+    this.slug,
+    this.supports,
+    this.taxonomies,
+    this.restBase,
+    this.lLinks,
+  });
 
   Attachment.fromJson(Map<String, dynamic> json) {
     capabilities = json['capabilities'] != null
@@ -281,54 +274,49 @@ class Attachment {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.capabilities != null) {
-      data['capabilities'] = this.capabilities.toJson();
-    }
+
+    data['capabilities'] = this.capabilities?.toJson();
     data['description'] = this.description;
     data['hierarchical'] = this.hierarchical;
     data['viewable'] = this.viewable;
-    if (this.labels != null) {
-      data['labels'] = this.labels.toJson();
-    }
+    data['labels'] = this.labels?.toJson();
     data['name'] = this.name;
     data['slug'] = this.slug;
-    if (this.supports != null) {
-      data['supports'] = this.supports.toJson();
-    }
+    data['supports'] = this.supports?.toJson();
     data['taxonomies'] = this.taxonomies;
     data['rest_base'] = this.restBase;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
+    data['_links'] = this.lLinks?.toJson();
+
     return data;
   }
 }
 
 class WpBlock {
-  Capabilities capabilities;
-  String description;
-  bool hierarchical;
-  bool viewable;
-  Labels labels;
-  String name;
-  String slug;
-  Supports supports;
-  List<int> taxonomies;
-  String restBase;
-  Links lLinks;
+  Capabilities? capabilities;
+  String? description;
+  bool? hierarchical;
+  bool? viewable;
+  Labels? labels;
+  String? name;
+  String? slug;
+  Supports? supports;
+  List<int>? taxonomies;
+  String? restBase;
+  Links? lLinks;
 
-  WpBlock(
-      {this.capabilities,
-      this.description,
-      this.hierarchical,
-      this.viewable,
-      this.labels,
-      this.name,
-      this.slug,
-      this.supports,
-      this.taxonomies,
-      this.restBase,
-      this.lLinks});
+  WpBlock({
+    this.capabilities,
+    this.description,
+    this.hierarchical,
+    this.viewable,
+    this.labels,
+    this.name,
+    this.slug,
+    this.supports,
+    this.taxonomies,
+    this.restBase,
+    this.lLinks,
+  });
 
   WpBlock.fromJson(Map<String, dynamic> json) {
     capabilities = json['capabilities'] != null
@@ -351,25 +339,19 @@ class WpBlock {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.capabilities != null) {
-      data['capabilities'] = this.capabilities.toJson();
-    }
+
+    data['capabilities'] = this.capabilities?.toJson();
     data['description'] = this.description;
     data['hierarchical'] = this.hierarchical;
     data['viewable'] = this.viewable;
-    if (this.labels != null) {
-      data['labels'] = this.labels.toJson();
-    }
+    data['labels'] = this.labels?.toJson();
     data['name'] = this.name;
     data['slug'] = this.slug;
-    if (this.supports != null) {
-      data['supports'] = this.supports.toJson();
-    }
+    data['supports'] = this.supports?.toJson();
     data['taxonomies'] = this.taxonomies;
     data['rest_base'] = this.restBase;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
+    data['_links'] = this.lLinks?.toJson();
+
     return data;
   }
 }

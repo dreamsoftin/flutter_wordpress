@@ -1,62 +1,61 @@
-import 'links.dart';
 import 'content.dart';
-import 'guid.dart';
-import 'title.dart';
 import 'excerpt.dart';
+import 'guid.dart';
+import 'links.dart';
+import 'title.dart';
 
 class Page {
-  int id;
-  String date;
-  String dateGmt;
-  Guid guid;
-  String modified;
-  String modifiedGmt;
-  String password;
-  String slug;
-  String status;
-  String type;
-  String link;
-  Title title;
-  Content content;
-  Excerpt excerpt;
-  int author;
-  int featuredMedia;
-  int parent;
-  int menuOrder;
-  String commentStatus;
-  String pingStatus;
-  String template;
-//  List<Null> meta;
-  String permalinkTemplate;
-  String generatedSlug;
-  Links lLinks;
+  int? id;
+  String? date;
+  String? dateGmt;
+  Guid? guid;
+  String? modified;
+  String? modifiedGmt;
+  String? password;
+  String? slug;
+  String? status;
+  String? type;
+  String? link;
+  Title? title;
+  Content? content;
+  Excerpt? excerpt;
+  int? author;
+  int? featuredMedia;
+  int? parent;
+  int? menuOrder;
+  String? commentStatus;
+  String? pingStatus;
+  String? template;
+  String? permalinkTemplate;
+  String? generatedSlug;
+  Links? lLinks;
 
-  Page(
-      {this.id,
-      this.date,
-      this.dateGmt,
-      this.guid,
-      this.modified,
-      this.modifiedGmt,
-      this.password,
-      this.slug,
-      this.status,
-      this.type,
-      this.link,
-      this.title,
-      this.content,
-      this.excerpt,
-      this.author,
-      this.featuredMedia,
-      this.parent,
-      this.menuOrder,
-      this.commentStatus,
-      this.pingStatus,
-      this.template,
-//        this.meta,
-      this.permalinkTemplate,
-      this.generatedSlug,
-      this.lLinks});
+  Page({
+    this.id,
+    this.date,
+    this.dateGmt,
+    this.guid,
+    this.modified,
+    this.modifiedGmt,
+    this.password,
+    this.slug,
+    this.status,
+    this.type,
+    this.link,
+    this.title,
+    this.content,
+    this.excerpt,
+    this.author,
+    this.featuredMedia,
+    this.parent,
+    this.menuOrder,
+    this.commentStatus,
+    this.pingStatus,
+    this.template,
+    this.permalinkTemplate,
+    this.generatedSlug,
+    this.lLinks,
+  });
 
   Page.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -82,12 +81,6 @@ class Page {
     commentStatus = json['comment_status'];
     pingStatus = json['ping_status'];
     template = json['template'];
-    /*if (json['meta'] != null) {
-      meta = new List<Null>();
-      json['meta'].forEach((v) {
-        meta.add(new Null.fromJson(v));
-      });
-    }*/
     permalinkTemplate = json['permalink_template'];
     generatedSlug = json['generated_slug'];
     lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
@@ -95,12 +88,11 @@ class Page {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['id'] = this.id;
     data['date'] = this.date;
     data['date_gmt'] = this.dateGmt;
-    if (this.guid != null) {
-      data['guid'] = this.guid.toJson();
-    }
+    data['guid'] = this.guid?.toJson();
     data['modified'] = this.modified;
     data['modified_gmt'] = this.modifiedGmt;
     data['password'] = this.password;
@@ -108,15 +100,9 @@ class Page {
     data['status'] = this.status;
     data['type'] = this.type;
     data['link'] = this.link;
-    if (this.title != null) {
-      data['title'] = this.title.toJson();
-    }
-    if (this.content != null) {
-      data['content'] = this.content.toJson();
-    }
-    if (this.excerpt != null) {
-      data['excerpt'] = this.excerpt.toJson();
-    }
+    data['title'] = this.title?.toJson();
+    data['content'] = this.content?.toJson();
+    data['excerpt'] = this.excerpt?.toJson();
     data['author'] = this.author;
     data['featured_media'] = this.featuredMedia;
     data['parent'] = this.parent;
@@ -124,14 +110,10 @@ class Page {
     data['comment_status'] = this.commentStatus;
     data['ping_status'] = this.pingStatus;
     data['template'] = this.template;
-    /*if (this.meta != null) {
-      data['meta'] = this.meta.map((v) => v.toJson()).toList();
-    }*/
     data['permalink_template'] = this.permalinkTemplate;
     data['generated_slug'] = this.generatedSlug;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
+    data['_links'] = this.lLinks?.toJson();
+
     return data;
   }
 }

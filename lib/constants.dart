@@ -151,7 +151,7 @@ String enumStringToName(String enumString) {
 /// Formats a list of [items] to a comma(,) separated string to pass it as a
 /// URL parameter.
 String listToUrlString<T>(List<T> items) {
-  if (items == null || items.length == 0) return '';
+  if (items.length == 0) return '';
 
   return items.join(',');
 }

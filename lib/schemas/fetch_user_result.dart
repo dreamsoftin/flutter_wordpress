@@ -1,8 +1,8 @@
 import 'user.dart';
 
 class FetchUsersResult {
-  List<User> users;
-  int totalUsers;
+  List<User> users = const [];
+  int? totalUsers;
 
   FetchUsersResult(List<User> users, int totalUsers) {
     this.users = users;

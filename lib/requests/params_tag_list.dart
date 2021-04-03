@@ -13,8 +13,8 @@ class ParamsTagList {
   final List<int> includeTagIDs;
   final Order order;
   final CategoryTagOrderBy orderBy;
-  final bool hideEmpty;
-  final int post;
+  final bool? hideEmpty;
+  final int? post;
   final String slug;
 
   ParamsTagList({
@@ -22,8 +22,8 @@ class ParamsTagList {
     this.pageNum = 1,
     this.perPage = 10,
     this.searchQuery = '',
-    this.excludeTagIDs,
-    this.includeTagIDs,
+    this.excludeTagIDs = const [],
+    this.includeTagIDs = const [],
     this.order = Order.asc,
     this.orderBy = CategoryTagOrderBy.name,
     this.hideEmpty,

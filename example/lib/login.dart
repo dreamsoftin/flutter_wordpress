@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
+
 import 'display_posts.dart';
 
 const PADDING_16 = EdgeInsets.all(16.0);
@@ -46,67 +47,64 @@ class LoginFieldsState extends State<LoginFields> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Center(
         child: SingleChildScrollView(
-          child: Container(
-            padding: PADDING_16,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: PADDING_8,
-                  child: _buildFormField(
-                    icon: Icon(Icons.person),
-                    labelText: "Username",
-                    hintText: "Username",
-                    initialText: _username,
-                    onChanged: _onUsernameChanged,
-                  ),
-                ),
-                Padding(
-                  padding: PADDING_8,
-                  child: _buildFormField(
-                    icon: Icon(Icons.lock),
-                    labelText: "Password",
-                    hintText: "Password",
-                    initialText: _password,
-                    obscureText: true,
-                    onChanged: _onPasswordChanged,
-                  ),
-                ),
-                _isDetailValid
-                    ? SizedBox(
-                  width: 0.0,
-                  height: 0.0,
-                )
-                    : Padding(
-                  padding: PADDING_8,
-                  child: Text(
-                    "Invalid Username / Password",
-                    style: TextStyle(
-                      color: Colors.red,
+      child: Container(
+        padding: PADDING_16,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: PADDING_8,
+              child: _buildFormField(
+                icon: Icon(Icons.person),
+                labelText: "Username",
+                hintText: "Username",
+                initialText: _username,
+                onChanged: _onUsernameChanged,
+              ),
+            ),
+            Padding(
+              padding: PADDING_8,
+              child: _buildFormField(
+                icon: Icon(Icons.lock),
+                labelText: "Password",
+                hintText: "Password",
+                initialText: _password,
+                obscureText: true,
+                onChanged: _onPasswordChanged,
+              ),
+            ),
+            _isDetailValid
+                ? SizedBox(
+                    width: 0.0,
+                    height: 0.0,
+                  )
+                : Padding(
+                    padding: PADDING_8,
+                    child: Text(
+                      "Invalid Username / Password",
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
                     ),
                   ),
-                ),
-                RaisedButton(
-                  onPressed: _isValidating ? () {} : _validateUser,
-                  color: Colors.blue,
-                  textColor: Colors.white,
-                  child: Padding(
-                    padding: PADDING_8,
-                    child: _isValidating
-                        ? CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation(Colors.white),
-                    )
-                        : Text('Login'),
-                  ),
-                ),
-              ],
+            ElevatedButton(
+              onPressed: _isValidating ? () {} : _validateUser,
+              child: Padding(
+                padding: PADDING_8,
+                child: _isValidating
+                    ? CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation(Colors.white),
+                      )
+                    : Text('Login'),
+              ),
             ),
-          ),
-        ));
+          ],
+        ),
+      ),
+    ));
   }
 
   Widget _buildFormField({
@@ -155,7 +153,7 @@ class LoginFieldsState extends State<LoginFields> {
     );
 
     final response =
-    wordPress.authenticateUser(username: _username, password: _password);
+        wordPress.authenticateUser(username: _username, password: _password);
 
     response.then((user) {
       setState(() {

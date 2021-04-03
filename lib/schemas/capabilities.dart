@@ -1,23 +1,23 @@
 class Capabilities {
-  String manageTerms;
-  String editTerms;
-  String deleteTerms;
-  String assignTerms;
-  String editPost;
-  String readPost;
-  String deletePost;
-  String editPosts;
-  String editOthersPosts;
-  String publishPosts;
-  String readPrivatePosts;
-  String read;
-  String deletePosts;
-  String deletePrivatePosts;
-  String deletePublishedPosts;
-  String deleteOthersPosts;
-  String editPrivatePosts;
-  String editPublishedPosts;
-  String createPosts;
+  String? manageTerms;
+  String? editTerms;
+  String? deleteTerms;
+  String? assignTerms;
+  String? editPost;
+  String? readPost;
+  String? deletePost;
+  String? editPosts;
+  String? editOthersPosts;
+  String? publishPosts;
+  String? readPrivatePosts;
+  String? read;
+  String? deletePosts;
+  String? deletePrivatePosts;
+  String? deletePublishedPosts;
+  String? deleteOthersPosts;
+  String? editPrivatePosts;
+  String? editPublishedPosts;
+  String? createPosts;
 
   Capabilities({
     this.manageTerms,
@@ -65,6 +65,7 @@ class Capabilities {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['manage_terms'] = this.manageTerms;
     data['edit_terms'] = this.editTerms;
     data['delete_terms'] = this.deleteTerms;
@@ -84,6 +85,7 @@ class Capabilities {
     data['edit_private_posts'] = this.editPrivatePosts;
     data['edit_published_posts'] = this.editPublishedPosts;
     data['create_posts'] = this.createPosts;
+    
     return data;
   }
 }
