@@ -76,15 +76,19 @@ class PostsBuilderState extends State<PostsBuilder> {
 
 //  yahya
 
-  Future<void> createUser({@required String email, @required String username, @required String password, @required List<String> roles}) async {
-    await widget.wordPress.createUser(
-      user: wp.User(
-        email: email,
-        password: password,
-        username: username,
-        roles: roles
-      )
-    ).then((p) {
+  Future<void> createUser(
+      {@required String email,
+      @required String username,
+      @required String password,
+      @required List<String> roles}) async {
+    await widget.wordPress
+        .createUser(
+            user: wp.User(
+                email: email,
+                password: password,
+                username: username,
+                roles: roles))
+        .then((p) {
       print('User created successfully ${p}');
     }).catchError((err) {
       print('Failed to create user: $err');
@@ -96,7 +100,8 @@ class PostsBuilderState extends State<PostsBuilder> {
 //  =====================
 
   Future<void> updatePost({@required int id, @required int userId}) async {
-    await widget.wordPress.updatePost(
+    await widget.wordPress
+        .updatePost(
       post: new wp.Post(
         title: 'First post as a Chief Editor',
         content: 'Blah! blah! blah!',
@@ -109,38 +114,46 @@ class PostsBuilderState extends State<PostsBuilder> {
         sticky: true,
       ),
       id: id, //
-    ).then((p) {
+    )
+        .then((p) {
       print('Post updated successfully with ID ${p}');
     }).catchError((err) {
       print('Failed to update post: $err');
     });
   }
 
-  Future<void> updateComment({@required int id, @required int postId, @required wp.User user}) async {
-    await widget.wordPress.updateComment(
+  Future<void> updateComment(
+      {@required int id, @required int postId, @required wp.User user}) async {
+    await widget.wordPress
+        .updateComment(
       comment: new wp.Comment(
         content: "Comment Updated2!",
         author: user.id,
         post: postId,
       ),
       id: id,
-    ).then((c) {
+    )
+        .then((c) {
       print('Comment updated successfully "$c"');
     }).catchError((err) {
       print('Failed to update Comment: $err');
     });
   }
 
-  Future<void> updateUser({@required int id, @required String username, @required String email}) async {
-    await widget.wordPress.updateUser(
+  Future<void> updateUser(
+      {@required int id,
+      @required String username,
+      @required String email}) async {
+    await widget.wordPress
+        .updateUser(
       user: new wp.User(
-        description: "This is description for this user",
-        username: username,
-        id: id,
-        email: email
-      ),
+          description: "This is description for this user",
+          username: username,
+          id: id,
+          email: email),
       id: id,
-    ).then((u) {
+    )
+        .then((u) {
       print('User updated successfully $u');
     }).catchError((err) {
       print('Failed to update User: $err');
@@ -239,7 +252,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                       title: title,
                       content: content,
                       featuredMedia: featuredMedia,
-                      id : id,
+                      id: id,
                     ),
                   ),
                 );
@@ -279,7 +292,7 @@ class PostsBuilderState extends State<PostsBuilder> {
             padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
             child: Text(
               title,
-              style: Theme.of(context).textTheme.title,
+              style: Theme.of(context).textTheme.headline1,
             ),
           ),
           _buildFeaturedMedia(featuredMedia),
@@ -352,7 +365,10 @@ class PostsBuilderState extends State<PostsBuilder> {
                   onPressed: () {
                     createPost(user: widget.user);
                   },
-                  icon: Icon(Icons.add_circle, color: Colors.white,),
+                  icon: Icon(
+                    Icons.add_circle,
+                    color: Colors.white,
+                  ),
                   label: Text(
                     "Create New Post",
                     style: TextStyle(color: Colors.white),
@@ -360,9 +376,16 @@ class PostsBuilderState extends State<PostsBuilder> {
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    createUser(roles: ["subscriber"], username: "myUserName", password: "123", email: "myEmail@domain.com");
+                    createUser(
+                        roles: ["subscriber"],
+                        username: "myUserName",
+                        password: "123",
+                        email: "myEmail@domain.com");
                   },
-                  icon: Icon(Icons.add_circle, color: Colors.white,),
+                  icon: Icon(
+                    Icons.add_circle,
+                    color: Colors.white,
+                  ),
                   label: Text(
                     "Create New User",
                     style: TextStyle(color: Colors.white),
@@ -370,9 +393,15 @@ class PostsBuilderState extends State<PostsBuilder> {
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    updateUser(id: 1, email: "newuser@gmaill.com", username: "newuser");
+                    updateUser(
+                        id: 1,
+                        email: "newuser@gmaill.com",
+                        username: "newuser");
                   },
-                  icon: Icon(Icons.settings, color: Colors.white,),
+                  icon: Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                  ),
                   label: Text(
                     "Update User with ID #1",
                     style: TextStyle(color: Colors.white),
@@ -382,7 +411,10 @@ class PostsBuilderState extends State<PostsBuilder> {
                   onPressed: () {
                     deleteUser(id: 1, reassign: 1);
                   },
-                  icon: Icon(Icons.delete, color: Colors.white,),
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                  ),
                   label: Text(
                     "Delete User with ID #1",
                     style: TextStyle(color: Colors.white),

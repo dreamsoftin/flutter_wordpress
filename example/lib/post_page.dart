@@ -126,7 +126,7 @@ class PostWithCommentsState extends State<PostWithComments> {
               padding: EdgeInsets.all(8.0),
               child: Text(
                 'No comments',
-                style: Theme.of(context).textTheme.display1,
+                style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
           );
