@@ -279,7 +279,7 @@ class PostsBuilderState extends State<PostsBuilder> {
             padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
             child: Text(
               title,
-              style: Theme.of(context).textTheme.title,
+              style: Theme.of(context).textTheme.headline6,
             ),
           ),
           _buildFeaturedMedia(featuredMedia),
