@@ -259,22 +259,66 @@ class WordPress {
   /// This may take a while.
   ///
   /// In case of an error, a [WordPressError] object is thrown.
-  Future<List<Post>> fetchPosts({
-    required ParamsPostList postParams,
-    bool fetchAuthor = false,
-    bool fetchComments = false,
-    Order orderComments = Order.desc,
-    CommentOrderBy orderCommentsBy = CommentOrderBy.date,
-    bool fetchCategories = false,
-    bool fetchTags = false,
-    bool fetchFeaturedMedia = false,
-    bool fetchAttachments = false,
-    String postType = "posts",
-    bool fetchAll = false,
-  }) async {
+  Future<List<Post>> fetchPosts(
+      {required ParamsPostList postParams,
+      bool fetchAuthor = false,
+      bool fetchComments = false,
+      Order orderComments = Order.desc,
+      CommentOrderBy orderCommentsBy = CommentOrderBy.date,
+      bool fetchCategories = false,
+      bool fetchTags = false,
+      bool fetchFeaturedMedia = false,
+      bool fetchAttachments = false,
+      String postType = "posts",
+      bool fetchAll = false}) async {
+    int bulkBatchNum = 100;
+
     if (fetchAll) {
-      postParams = postParams.copyWith(perPage: 100);
+      postParams = postParams.copyWith(perPage: bulkBatchNum);
     }
+
+    Map<int, User> authorsByID = {};
+    Map<int, int> authorIDForPostIDs = {};
+    Map<int, Post> postsByID = {};
+    Map<int, List<Comment>> commentsForPostIDs = {};
+    Map<int, int> featuredMediaIDForPostIDs = {};
+    Map<int, Media> featuredMediaByID = {};
+    Map<int, Category> categoriesByID = {};
+    Map<int, Tag> tagsByID = {};
+    Map<int, List<Media>> attachmentsForPostIDs = {};
+
+    /// This function fetches post information such as author, comments, categories,
+    /// tags, featuredMedia and attachments.
+    var _postPrep = ({
+      required Post post,
+      bool setAuthor = false,
+      bool setComments = false,
+      bool setCategories = false,
+      bool setTags = false,
+      bool setFeaturedMedia = false,
+      bool setAttachments = false,
+    }) async {
+      if (setAuthor && post.id != null && post.authorID != null) {
+        authorIDForPostIDs[post.id!] = post.authorID!;
+      }
+      if (setComments && post.id != null) {
+        commentsForPostIDs[post.id!] = [];
+      }
+      if (setCategories) {
+        post.categoryIDs
+            ?.forEach((id) => categoriesByID[id] = Category(id: id));
+      }
+      if (setTags) {
+        post.tagIDs?.forEach((id) => tagsByID[id] = Tag(id: id));
+      }
+      if (setFeaturedMedia && post.id != null && post.featuredMediaID != null) {
+        featuredMediaIDForPostIDs[post.id!] = post.featuredMediaID!;
+      }
+      if (setAttachments && post.id != null) {
+        attachmentsForPostIDs[post.id!] = [];
+      }
+      return post;
+    };
 
     final StringBuffer url =
         new StringBuffer(_baseUrl + URL_WP_BASE + "/" + postType);
@@ -285,28 +329,265 @@ class WordPress {
         await http.get(Uri.parse(url.toString()), headers: _urlHeader);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      List<Post> posts = [];
       final list = json.decode(response.body);
 
       for (final post in list) {
-        posts.add(await _postBuilder(
+        var pt = await _postPrep(
           post: Post.fromJson(post),
           setAuthor: fetchAuthor,
           setComments: fetchComments,
-          orderComments: orderComments,
-          orderCommentsBy: orderCommentsBy,
-          setCategories: fetchCategories,
-          setTags: fetchTags,
           setFeaturedMedia: fetchFeaturedMedia,
+          setCategories: fetchCategories,
           setAttachments: fetchAttachments,
-        ));
+        );
+        if (pt.id != null) postsByID[pt.id!] = pt;
       }
+
+      var pids = postsByID.keys.toList();
+
+      //handler to fetch authors
+      var handleGettingAuthors = ({bool setAuthor = false}) async {
+        if (setAuthor) {
+          var aids = authorIDForPostIDs.values.toList();
+          FetchUsersResult authResult =
+              await fetchUsers(params: ParamsUserList(includeUserIDs: aids));
+          authorsByID = Map.fromIterable(authResult.users,
+              key: (u) => u.id, value: (u) => u);
+          if (authResult.users.length != authResult.totalUsers &&
+              authResult.totalUsers != null) {
+            var stride = authResult.users.length;
+            var numOfCalls = (authResult.totalUsers! / stride) + 1;
+            for (var i = 2; i <= numOfCalls; i++) {
+              FetchUsersResult result = await fetchUsers(
+                  params: ParamsUserList(
+                includeUserIDs: aids,
+                pageNum: i,
+                perPage: stride,
+              ));
+              result.users.forEach((u) {
+                if (u.id != null) authorsByID[u.id!] = u;
+              });
+            }
+          }
+        }
+      };
+
+      //handler to fetch comments
+      var handleGettingComments = ({bool setComments = false}) async {
+        if (setComments) {
+          List<Comment> comments = await this.fetchComments(
+              params: ParamsCommentList(
+            includePostIDs: pids,
+            order: orderComments,
+            orderBy: orderCommentsBy,
+            perPage: bulkBatchNum,
+            pageNum: 1,
+          ));
+          if (comments.length != 0) {
+            comments.forEach((comment) {
+              commentsForPostIDs[comment.post]?.add(comment);
+            });
+            var i = 2;
+            while (comments.length == bulkBatchNum) {
+              comments = await this.fetchComments(
+                  params: ParamsCommentList(
+                includePostIDs: pids,
+                order: orderComments,
+                orderBy: orderCommentsBy,
+                perPage: bulkBatchNum,
+                pageNum: i,
+              ));
+              comments.forEach((comment) {
+                commentsForPostIDs[comment.post]?.add(comment);
+              });
+              i += 1;
+            }
+          }
+        }
+      };
+
+      //handler to fetch categories
+      var handleGettingCategories = ({bool setCategories = false}) async {
+        if (setCategories) {
+          var cids = categoriesByID.keys.toList();
+          List<Category> categories = await this.fetchCategories(
+              params: ParamsCategoryList(
+            includeCategoryIDs: cids,
+            perPage: bulkBatchNum,
+            pageNum: 1,
+          ));
+          if (categories.length != 0) {
+            categories.forEach((cat) {
+              if (cat.id != null) categoriesByID[cat.id!] = cat;
+            });
+            var i = 2;
+            while (categories.length == bulkBatchNum) {
+              categories = await this.fetchCategories(
+                  params: ParamsCategoryList(
+                includeCategoryIDs: cids,
+                perPage: bulkBatchNum,
+                pageNum: i,
+              ));
+              categories.forEach((cat) {
+                if (cat.id != null) categoriesByID[cat.id!] = cat;
+              });
+              i += 1;
+            }
+          }
+        }
+      };
+
+      //handler to fetch tags
+      var handleGettingTags = ({bool setTags = false}) async {
+        var tids = tagsByID.keys.toList();
+        if (setTags) {
+          List<Tag> tags = await this.fetchTags(
+              params: ParamsTagList(
+            includeTagIDs: tids,
+            perPage: bulkBatchNum,
+            pageNum: 1,
+          ));
+          if (tags.length != 0) {
+            tags.forEach((tag) {
+              if (tag.id != null) tagsByID[tag.id!] = tag;
+            });
+            var i = 2;
+            while (tags.length == bulkBatchNum) {
+              tags = await this.fetchTags(
+                  params: ParamsTagList(
+                includeTagIDs: tids,
+                perPage: bulkBatchNum,
+                pageNum: i,
+              ));
+              tags.forEach((tag) {
+                if (tag.id != null) tagsByID[tag.id!] = tag;
+              });
+              i += 1;
+            }
+          }
+        }
+      };
+
+      //handler to fetch featured media
+      var handleGettingFeaturedMedia = ({bool setFeaturedMedia = false}) async {
+        if (setFeaturedMedia) {
+          var fids = featuredMediaIDForPostIDs.values.toList();
+          List<Media> media = await this.fetchMediaList(
+            params: ParamsMediaList(
+                includeMediaIDs: fids, perPage: bulkBatchNum, pageNum: 1),
+          );
+          if (media.length != 0) {
+            media.forEach((fm) {
+              if (fm.id != null) featuredMediaByID[fm.id!] = fm;
+            });
+            var i = 2;
+            while (media.length == bulkBatchNum) {
+              media = await this.fetchMediaList(
+                params: ParamsMediaList(
+                  includeMediaIDs: fids,
+                  perPage: bulkBatchNum,
+                  pageNum: i,
+                ),
+              );
+              media.forEach((fm) {
+                if (fm.id != null) featuredMediaByID[fm.id!] = fm;
+              });
+              i += 1;
+            }
+          }
+        }
+      };
+
+      //handler to fetch attachments
+      var handleGettingAttachments = ({bool setAttachments = false}) async {
+        if (setAttachments) {
+          List<Media> attachments = await this.fetchMediaList(
+            params: ParamsMediaList(
+              includeParentIDs: pids,
+              perPage: bulkBatchNum,
+              pageNum: 1,
+            ),
+          );
+          if (attachments.length != 0) {
+            attachments.forEach((attachment) {
+              attachmentsForPostIDs[attachment.post]?.add(attachment);
+            });
+            var i = 2;
+            while (attachments.length == bulkBatchNum) {
+              attachments = await this.fetchMediaList(
+                params: ParamsMediaList(
+                  includeParentIDs: pids,
+                  perPage: bulkBatchNum,
+                  pageNum: i,
+                ),
+              );
+              attachments.forEach((attachment) {
+                attachmentsForPostIDs[attachment.post]?.add(attachment);
+              });
+              i += 1;
+            }
+          }
+        }
+      };
+
+      await Future.wait([
+        handleGettingAuthors(setAuthor: fetchAuthor),
+        handleGettingComments(setComments: fetchComments),
+        handleGettingCategories(setCategories: fetchCategories),
+        handleGettingTags(setTags: fetchTags),
+        handleGettingFeaturedMedia(setFeaturedMedia: fetchFeaturedMedia),
+        handleGettingAttachments(setAttachments: fetchAttachments),
+      ]);
+
+      //fill posts
+      postsByID.values.forEach((post) {
+        //handle Author
+        if (fetchAuthor) {
+          post.author = authorsByID[post.authorID];
+        }
+        //handle comments
+        if (fetchComments) {
+          post.comments = commentsForPostIDs[post.id];
+          post.commentsHierarchy = [];
+          if (post.comments != null) {
+            post.comments?.forEach((comment) {
+              if (comment.parent == 0)
+                post.commentsHierarchy?.add(
+                    _commentHierarchyBuilder(post.comments ?? [], comment));
+            });
+          }
+        }
+        //handle categories
+        if (fetchCategories) {
+          post.categories = [];
+          post.categoryIDs?.forEach((catid) {
+            if (categoriesByID[catid] != null)
+              post.categories?.add(categoriesByID[catid]!);
+          });
+        }
+        //handle tags
+        if (fetchTags) {
+          post.tags = [];
+          post.tagIDs?.forEach((id) {
+            if (tagsByID[id] != null) post.tags?.add(tagsByID[id]!);
+          });
+        }
+        //handle featured media
+        if (fetchFeaturedMedia) {
+          post.featuredMedia =
+              featuredMediaByID[featuredMediaIDForPostIDs[post.id]];
+        }
+        //handle attachments
+        if (fetchAttachments) {
+          post.attachments = attachmentsForPostIDs[post.id];
+        }
+      });
 
       if (fetchAll && response.headers["x-wp-totalpages"] != null) {
         final totalPages = int.parse(response.headers["x-wp-totalpages"]!);
 
         for (int i = postParams.pageNum + 1; i <= totalPages; ++i) {
-          posts.addAll(await fetchPosts(
+          (await fetchPosts(
             postParams: postParams.copyWith(pageNum: i),
             fetchAuthor: fetchAuthor,
             fetchComments: fetchComments,
@@ -316,11 +597,14 @@ class WordPress {
             fetchTags: fetchTags,
             fetchFeaturedMedia: fetchFeaturedMedia,
             fetchAttachments: fetchAttachments,
-          ));
+          ))
+              .forEach((p) {
+            if (p.id != null) postsByID[p.id!] = p;
+          });
         }
       }
 
-      return posts;
+      return postsByID.values.toList();
     } else {
       try {
         WordPressError err =
@@ -330,69 +614,6 @@ class WordPress {
         throw new WordPressError(message: response.body);
       }
     }
-  }
-
-  /// This function fetches post information such as author, comments, categories,
-  /// tags, featuredMedia and attachments.
-  Future<Post> _postBuilder({
-    required Post post,
-    bool setAuthor = false,
-    bool setComments = false,
-    Order orderComments = Order.desc,
-    CommentOrderBy orderCommentsBy = CommentOrderBy.date,
-    bool setCategories = false,
-    bool setTags = false,
-    bool setFeaturedMedia = false,
-    bool setAttachments = false,
-  }) async {
-    if (setAuthor) {
-      User author = await fetchUser(id: post.authorID);
-      post.author = author;
-    }
-    if (setComments) {
-      List<Comment> comments = await fetchComments(
-          params: ParamsCommentList(
-        includePostIDs: [post.id!],
-        order: orderComments,
-        orderBy: orderCommentsBy,
-      ));
-      if (comments.length != 0) {
-        post.comments = comments;
-
-        post.commentsHierarchy = [];
-        post.comments?.forEach((comment) {
-          if (comment.parent == 0)
-            post.commentsHierarchy
-                ?.add(_commentHierarchyBuilder(post.comments!, comment));
-        });
-      }
-    }
-    if (setCategories) {
-      List<Category> categories =
-          await fetchCategories(params: ParamsCategoryList(post: post.id));
-      if (categories.length != 0) post.categories = categories;
-    }
-    if (setTags) {
-      List<Tag> tags = await fetchTags(params: ParamsTagList(post: post.id));
-      if (tags.length != 0) post.tags = tags;
-    }
-    if (setFeaturedMedia) {
-      List<Media> media = await fetchMediaList(
-        params: ParamsMediaList(
-          includeMediaIDs: [post.featuredMediaID!],
-        ),
-      );
-      if (media.length != 0) post.featuredMedia = media[0];
-    }
-    if (setAttachments) {
-      List<Media> media = await fetchMediaList(
-        params: ParamsMediaList(
-          includeParentIDs: [post.id!],
-        ),
-      );
-      if (media.length != 0) post.attachments = media;
-    }
-    return post;
   }
 
   ///This recursive function builds the hierarchy of comments for the given post
