@@ -9,7 +9,7 @@ class PostListPage extends StatelessWidget {
   final wp.WordPress wordPress;
   final wp.User user;
 
-  PostListPage({Key key, @required this.wordPress, this.user});
+  PostListPage({Key? key, required this.wordPress, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class PostsBuilder extends StatefulWidget {
   final wp.WordPress wordPress;
   final wp.User user;
 
-  PostsBuilder({Key key, @required this.wordPress, this.user});
+  PostsBuilder({Key? key, required this.wordPress, required this.user});
 
   @override
   PostsBuilderState createState() => PostsBuilderState();
@@ -43,7 +43,7 @@ class PostsBuilderState extends State<PostsBuilder> {
   final padding_8 = EdgeInsets.all(8.0);
   final padding_16 = EdgeInsets.all(16.0);
 
-  Future<List<wp.Post>> posts;
+  late Future<List<wp.Post>> posts;
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class PostsBuilderState extends State<PostsBuilder> {
     fetchPosts();
   }
 
-  void createPost({@required wp.User user}) {
+  void createPost({required wp.User user}) {
     final post = widget.wordPress.createPost(
       post: new wp.Post(
         title: 'First post as a Chief Editor',
@@ -76,15 +76,19 @@ class PostsBuilderState extends State<PostsBuilder> {
 
 //  yahya
 
-  Future<void> createUser({@required String email, @required String username, @required String password, @required List<String> roles}) async {
-    await widget.wordPress.createUser(
-      user: wp.User(
-        email: email,
-        password: password,
-        username: username,
-        roles: roles
-      )
-    ).then((p) {
+  Future<void> createUser(
+      {required String email,
+      required String username,
+      required String password,
+      required List<String> roles}) async {
+    await widget.wordPress
+        .createUser(
+            user: wp.User(
+                email: email,
+                password: password,
+                username: username,
+                roles: roles))
+        .then((p) {
       print('User created successfully ${p}');
     }).catchError((err) {
       print('Failed to create user: $err');
@@ -95,8 +99,9 @@ class PostsBuilderState extends State<PostsBuilder> {
 //  UPDATE START
 //  =====================
 
-  Future<void> updatePost({@required int id, @required int userId}) async {
-    await widget.wordPress.updatePost(
+  Future<void> updatePost({required int id, required int userId}) async {
+    await widget.wordPress
+        .updatePost(
       post: new wp.Post(
         title: 'First post as a Chief Editor',
         content: 'Blah! blah! blah!',
@@ -109,38 +114,46 @@ class PostsBuilderState extends State<PostsBuilder> {
         sticky: true,
       ),
       id: id, //
-    ).then((p) {
+    )
+        .then((p) {
       print('Post updated successfully with ID ${p}');
     }).catchError((err) {
       print('Failed to update post: $err');
     });
   }
 
-  Future<void> updateComment({@required int id, @required int postId, @required wp.User user}) async {
-    await widget.wordPress.updateComment(
+  Future<void> updateComment(
+      {required int id, required int postId, required wp.User user}) async {
+    await widget.wordPress
+        .updateComment(
       comment: new wp.Comment(
         content: "Comment Updated2!",
         author: user.id,
         post: postId,
       ),
       id: id,
-    ).then((c) {
+    )
+        .then((c) {
       print('Comment updated successfully "$c"');
     }).catchError((err) {
       print('Failed to update Comment: $err');
     });
   }
 
-  Future<void> updateUser({@required int id, @required String username, @required String email}) async {
-    await widget.wordPress.updateUser(
+  Future<void> updateUser(
+      {required int id,
+      required String username,
+      required String email}) async {
+    await widget.wordPress
+        .updateUser(
       user: new wp.User(
-        description: "This is description for this user",
-        username: username,
-        id: id,
-        email: email
-      ),
+          description: "This is description for this user",
+          username: username,
+          id: id,
+          email: email),
       id: id,
-    ).then((u) {
+    )
+        .then((u) {
       print('User updated successfully $u');
     }).catchError((err) {
       print('Failed to update User: $err');
@@ -155,7 +168,7 @@ class PostsBuilderState extends State<PostsBuilder> {
 //  DELETE START
 //  =====================
 
-  Future<void> deletePost({@required int id}) async {
+  Future<void> deletePost({required int id}) async {
     await widget.wordPress.deletePost(id: id).then((p) {
       print('Post Deleted successfully: $p');
     }).catchError((err) {
@@ -163,7 +176,7 @@ class PostsBuilderState extends State<PostsBuilder> {
     });
   }
 
-  Future<void> deleteComment({@required int id}) async {
+  Future<void> deleteComment({required int id}) async {
     await widget.wordPress.deleteComment(id: id).then((c) {
       print('Comment Deleted successfully: $c');
     }).catchError((err) {
@@ -171,7 +184,7 @@ class PostsBuilderState extends State<PostsBuilder> {
     });
   }
 
-  Future<void> deleteUser({@required int id, @required int reassign}) async {
+  Future<void> deleteUser({required int id, required int reassign}) async {
     await widget.wordPress.deleteUser(id: id, reassign: reassign).then((u) {
       print('User Deleted successfully: $u');
     }).catchError((err) {
@@ -185,12 +198,12 @@ class PostsBuilderState extends State<PostsBuilder> {
 
 //  end yahya
 
-  void createComment({@required int userId, @required int postId}) {
+  void createComment({required int userId, required int postId}) {
     final comment = widget.wordPress.createComment(
       comment: new wp.Comment(
         author: userId,
         post: postId,
-        content: "First!",
+        content: "<p>First! Comment using API</p>",
         parent: 0,
       ),
     );
@@ -222,29 +235,29 @@ class PostsBuilderState extends State<PostsBuilder> {
           return RefreshIndicator(
             child: ListView.builder(
               itemBuilder: (context, i) {
-                int id = snapshot.data[i].id;
-                String title = snapshot.data[i].title.rendered;
-                String author = snapshot.data[i].author.name;
-                String content = snapshot.data[i].content.rendered;
-                wp.Media featuredMedia = snapshot.data[i].featuredMedia;
+                int id = snapshot.data![i].id!;
+                String title = snapshot.data![i].title?.rendered??"";
+                String author = snapshot.data![i].author?.name??"";
+                String content = snapshot.data![i].content?.rendered??"";
+                wp.Media? featuredMedia = snapshot.data![i].featuredMedia;
 
                 return Padding(
                   padding: paddingCardsList,
                   child: GestureDetector(
                     onTap: () {
-                      openPostPage(snapshot.data[i]);
+                      openPostPage(snapshot.data![i]);
                     },
                     child: _buildPostCard(
                       author: author,
                       title: title,
                       content: content,
                       featuredMedia: featuredMedia,
-                      id : id,
+                      id: id,
                     ),
                   ),
                 );
               },
-              itemCount: snapshot.data.length,
+              itemCount: snapshot.data?.length??0,
             ),
             onRefresh: fetchPosts,
           );
@@ -263,11 +276,11 @@ class PostsBuilderState extends State<PostsBuilder> {
   }
 
   Widget _buildPostCard({
-    String author,
-    String title,
-    String content,
-    wp.Media featuredMedia,
-    int id,
+    required String author,
+    required String title,
+    required String content,
+    required wp.Media? featuredMedia,
+    required int id,
   }) {
     return Card(
       color: Colors.white,
@@ -303,7 +316,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    createComment(postId: 1, userId: 1);
+                    createComment(postId: id, userId: 1);
                   },
                   icon: Icon(Icons.settings),
                   label: Text(
@@ -312,11 +325,11 @@ class PostsBuilderState extends State<PostsBuilder> {
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    updateComment(user: widget.user, id: 1, postId: 1);
+                    updateComment(user: widget.user, id: 1, postId: id);
                   },
                   icon: Icon(Icons.settings),
                   label: Text(
-                    "Update Comment with ID #1",
+                    "Update Comment with ID #$id",
                   ),
                 ),
                 ElevatedButton.icon(
@@ -330,7 +343,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    updatePost(userId: widget.user.id, id: 1);
+                    updatePost(userId: widget.user.id!, id: 1);
                   },
                   icon: Icon(Icons.settings, color: Colors.white),
                   label: Text(
@@ -352,7 +365,10 @@ class PostsBuilderState extends State<PostsBuilder> {
                   onPressed: () {
                     createPost(user: widget.user);
                   },
-                  icon: Icon(Icons.add_circle, color: Colors.white,),
+                  icon: Icon(
+                    Icons.add_circle,
+                    color: Colors.white,
+                  ),
                   label: Text(
                     "Create New Post",
                     style: TextStyle(color: Colors.white),
@@ -360,9 +376,16 @@ class PostsBuilderState extends State<PostsBuilder> {
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    createUser(roles: ["subscriber"], username: "myUserName", password: "123", email: "myEmail@domain.com");
+                    createUser(
+                        roles: ["subscriber"],
+                        username: "myUserName",
+                        password: "123",
+                        email: "myEmail@domain.com");
                   },
-                  icon: Icon(Icons.add_circle, color: Colors.white,),
+                  icon: Icon(
+                    Icons.add_circle,
+                    color: Colors.white,
+                  ),
                   label: Text(
                     "Create New User",
                     style: TextStyle(color: Colors.white),
@@ -370,9 +393,15 @@ class PostsBuilderState extends State<PostsBuilder> {
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    updateUser(id: 1, email: "newuser@gmaill.com", username: "newuser");
+                    updateUser(
+                        id: 1,
+                        email: "newuser@gmaill.com",
+                        username: "newuser");
                   },
-                  icon: Icon(Icons.settings, color: Colors.white,),
+                  icon: Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                  ),
                   label: Text(
                     "Update User with ID #1",
                     style: TextStyle(color: Colors.white),
@@ -382,7 +411,10 @@ class PostsBuilderState extends State<PostsBuilder> {
                   onPressed: () {
                     deleteUser(id: 1, reassign: 1);
                   },
-                  icon: Icon(Icons.delete, color: Colors.white,),
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                  ),
                   label: Text(
                     "Delete User with ID #1",
                     style: TextStyle(color: Colors.white),
@@ -396,21 +428,22 @@ class PostsBuilderState extends State<PostsBuilder> {
     );
   }
 
-  Widget _buildFeaturedMedia(wp.Media featuredMedia) {
+  Widget _buildFeaturedMedia(wp.Media? featuredMedia) {
     if (featuredMedia == null) {
       return SizedBox(
         width: 0.0,
         height: 0.0,
       );
     }
-    String imgSource = featuredMedia.mediaDetails.sizes.mediumLarge.sourceUrl;
-    imgSource = imgSource.replaceAll('localhost', '192.168.6.165');
-    return Center(
-      child: Image.network(
-        imgSource,
-        fit: BoxFit.cover,
-      ),
-    );
+    return Container();
+    // String imgSource = featuredMedia.mediaDetails.sizes.mediumLarge.sourceUrl??;
+    // imgSource = imgSource.replaceAll('localhost', '192.168.6.165');
+    // return Center(
+    //   child: Image.network(
+    //     imgSource,
+    //     fit: BoxFit.cover,
+    //   ),
+    // );
   }
 
   void openPostPage(wp.Post post) {
@@ -419,7 +452,6 @@ class PostsBuilderState extends State<PostsBuilder> {
       context,
       MaterialPageRoute(builder: (context) {
         return SinglePostPage(
-          wordPress: widget.wordPress,
           post: post,
         );
       }),

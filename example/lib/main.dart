@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'login.dart';
+
+import 'home_page.dart';
 
 void main() {
   runApp(WordPressApp());
@@ -12,7 +13,7 @@ class WordPressApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'WordPress Demo',
       theme: ThemeData.light(),
-      home: LoginPage(),
+      home: HomePage(),
     );
   }
 }

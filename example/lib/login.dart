@@ -33,8 +33,8 @@ class LoginFields extends StatefulWidget {
 }
 
 class LoginFieldsState extends State<LoginFields> {
-  String _username;
-  String _password;
+  String _username = "";
+  String _password = "";
   bool _isDetailValid = true;
   bool _isValidating = false;
 
@@ -108,10 +108,10 @@ class LoginFieldsState extends State<LoginFields> {
   }
 
   Widget _buildFormField({
-    Icon icon,
-    String labelText,
-    String hintText,
-    String initialText,
+   required Icon icon,
+   required String labelText,
+   required String hintText,
+   required String initialText,
     TextInputType inputType = TextInputType.text,
     bool obscureText = false,
     onChanged,
@@ -146,7 +146,7 @@ class LoginFieldsState extends State<LoginFields> {
     });
 
     wp.WordPress wordPress = new wp.WordPress(
-      baseUrl: 'YOUR WEBSITE URL',
+      baseUrl: 'http://wptest.dreamsoftin.com',
       authenticator: wp.WordPressAuthenticator.JWT,
       adminName: '',
       adminKey: '',

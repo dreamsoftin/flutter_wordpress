@@ -191,9 +191,9 @@ class Post {
     data['password'] = this.password;
     data['slug'] = this.slug;
     data['status'] = enumStringToName(this.status.toString());
-    data['title'] = this.title?.toJson();
-    data['content'] = this.content?.toJson();
-    data['excerpt'] = this.excerpt?.toJson();
+    data['title'] = this.title?.rendered ?? ""; //.toJson();
+    data['content'] = this.content?.rendered ?? ""; //.toJson();
+    data['excerpt'] = this.excerpt?.rendered ?? ""; //.toJson();
     data['author'] = this.authorID;
     data['featured_media'] = this.featuredMediaID;
     data['comment_status'] = enumStringToName(this.commentStatus.toString());
