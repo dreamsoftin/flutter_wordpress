@@ -3,6 +3,8 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
 import 'package:flutter_wordpress_example/service/comments_service.dart';
 
+import 'service/auth_service.dart';
+
 class SinglePostPage extends StatelessWidget {
   final wp.Post post;
 
@@ -12,11 +14,11 @@ class SinglePostPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(post.title?.rendered??""),
+        title: Text(post.title?.rendered ?? ""),
       ),
       body: Padding(
         padding: EdgeInsets.all(8.0),
-        child: PostWithComments( post: post),
+        child: PostWithComments(post: post),
       ),
     );
   }
@@ -34,13 +36,13 @@ class PostWithComments extends StatefulWidget {
 class PostWithCommentsState extends State<PostWithComments> {
   late String _content;
 
- late Future<List<wp.CommentHierarchy>> _comments;
+  late Future<List<wp.CommentHierarchy>> _comments;
 
   @override
   void initState() {
     super.initState();
 
-    _content = widget.post.content?.rendered??"";
+    _content = widget.post.content?.rendered ?? "";
     _content = _content.replaceAll('localhost', '192.168.6.165');
 
     fetchComments();
@@ -48,11 +50,22 @@ class PostWithCommentsState extends State<PostWithComments> {
 
   void fetchComments() {
     // setState(() {
-      _comments = CommentsService.instance.fetchCommentsAsHierarchy(
-          params: wp.ParamsCommentList(
-        includePostIDs: widget.post.id == null ? [] :[widget.post.id!],
-      ));
+    _comments = CommentsService.instance.fetchCommentsAsHierarchy(
+        params: wp.ParamsCommentList(
+      includePostIDs: widget.post.id == null ? [] : [widget.post.id!],
+    ));
     // });
+  }
+
+  Future<void> createComment(String text, int parent) async {
+    await CommentsService.instance.create(wp.Comment(
+      author: AuthService.instance.currentUser!.id!,
+      post: widget.post.id,
+      content: text,
+      parent: parent,
+    ));
+    fetchComments();
+    setState(() {});
   }
 
   @override
@@ -71,7 +84,14 @@ class PostWithCommentsState extends State<PostWithComments> {
                 children: <Widget>[
                   Icon(Icons.comment),
                   Text('Comments'),
+                  Spacer(),
+                  IconButton(onPressed: () {}, icon: Icon(Icons.add))
                 ],
+              ),
+              CommenttextField(
+                comment: (value) {
+                  createComment(value, 0);
+                },
               ),
               Divider(),
             ],
@@ -92,7 +112,7 @@ class PostWithCommentsState extends State<PostWithComments> {
   SliverChildDelegate _buildCommentsSection(
       AsyncSnapshot<List<wp.CommentHierarchy>?> snapshot) {
     if (snapshot.hasData) {
-      return _buildComments(snapshot.data??[]);
+      return _buildComments(snapshot.data);
     } else if (snapshot.hasError) {
       return SliverChildListDelegate([
         Text(
@@ -116,7 +136,7 @@ class PostWithCommentsState extends State<PostWithComments> {
   }
 
   SliverChildBuilderDelegate _buildComments(
-      List<wp.CommentHierarchy> comments) {
+      List<wp.CommentHierarchy>? comments) {
     return SliverChildBuilderDelegate(
       (BuildContext context, int i) {
         if (comments == null || comments.length == 0) {
@@ -149,16 +169,19 @@ class PostWithCommentsState extends State<PostWithComments> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Html(
-              data: root.comment.content?.rendered??"",
+              data: root.comment.content?.rendered ?? "",
               // blockSpacing: 0.0,
             ),
             Text(
-              root.comment.authorName??"",
+              root.comment.authorName ?? "",
               style: TextStyle(
                 color: Colors.grey,
                 fontWeight: FontWeight.w300,
               ),
             ),
+            CommenttextField(comment: (text) {
+              createComment(text, root.comment.id!);
+            })
           ],
         ),
       );
@@ -168,11 +191,11 @@ class PostWithCommentsState extends State<PostWithComments> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Html(
-              data: root.comment.content?.rendered??"",
+              data: root.comment.content?.rendered ?? "",
               // blockSpacing: 0.0,
             ),
             Text(
-              root.comment.authorName??"",
+              root.comment.authorName ?? "",
               style: TextStyle(
                 color: Colors.grey,
                 fontWeight: FontWeight.w300,
@@ -180,13 +203,47 @@ class PostWithCommentsState extends State<PostWithComments> {
             ),
           ],
         ),
-        children: (root.children??[]).map((c) {
-          return Padding(
-            padding: EdgeInsets.only(left: 16.0),
-            child: _buildCommentTile(c),
-          );
-        }).toList(),
+        trailing: IconButton(
+          onPressed: () {
+            CommentsService.instance.delete(root.comment.id!);
+          },
+          icon: Icon(Icons.delete),
+        ),
+        children: [
+          ...(root.children ?? []).map((c) {
+            return Padding(
+              padding: EdgeInsets.only(left: 16.0),
+              child: _buildCommentTile(c),
+            );
+          }).toList(),
+          CommenttextField(comment: (text) {
+            createComment(text, root.comment.id!);
+          })
+        ],
       );
     }
+  }
+}
+
+class CommenttextField extends StatelessWidget {
+  CommenttextField({Key? key, required this.comment}) : super(key: key);
+  final TextEditingController controller = TextEditingController();
+  final ValueChanged<String> comment;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Flexible(
+            child: TextField(
+          controller: controller,
+        )),
+        ElevatedButton(
+            onPressed: () {
+              comment.call(controller.text);
+              controller.clear();
+            },
+            child: Text("Comment"))
+      ],
+    );
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
+import 'package:flutter_wordpress_example/service/auth_service.dart';
 
 import 'display_posts.dart';
+import 'home_page.dart';
 
 const PADDING_16 = EdgeInsets.all(16.0);
 const PADDING_8 = EdgeInsets.all(8.0);
@@ -108,10 +110,10 @@ class LoginFieldsState extends State<LoginFields> {
   }
 
   Widget _buildFormField({
-   required Icon icon,
-   required String labelText,
-   required String hintText,
-   required String initialText,
+    required Icon icon,
+    required String labelText,
+    required String hintText,
+    required String initialText,
     TextInputType inputType = TextInputType.text,
     bool obscureText = false,
     onChanged,
@@ -140,35 +142,51 @@ class LoginFieldsState extends State<LoginFields> {
     _password = value;
   }
 
-  void _validateUser() {
+  Future<void> _validateUser() async {
     setState(() {
       _isValidating = true;
     });
+    try {
+      await AuthService.instance.authenticate(_username, _password);
+      if (AuthService.instance.currentUser == null)
+        throw "Failed to Authenticate";
 
-    wp.WordPress wordPress = new wp.WordPress(
-      baseUrl: 'http://wptest.dreamsoftin.com',
-      authenticator: wp.WordPressAuthenticator.JWT,
-      adminName: '',
-      adminKey: '',
-    );
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(),
+          ),
+          (route) => false);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("$e"),
+        backgroundColor: Colors.red,
+      ));
+    }
+    // wp.WordPress wordPress = new wp.WordPress(
+    //   baseUrl: 'http://wptest.dreamsoftin.com',
+    //   authenticator: wp.WordPressAuthenticator.JWT,
+    //   adminName: '',
+    //   adminKey: '',
+    // );
 
-    final response =
-        wordPress.authenticateUser(username: _username, password: _password);
+    // final response =
+    //     wordPress.authenticateUser(username: _username, password: _password);
 
-    response.then((user) {
-      setState(() {
-        _isDetailValid = true;
-        _isValidating = false;
+    // response.then((user) {
+    //   setState(() {
+    //     _isDetailValid = true;
+    //     _isValidating = false;
 
-        _onValidUser(wordPress, user);
-      });
-    }).catchError((err) {
-      print(err.toString());
-      setState(() {
-        _isDetailValid = false;
-        _isValidating = false;
-      });
-    });
+    //     _onValidUser(wordPress, user);
+    //   });
+    // }).catchError((err) {
+    //   print(err.toString());
+    //   setState(() {
+    //     _isDetailValid = false;
+    //     _isValidating = false;
+    //   });
+    // });
   }
 
   void _onValidUser(wp.WordPress wordPress, wp.User user) {

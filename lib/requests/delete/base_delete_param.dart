@@ -11,7 +11,7 @@ class DeleteParams {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'force': force,
+      'force': force ?? false,
     };
   }
 
@@ -24,5 +24,6 @@ class DeleteParams {
 
   String toJson() => json.encode(toMap());
 
-  factory DeleteParams.fromJson(String source) => DeleteParams.fromMap(json.decode(source));
+  factory DeleteParams.fromJson(String source) =>
+      DeleteParams.fromMap(json.decode(source));
 }
