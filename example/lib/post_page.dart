@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
+import 'package:flutter_wordpress/schemas/comment_hierarchy.dart';
 
 class SinglePostPage extends StatelessWidget {
   final wp.WordPress wordPress;
   final wp.Post post;
 
-  SinglePostPage({Key key, @required this.wordPress, @required this.post});
+  SinglePostPage({Key? key, required this.wordPress, required this.post});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(post.title.rendered),
+        title: Text(post.title!.rendered!),
       ),
       body: Padding(
         padding: EdgeInsets.all(8.0),
@@ -26,23 +27,23 @@ class PostWithComments extends StatefulWidget {
   final wp.WordPress wordPress;
   final wp.Post post;
 
-  PostWithComments({@required this.wordPress, @required this.post});
+  PostWithComments({required this.wordPress, required this.post});
 
   @override
   PostWithCommentsState createState() => PostWithCommentsState();
 }
 
 class PostWithCommentsState extends State<PostWithComments> {
-  String _content;
+  String? _content;
 
-  Future<List<wp.CommentHierarchy>> _comments;
+  Future<List<wp.CommentHierarchy>>? _comments;
 
   @override
   void initState() {
     super.initState();
 
-    _content = widget.post.content.rendered;
-    _content = _content.replaceAll('localhost', '192.168.6.165');
+    _content = widget.post.content!.rendered;
+    _content = _content!.replaceAll('localhost', '192.168.6.165');
 
     fetchComments();
   }
@@ -51,7 +52,7 @@ class PostWithCommentsState extends State<PostWithComments> {
     setState(() {
       _comments = widget.wordPress.fetchCommentsAsHierarchy(
           params: wp.ParamsCommentList(
-        includePostIDs: [widget.post.id],
+        includePostIDs: [widget.post.id!],
       ));
     });
   }
@@ -82,7 +83,8 @@ class PostWithCommentsState extends State<PostWithComments> {
           future: _comments,
           builder: (context, snapshot) {
             return SliverList(
-              delegate: _buildCommentsSection(snapshot),
+              delegate: _buildCommentsSection(
+                  snapshot as AsyncSnapshot<List<CommentHierarchy>>),
             );
           },
         ),
@@ -117,7 +119,7 @@ class PostWithCommentsState extends State<PostWithComments> {
   }
 
   SliverChildBuilderDelegate _buildComments(
-      List<wp.CommentHierarchy> comments) {
+      List<wp.CommentHierarchy>? comments) {
     return SliverChildBuilderDelegate(
       (BuildContext context, int i) {
         if (comments == null || comments.length == 0) {
@@ -150,11 +152,11 @@ class PostWithCommentsState extends State<PostWithComments> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Html(
-              data: root.comment.content.rendered,
+              data: root.comment.content!.rendered,
               // blockSpacing: 0.0,
             ),
             Text(
-              root.comment.authorName,
+              root.comment.authorName!,
               style: TextStyle(
                 color: Colors.grey,
                 fontWeight: FontWeight.w300,
@@ -169,11 +171,11 @@ class PostWithCommentsState extends State<PostWithComments> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Html(
-              data: root.comment.content.rendered,
+              data: root.comment.content!.rendered,
               // blockSpacing: 0.0,
             ),
             Text(
-              root.comment.authorName,
+              root.comment.authorName!,
               style: TextStyle(
                 color: Colors.grey,
                 fontWeight: FontWeight.w300,
@@ -181,7 +183,7 @@ class PostWithCommentsState extends State<PostWithComments> {
             ),
           ],
         ),
-        children: root.children.map((c) {
+        children: root.children!.map((c) {
           return Padding(
             padding: EdgeInsets.only(left: 16.0),
             child: _buildCommentTile(c),

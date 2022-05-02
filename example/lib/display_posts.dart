@@ -7,9 +7,9 @@ import 'post_page.dart';
 
 class PostListPage extends StatelessWidget {
   final wp.WordPress wordPress;
-  final wp.User user;
+  final wp.User? user;
 
-  PostListPage({Key key, @required this.wordPress, this.user});
+  PostListPage({Key? key, required this.wordPress, this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +29,9 @@ class PostListPage extends StatelessWidget {
 
 class PostsBuilder extends StatefulWidget {
   final wp.WordPress wordPress;
-  final wp.User user;
+  final wp.User? user;
 
-  PostsBuilder({Key key, @required this.wordPress, this.user});
+  PostsBuilder({Key? key, required this.wordPress, this.user});
 
   @override
   PostsBuilderState createState() => PostsBuilderState();
@@ -43,7 +43,7 @@ class PostsBuilderState extends State<PostsBuilder> {
   final padding_8 = EdgeInsets.all(8.0);
   final padding_16 = EdgeInsets.all(16.0);
 
-  Future<List<wp.Post>> posts;
+  Future<List<wp.Post>>? posts;
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class PostsBuilderState extends State<PostsBuilder> {
     fetchPosts();
   }
 
-  void createPost({@required wp.User user}) {
+  void createPost({required wp.User user}) {
     final post = widget.wordPress.createPost(
       post: new wp.Post(
         title: 'First post as a Chief Editor',
@@ -76,7 +76,7 @@ class PostsBuilderState extends State<PostsBuilder> {
 
 //  yahya
 
-  Future<void> createUser({@required String email, @required String username, @required String password, @required List<String> roles}) async {
+  Future<void> createUser({required String email, required String username, required String password, required List<String> roles}) async {
     await widget.wordPress.createUser(
       user: wp.User(
         email: email,
@@ -95,7 +95,7 @@ class PostsBuilderState extends State<PostsBuilder> {
 //  UPDATE START
 //  =====================
 
-  Future<void> updatePost({@required int id, @required int userId}) async {
+  Future<void> updatePost({required int id, required int? userId}) async {
     await widget.wordPress.updatePost(
       post: new wp.Post(
         title: 'First post as a Chief Editor',
@@ -116,7 +116,7 @@ class PostsBuilderState extends State<PostsBuilder> {
     });
   }
 
-  Future<void> updateComment({@required int id, @required int postId, @required wp.User user}) async {
+  Future<void> updateComment({required int id, required int postId, required wp.User user}) async {
     await widget.wordPress.updateComment(
       comment: new wp.Comment(
         content: "Comment Updated2!",
@@ -131,7 +131,7 @@ class PostsBuilderState extends State<PostsBuilder> {
     });
   }
 
-  Future<void> updateUser({@required int id, @required String username, @required String email}) async {
+  Future<void> updateUser({required int id, required String username, required String email}) async {
     await widget.wordPress.updateUser(
       user: new wp.User(
         description: "This is description for this user",
@@ -155,7 +155,7 @@ class PostsBuilderState extends State<PostsBuilder> {
 //  DELETE START
 //  =====================
 
-  Future<void> deletePost({@required int id}) async {
+  Future<void> deletePost({required int id}) async {
     await widget.wordPress.deletePost(id: id).then((p) {
       print('Post Deleted successfully: $p');
     }).catchError((err) {
@@ -163,7 +163,7 @@ class PostsBuilderState extends State<PostsBuilder> {
     });
   }
 
-  Future<void> deleteComment({@required int id}) async {
+  Future<void> deleteComment({required int id}) async {
     await widget.wordPress.deleteComment(id: id).then((c) {
       print('Comment Deleted successfully: $c');
     }).catchError((err) {
@@ -171,7 +171,7 @@ class PostsBuilderState extends State<PostsBuilder> {
     });
   }
 
-  Future<void> deleteUser({@required int id, @required int reassign}) async {
+  Future<void> deleteUser({required int id, required int reassign}) async {
     await widget.wordPress.deleteUser(id: id, reassign: reassign).then((u) {
       print('User Deleted successfully: $u');
     }).catchError((err) {
@@ -185,7 +185,7 @@ class PostsBuilderState extends State<PostsBuilder> {
 
 //  end yahya
 
-  void createComment({@required int userId, @required int postId}) {
+  void createComment({required int userId, required int postId}) {
     final comment = widget.wordPress.createComment(
       comment: new wp.Comment(
         author: userId,
@@ -202,7 +202,7 @@ class PostsBuilderState extends State<PostsBuilder> {
     });
   }
 
-  Future<void> fetchPosts() {
+  Future<void>? fetchPosts() {
     setState(() {
       posts = widget.wordPress.fetchPosts(
         postParams: wp.ParamsPostList(perPage: 1),
@@ -222,17 +222,17 @@ class PostsBuilderState extends State<PostsBuilder> {
           return RefreshIndicator(
             child: ListView.builder(
               itemBuilder: (context, i) {
-                int id = snapshot.data[i].id;
-                String title = snapshot.data[i].title.rendered;
-                String author = snapshot.data[i].author.name;
-                String content = snapshot.data[i].content.rendered;
-                wp.Media featuredMedia = snapshot.data[i].featuredMedia;
+                int? id = snapshot.data![i].id;
+                String title = snapshot.data![i].title!.rendered!;
+                String author = snapshot.data![i].author!.name!;
+                String? content = snapshot.data![i].content!.rendered;
+                wp.Media? featuredMedia = snapshot.data![i].featuredMedia;
 
                 return Padding(
                   padding: paddingCardsList,
                   child: GestureDetector(
                     onTap: () {
-                      openPostPage(snapshot.data[i]);
+                      openPostPage(snapshot.data![i]);
                     },
                     child: _buildPostCard(
                       author: author,
@@ -244,9 +244,9 @@ class PostsBuilderState extends State<PostsBuilder> {
                   ),
                 );
               },
-              itemCount: snapshot.data.length,
+              itemCount: snapshot.data!.length,
             ),
-            onRefresh: fetchPosts,
+            onRefresh: fetchPosts as Future<void> Function(),
           );
         } else if (snapshot.hasError) {
           return Text(
@@ -263,11 +263,11 @@ class PostsBuilderState extends State<PostsBuilder> {
   }
 
   Widget _buildPostCard({
-    String author,
-    String title,
-    String content,
-    wp.Media featuredMedia,
-    int id,
+    required String author,
+    required String title,
+    String? content,
+    wp.Media? featuredMedia,
+    int? id,
   }) {
     return Card(
       color: Colors.white,
@@ -312,7 +312,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    updateComment(user: widget.user, id: 1, postId: 1);
+                    updateComment(user: widget.user!, id: 1, postId: 1);
                   },
                   icon: Icon(Icons.settings),
                   label: Text(
@@ -330,7 +330,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    updatePost(userId: widget.user.id, id: 1);
+                    updatePost(userId: widget.user!.id, id: 1);
                   },
                   icon: Icon(Icons.settings, color: Colors.white),
                   label: Text(
@@ -350,7 +350,7 @@ class PostsBuilderState extends State<PostsBuilder> {
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    createPost(user: widget.user);
+                    createPost(user: widget.user!);
                   },
                   icon: Icon(Icons.add_circle, color: Colors.white,),
                   label: Text(
@@ -396,14 +396,14 @@ class PostsBuilderState extends State<PostsBuilder> {
     );
   }
 
-  Widget _buildFeaturedMedia(wp.Media featuredMedia) {
+  Widget _buildFeaturedMedia(wp.Media? featuredMedia) {
     if (featuredMedia == null) {
       return SizedBox(
         width: 0.0,
         height: 0.0,
       );
     }
-    String imgSource = featuredMedia.mediaDetails.sizes.mediumLarge.sourceUrl;
+    String imgSource = featuredMedia.mediaDetails!.sizes!.mediumLarge!.sourceUrl!;
     imgSource = imgSource.replaceAll('localhost', '192.168.6.165');
     return Center(
       child: Image.network(
