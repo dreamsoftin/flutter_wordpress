@@ -25,6 +25,7 @@ class ParamsPostList {
   final List<int> includeTags;
   final List<int> excludeTags;
   final bool? sticky;
+  final List<String> fields;
 
   ParamsPostList({
     this.context = WordPressContext.view,
@@ -47,6 +48,7 @@ class ParamsPostList {
     this.includeTags = const [],
     this.excludeTags = const [],
     this.sticky,
+    this.fields = const [],
   });
 
   Map<String, String> toMap() {
@@ -71,6 +73,7 @@ class ParamsPostList {
       'tags': '${listToUrlString(includeTags)}',
       'tags_exclude': '${listToUrlString(excludeTags)}',
       'sticky': '${this.sticky == null ? '' : this.sticky}',
+      '_fields': this.fields.join(',')
     };
   }
 
@@ -98,7 +101,8 @@ ParamsPostList copyWith({
     postStatus: postStatus,
     searchQuery: searchQuery,
     slug: slug,
-    sticky: sticky
+    sticky: sticky,
+    fields: fields,
   );
 }
 
